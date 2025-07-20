@@ -1,0 +1,117 @@
+## 🛡️ STANDARD OPERATING PROCEDURE (SOP)
+
+**Title**: FTP Alert Handling & Agentic Triage Protocol
+**Department**: Fraud Risk & Intelligence
+**Issued By**: Head of Financial Crime Compliance
+**Effective Date**: 08 July 2025 | **Version**: 3.1
+**Applies To**: Fraud Analysts, Agentic Triage, Digital Operations, Contact Centre, Case Management Teams
+
+---
+
+### 1. PURPOSE
+
+Define a **compliant**, **risk‑driven**, and **data‑grounded** framework to triage, validate, and resolve fraud alerts automatically with GenAI agents—protecting customers & meeting APRA, ASIC, AUSTRAC, and Scamwatch requirements.
+
+---
+
+### 2. SCOPE
+
+* Covers all FTP‑generated alerts across Online, Mobile, SWIFT, PayID, BPAY, etc.
+* Enemy vectors include credential compromise, account takeover, BEC, crypto/investment scams, device/IP anomalies.
+
+---
+
+### 3. CONTEXT & INPUTS
+
+All alerts pass through an **MCP Orchestrator**, which creates structured, schema‑driven contexts:
+
+* **TransactionContext**
+* **UserContext**
+* **MerchantContext**
+* **DeviceContext**
+* **SOPContext** (bank’s policies & exception logic)
+* **AlertContext** (FTP metadata)
+
+Agents communicate via MCP, ensuring full traceability and auditable logs of the exact data considered.
+
+---
+
+### 4. TRIAGE DECISION RULES
+
+The **Triage Agent** applies SOP‑driven logic, enriched with real‑time GenAI reasoning:
+
+| Strategy                         | Rule ID     | Call Required IF…                                                     | Skip IF…                                        |
+| -------------------------------- | ----------- | --------------------------------------------------------------------- | ----------------------------------------------- |
+| Password Change + Large Transfer | RUL‑TX901   | Transfer >5k in 60 min after password change AND unknown payee        | Payee trusted >3 mths, matches usual patterns   |
+| New Device + Large Transfer      | RUL‑TX817   | New device → transfer >10k → destination = investment/crypto platform | Biometrics verified; previously approved device |
+| Investment‑Scam                  | RUL‑TX488   | First‑time >5k to unlicensed/unverified entity OR on blacklist        | *Never skip*                                    |
+| Full Balance Outflow             | RUL‑TX778   | 80%+ balance moved to unknown/crypto or multiple rapid transfers      | *Never skip*                                    |
+| Offshore Transfer                | RUL‑TX234   | New offshore >10k to high‑risk jurisdiction                           | If licensed entity AND typical pattern          |
+| Drip Transfer Anomaly            | RUL‑TX155   | Daily small transfers >3 days totaling >2k, round amounts             | Matches existing pattern                        |
+| Invoice Redirection              | RUL‑TX230   | Vendor bank details changed & payment >10% deviation from norm        | Securely verified change                        |
+| New Device + Account Cleanout    | RUL‑TX817v2 | Unverified device + >50% balance → crypto transfers out-of-hours      | *Never skip*                                    |
+
+This agent uses **MCP to fetch SOPContext** and retrieve real-time customer/device history before applying thresholds.
+
+---
+
+### 5. AGENTIC MODULES & CONNECTORS
+
+* **Context Store**: All agents share and update contexts via MCP, including **RiskSummaryContext**, **DecisionContext**, and **DialogueContext**.
+* **Decision Agent**: Leverages GenAI (Claude 3.7 Sonnet) for logical reasoning and explanations, fused with numeric rule checks.
+* **Dialogue Agent**: Uses **LangGraph** to generate adaptive question flows (identity, transaction background, investment details), storing results in **DialogueContext**.
+* **Risk Assessor**: Reviews conversation context; detects scam indicators and either finalizes or triggers further questioning loop.
+* **SOP Agent**: Manning the SOPContext—providing SOP rules, escalation criteria, contact templates on demand.
+
+---
+
+### 6. CUSTOMER ENGAGEMENT
+
+**Caller**: “Hi \[Name], it’s \[Agent] from \[Bank]. We noticed a \[high‑value crypto/investment] transaction of $\[X]. Did you authorize this and are you certain the recipient is ASIC‑licensed?”
+
+Prompts follow a logical progression from identity validation to deeper probing into scam indicators.
+
+---
+
+### 7. ESCALATION & HANDOVERS
+
+* **Tier 1 (Agentic)**: Auto-resolution if calls not required.
+* **Tier 2 (Human Analyst)**: If flagged high-risk, Geo-jurisdictional complexity, device anomalies, or >\$20k.
+* **Tier 3 (Legal/Compliance)**: Requires police/reporting/AUSTRAC.
+
+---
+
+### 8. SLA & MONITORING
+
+| Priority | Agent Call SLA | Resolution SLA | Monitoring Cycle |
+| -------- | -------------- | -------------- | ---------------- |
+| High     | 30 mins        | 2 hours        | Daily            |
+| Medium   | 2 hours        | 6 hours        | Bi‑weekly        |
+| Low      | Same day       | 24 hours       | Monthly QA       |
+
+Performance metrics feed into the **FeedbackContext** to optimize agent chains.
+
+---
+
+### 9. AUDIT, SECURITY & GOVERNANCE
+
+* Full **MCP logs**: context reads/writes, tool calls, decisions, timestamps.
+* **Guardrails & ACLs** implemented per-context and agent-role to prevent unauthorized data flow — aligning with enterprise-grade risk mitigations ([k2view.com][1], [swimlane.com][2], [digitalocean.com][3], [en.wikipedia.org][4], [anthropic.com][5]).
+* MCP servers take responsibility for schema validation and security controls.
+
+---
+
+### 10. COMPLIANCE & REFERENCES
+
+* Grounded in **APRA CPG 234**, **ASIC**, **AUSTRAC**, **Scamwatch**.
+* Leverages **MCP standard** for secure, auditable data access ([k2view.com][1]).
+* Uses context-driven SOP enforcement consistent with best practices in rapid fraud triage .
+
+---
+
+### 🔄 VERSION CONTROL HISTORY
+
+* **3.1 (2025‑07‑10)**: Enhanced with MCP-context orchestration, automated agent logic, and guardrail-centric audit.
+* **3.0 (2025‑07‑08)**: Integration of FTP & Agent‑based triage.
+* **2.1 (2025‑07‑06)**: Rule threshold definitions.
+* **2.0 (2025‑06‑30)**: Legacy triage-only version.

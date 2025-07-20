@@ -1,0 +1,38 @@
+[
+  {
+    "alertId": "ALRT-AU-CUST7712-1",
+    "customerId": "AU-CUST7712",
+    "ruleId": "RUL-TX901",
+    "strategy": "Large Fund Transfer Post Password Change",
+    "queue": "High-Risk Behaviour Queue",
+    "priority": "High",
+    "status": "Open",
+    "description": "Password updated at 09:12; $15,000 transferred at 09:38 to unknown PayID recipient",
+    "alertDate": "2025-08-03",
+    "alertTime": "09:40:10"
+  },
+  {
+    "alertId": "ALRT-AU-CUST1053-1",
+    "customerId": "AU-CUST1053",
+    "ruleId": "RUL-TX230",
+    "strategy": "Business Invoice Redirection",
+    "queue": "Commercial Fraud Queue",
+    "priority": "High",
+    "status": "Open",
+    "description": "$13,800 transferred to account with altered BSB/Acc from regular vendor 'FixPro Electrical'",
+    "alertDate": "2025-07-03",
+    "alertTime": "10:41:55"
+  },
+  {
+    "alertId": "ALRT-AU-CUST2245-1",
+    "customerId": "AU-CUST2245",
+    "ruleId": "RUL-TX817",
+    "strategy": "New Device + Account Cleanout",
+    "queue": "Device Anomaly Queue",
+    "priority": "High",
+    "status": "Open",
+    "description": "Login from unknown iPhone; $9,920 (99.6% balance) transferred to first-time crypto merchant",
+    "alertDate": "2025-07-03",
+    "alertTime": "12:11:38"
+  }
+]

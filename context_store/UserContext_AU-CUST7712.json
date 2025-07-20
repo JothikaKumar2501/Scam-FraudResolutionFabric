@@ -1,0 +1,37 @@
+{
+  "customer_id": "AU-CUST7712",
+  "personal_information": {
+    "name": "Oliver James Thompson",
+    "date_of_birth": "1989-05-17",
+    "gender": "Male",
+    "id_verified": true,
+    "digital_literacy_level": "High"
+  },
+  "contact_information": {
+    "address": "27 Eucalyptus Drive, Blackburn VIC 3130",
+    "email": "oliver.thompson@gmail.com",
+    "phone": "0468 329 174",
+    "preferred_contact": "Email"
+  },
+  "background": {
+    "citizenship": "Australian",
+    "marital_status": "Married",
+    "dependents": 2,
+    "language_preference": "English"
+  },
+  "employment": {
+    "status": "Full-time",
+    "occupation": "Software Engineer",
+    "employer": "TechSolutions Pty Ltd",
+    "annual_income": "110000"
+  },
+  "customer_details": {
+    "segment": "Premium",
+    "customer_since": "2015-07-23",
+    "home_branch": "Melbourne CBD",
+    "known_device_familiarity_score": 0.95,
+    "prior_alerts": 1,
+    "scam_education_completed": true,
+    "risk_profile": "Low"
+  }
+}

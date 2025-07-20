@@ -1,0 +1,20 @@
+{
+  "id": "msg_bdrk_01SLMFeobw9igKQFBCVXjM34",
+  "type": "message",
+  "role": "assistant",
+  "model": "claude-3-7-sonnet-20250219",
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"anomaly_score\": 0.85, \"explanation\": \"High anomaly score due to: 1) Large transaction amount ($15,000) significantly above typical spending patterns, 2) Transaction location is 'Unknown' which is suspicious, 3) Customer has high risk profile, 4) Customer has prior alerts (2), 5) Customer has not completed scam education, 6) Transaction lacks device ID information which reduces verification capability\"}"
+    }
+  ],
+  "stop_reason": "end_turn",
+  "stop_sequence": null,
+  "usage": {
+    "input_tokens": 606,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 99
+  }
+}

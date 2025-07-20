@@ -1,0 +1,10 @@
+{
+  "txn_id": "ALRT-AU-CUST7712-1",
+  "user_id": "AU-CUST7712",
+  "customer_id": "AU-CUST7712",
+  "amount": 0.0,
+  "timestamp": "2025-07-03T09:40:10Z",
+  "location": "Unknown",
+  "merchant_id": "m123",
+  "device_id": null
+}

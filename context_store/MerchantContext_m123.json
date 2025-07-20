@@ -1,0 +1,7 @@
+{
+  "merchant_id": "m123",
+  "name": "Acme Corp",
+  "category": "Retail",
+  "risk_level": "medium",
+  "profile": {}
+}

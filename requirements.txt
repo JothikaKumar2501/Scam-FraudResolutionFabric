@@ -1,0 +1,8 @@
+streamlit
+boto3
+langgraph
+qdrant-client
+plotly
+altair
+streamlit-aggrid
+streamlit-chat

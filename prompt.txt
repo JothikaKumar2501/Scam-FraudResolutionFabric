@@ -1,0 +1,14 @@
+We have to use gen ai to automate fraud scam alerts. So I will have a Json file with the customers supicious transaction
+details and I have the details of the customer( his transaction history, demmographics) and the SOPs of the bank. 
+First the json file is passed to an agent called triage agent. By analyzing the customer details, SOPs and the sucpicious 
+transaction it will make a decision whether to call the customer or not. If no it will provide a proper end analysis. 
+if yes the taks is transfered to another agent called- Dialogue agent so this dialogue agent is a chat bot it will ask 
+the questions to customer based on the answers it hads to decide whether its a scam or not. the questions 
+include: introductory questions based on transaction transaction type and also the basic questions ( like his name and all) 
+ask follow up questions baseed on conversation.  these conversations are passed to Risk  Assessor agent . 
+this agent reviews the conversation for scam and fraud indicators. it has to do the following tasks: risk score for 
+conversation, suggest follow up questions, check for scam indicators. if it doesn't have enough information it 
+goes back to the dialogue agent and now the dialogues agent has to come up with its own questions and agin the 
+conversations are passed to risk assesor agent. so this can be some 3/4 loops. if it has enough informsation it 
+will give an end analysis with reasoning and scam alert. so I want you to help me build the multi agentic system. 
+use langgraph, aws bedrock models (using boto3), aws bedrock claude 3.7 sonnet & aws titan text embedding v2 model, qdrant vectorstore, Context Engineering.

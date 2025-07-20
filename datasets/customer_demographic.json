@@ -1,0 +1,117 @@
+{
+  "customers": [
+    {
+      "customer_id": "AU-CUST7712",
+      "personal_information": {
+        "name": "Oliver James Thompson",
+        "date_of_birth": "1989-05-17",
+        "gender": "Male",
+        "id_verified": true,
+        "digital_literacy_level": "High"
+      },
+      "contact_information": {
+        "address": "27 Eucalyptus Drive, Blackburn VIC 3130",
+        "email": "oliver.thompson@gmail.com",
+        "phone": "0468 329 174",
+        "preferred_contact": "Email"
+      },
+      "background": {
+        "citizenship": "Australian",
+        "marital_status": "Married",
+        "dependents": 2,
+        "language_preference": "English"
+      },
+      "employment": {
+        "status": "Full-time",
+        "occupation": "Software Engineer",
+        "employer": "TechSolutions Pty Ltd",
+        "annual_income": "110000"
+      },
+      "customer_details": {
+        "segment": "Premium",
+        "customer_since": "2015-07-23",
+        "home_branch": "Melbourne CBD",
+        "known_device_familiarity_score": 0.95,
+        "prior_alerts": 1,
+        "scam_education_completed": true,
+        "risk_profile": "Low"
+      }
+    },
+    {
+      "customer_id": "AU-CUST1053",
+      "personal_information": {
+        "name": "Jack Patrick O'Connor",
+        "date_of_birth": "1982-07-03",
+        "gender": "Male",
+        "id_verified": true,
+        "digital_literacy_level": "Medium"
+      },
+      "contact_information": {
+        "address": "5 Adelaide Terrace, Darwin NT 0800",
+        "email": "jack.oconnor@yahoo.com.au",
+        "phone": "0459 218 673",
+        "preferred_contact": "Email"
+      },
+      "background": {
+        "citizenship": "Australian",
+        "marital_status": "Married",
+        "dependents": 2,
+        "language_preference": "Hindi"
+      },
+      "employment": {
+        "status": "Self-employed",
+        "occupation": "Electrician",
+        "employer": "O'Connor Electrical Services",
+        "annual_income": "95000"
+      },
+      "customer_details": {
+        "segment": "Standard",
+        "customer_since": "2013-09-22",
+        "home_branch": "Darwin Central",
+        "known_device_familiarity_score": 0.65,
+        "prior_alerts": 2,
+        "scam_education_completed": false,
+        "risk_profile": "High"
+      }
+    },
+    {
+      "customer_id": "AU-CUST2245",
+      "personal_information": {
+        "name": "Nguyen Minh Lan",
+        "date_of_birth": "1965-11-30",
+        "gender": "Female",
+        "id_verified": false,
+        "digital_literacy_level": "Low"
+      },
+      "contact_information": {
+        "address": "14 Victoria St, Cabramatta NSW 2166",
+        "email": "minh.lan1965@yahoo.com",
+        "phone": "0422 991 038",
+        "preferred_contact": "Phone"
+      },
+      "background": {
+        "citizenship": "Australian",
+        "marital_status": "Widowed",
+        "dependents": 0,
+        "language_preference": "Vietnamese"
+      },
+      "employment": {
+        "status": "Retired",
+        "occupation": "N/A",
+        "employer": "N/A",
+        "annual_income": "21000"
+      },
+      "customer_details": {
+        "segment": "Vulnerable",
+        "customer_since": "2001-01-10",
+        "home_branch": "Bankstown",
+        "known_device_familiarity_score": 0.25,
+        "prior_alerts": 4,
+        "scam_education_completed": false,
+        "risk_profile": "Very High",
+        "fraud_flag": true,
+        "note": "Uses interpreter; lives alone; victim of previous investment scam in 2023"
+      }
+    }
+  ]
+}

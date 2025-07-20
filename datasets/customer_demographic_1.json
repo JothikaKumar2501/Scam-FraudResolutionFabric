@@ -1,0 +1,252 @@
+{
+  "customers": [
+    {
+      "customer_id": "AU-CUST7712",
+      "personal_information": {
+        "name": "Oliver James Thompson",
+        "date_of_birth": "1989-05-17",
+        "gender": "Male",
+        "id_verified": true
+      },
+      "contact_information": {
+        "address": "27 Eucalyptus Drive, Blackburn VIC 3130",
+        "email": "oliver.thompson@gmail.com",
+        "phone": "0468 329 174",
+        "preferred_contact": "Email"
+      },
+      "background": {
+        "citizenship": "Australian",
+        "marital_status": "Married",
+        "dependents": 2
+      },
+      "employment": {
+        "status": "Full-time",
+        "occupation": "Software Engineer",
+        "employer": "TechSolutions Pty Ltd",
+        "annual_income": "110000"
+      },
+      "customer_details": {
+        "segment": "Premium",
+        "customer_since": "2015-07-23",
+        "home_branch": "Melbourne CBD"
+      }
+    },
+    {
+      "customer_id": "AU-CUST5349",
+      "personal_information": {
+        "name": "Emma Louise Mitchell",
+        "date_of_birth": "1996-03-12",
+        "gender": "Female",
+        "id_verified": true
+      },
+      "contact_information": {
+        "address": "8/42 Bondi Road, Bondi NSW 2026",
+        "email": "emma.mitchell85@hotmail.com",
+        "phone": "0412 587 633",
+        "preferred_contact": "SMS"
+      },
+      "background": {
+        "citizenship": "Australian",
+        "marital_status": "Single",
+        "dependents": 0
+      },
+      "employment": {
+        "status": "Full-time",
+        "occupation": "Marketing Manager",
+        "employer": "Bright Media Agency",
+        "annual_income": "85000"
+      },
+      "customer_details": {
+        "segment": "Standard",
+        "customer_since": "2018-11-05",
+        "home_branch": "Bondi Junction"
+      }
+    },
+    {
+      "customer_id": "AU-CUST6831",
+      "personal_information": {
+        "name": "William Robert Johnson",
+        "date_of_birth": "1978-09-23",
+        "gender": "Male",
+        "id_verified": true
+      },
+      "contact_information": {
+        "address": "103 Brisbane Street, Perth WA 6000",
+        "email": "w.johnson@outlook.com.au",
+        "phone": "0433 751 982",
+        "preferred_contact": "Phone"
+      },
+      "background": {
+        "citizenship": "Australian",
+        "marital_status": "Divorced",
+        "dependents": 1
+      },
+      "employment": {
+        "status": "Full-time",
+        "occupation": "Civil Engineer",
+        "employer": "WestBuild Construction",
+        "annual_income": "145000"
+      },
+      "customer_details": {
+        "segment": "Premium",
+        "customer_since": "2010-04-18",
+        "home_branch": "Perth CBD"
+      }
+    },
+    {
+      "customer_id": "AU-CUST9823",
+      "personal_information": {
+        "name": "Charlotte Emily Watson",
+        "date_of_birth": "1992-12-07",
+        "gender": "Female",
+        "id_verified": true
+      },
+      "contact_information": {
+        "address": "15 Ramsay Street, Haberfield NSW 2045",
+        "email": "charlotte.w@bigpond.com",
+        "phone": "0451 389 227",
+        "preferred_contact": "Email"
+      },
+      "background": {
+        "citizenship": "Australian",
+        "marital_status": "De facto",
+        "dependents": 0
+      },
+      "employment": {
+        "status": "Part-time",
+        "occupation": "Physiotherapist",
+        "employer": "Active Health Clinic",
+        "annual_income": "65000"
+      },
+      "customer_details": {
+        "segment": "Standard",
+        "customer_since": "2017-08-14",
+        "home_branch": "Leichhardt"
+      }
+    },
+    {
+      "customer_id": "AU-CUST4581",
+      "personal_information": {
+        "name": "Thomas William Anderson",
+        "date_of_birth": "1971-02-25",
+        "gender": "Male",
+        "id_verified": true
+      },
+      "contact_information": {
+        "address": "78 Collins Avenue, Hobart TAS 7000",
+        "email": "t.anderson@iinet.net.au",
+        "phone": "0429 873 441",
+        "preferred_contact": "Phone"
+      },
+      "background": {
+        "citizenship": "Australian",
+        "marital_status": "Married",
+        "dependents": 3
+      },
+      "employment": {
+        "status": "Full-time",
+        "occupation": "School Principal",
+        "employer": "Hobart Secondary College",
+        "annual_income": "125000"
+      },
+      "customer_details": {
+        "segment": "Premium",
+        "customer_since": "2008-05-30",
+        "home_branch": "Hobart City"
+      }
+    },
+    {
+      "customer_id": "AU-CUST3917",
+      "personal_information": {
+        "name": "Sophie Grace Richardson",
+        "date_of_birth": "1997-11-19",
+        "gender": "Female",
+        "id_verified": true
+      },
+      "contact_information": {
+        "address": "39 Sunshine Boulevard, Gold Coast QLD 4217",
+        "email": "sophie.rich@gmail.com",
+        "phone": "0417 662 195",
+        "preferred_contact": "SMS"
+      },
+      "background": {
+        "citizenship": "Australian",
+        "marital_status": "Single",
+        "dependents": 0
+      },
+      "employment": {
+        "status": "Full-time",
+        "occupation": "Hospitality Manager",
+        "employer": "Beachside Resort & Spa",
+        "annual_income": "72000"
+      },
+      "customer_details": {
+        "segment": "Standard",
+        "customer_since": "2020-01-15",
+        "home_branch": "Surfers Paradise"
+      }
+    },
+    {
+      "customer_id": "AU-CUST1053",
+      "personal_information": {
+        "name": "Jack Patrick O'Connor",
+        "date_of_birth": "1982-07-03",
+        "gender": "Male",
+        "id_verified": true
+      },
+      "contact_information": {
+        "address": "5 Adelaide Terrace, Darwin NT 0800",
+        "email": "jack.oconnor@yahoo.com.au",
+        "phone": "0459 218 673",
+        "preferred_contact": "Email"
+      },
+      "background": {
+        "citizenship": "Australian",
+        "marital_status": "Married",
+        "dependents": 2
+      },
+      "employment": {
+        "status": "Self-employed",
+        "occupation": "Electrician",
+        "employer": "O'Connor Electrical Services",
+        "annual_income": "95000"
+      },
+      "customer_details": {
+        "segment": "Standard",
+        "customer_since": "2013-09-22",
+        "home_branch": "Darwin Central"
+      }
+    },
+    {
+      "customer_id": "AU-CUST7630",
+      "personal_information": {
+        "name": "Isabella Maria Martinez",
+        "date_of_birth": "1986-04-10",
+        "gender": "Female",
+        "id_verified": true
+      },
+      "contact_information": {
+        "address": "221 Lonsdale Street, Adelaide SA 5000",
+        "email": "bella.martinez@outlook.com",
+        "phone": "0478 332 916",
+        "preferred_contact": "Email"
+      },
+      "background": {
+        "citizenship": "Australian",
+        "marital_status": "Married",
+        "dependents": 1
+      },
+      "employment": {
+        "status": "Full-time",
+        "occupation": "Urban Planner",
+        "employer": "Adelaide City Council",
+        "annual_income": "92000"
+      },
+      "customer_details": {
+        "segment": "Premium",
+        "customer_since": "2014-03-28",
+        "home_branch": "Adelaide CBD"
+      }
+    }
+  ]
+}

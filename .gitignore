@@ -1,0 +1,14 @@
+.env
+__pycache__/
+.cursor/rules/
+.venv/
+.python-version
+qdrant.py
+uv.lock
+ex.py
+workflow.py
+user_responses.txt
+supervisor.py
+main_multi_agent.py
+aws_bedrock_docs.py
+

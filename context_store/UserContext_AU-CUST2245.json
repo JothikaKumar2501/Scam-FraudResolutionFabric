@@ -1,0 +1,39 @@
+{
+  "customer_id": "AU-CUST2245",
+  "personal_information": {
+    "name": "Nguyen Minh Lan",
+    "date_of_birth": "1965-11-30",
+    "gender": "Female",
+    "id_verified": false,
+    "digital_literacy_level": "Low"
+  },
+  "contact_information": {
+    "address": "14 Victoria St, Cabramatta NSW 2166",
+    "email": "minh.lan1965@yahoo.com",
+    "phone": "0422 991 038",
+    "preferred_contact": "Phone"
+  },
+  "background": {
+    "citizenship": "Australian",
+    "marital_status": "Widowed",
+    "dependents": 0,
+    "language_preference": "Vietnamese"
+  },
+  "employment": {
+    "status": "Retired",
+    "occupation": "N/A",
+    "employer": "N/A",
+    "annual_income": "21000"
+  },
+  "customer_details": {
+    "segment": "Vulnerable",
+    "customer_since": "2001-01-10",
+    "home_branch": "Bankstown",
+    "known_device_familiarity_score": 0.25,
+    "prior_alerts": 4,
+    "scam_education_completed": false,
+    "risk_profile": "Very High",
+    "fraud_flag": true,
+    "note": "Uses interpreter; lives alone; victim of previous investment scam in 2023"
+  }
+}

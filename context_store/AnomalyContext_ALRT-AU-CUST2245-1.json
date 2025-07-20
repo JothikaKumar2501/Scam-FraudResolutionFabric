@@ -1,0 +1,20 @@
+{
+  "id": "msg_bdrk_01Pjy5WK5pympTt91ScJMVAN",
+  "type": "message",
+  "role": "assistant",
+  "model": "claude-3-7-sonnet-20250219",
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"anomaly_score\": 0.95, \"explanation\": \"Very high anomaly score due to multiple risk factors: 1) Large transaction amount ($15,000) for a retired individual with $21,000 annual income, 2) Customer has 'Very High' risk profile and previous fraud flag, 3) Customer is in 'Vulnerable' segment with low digital literacy, 4) Customer has history of being scam victim, 5) Transaction location is 'Unknown', 6) No device ID associated with transaction, 7) Customer has prior alerts (4), and 8) Customer has not completed scam education.\"}"
+    }
+  ],
+  "stop_reason": "end_turn",
+  "stop_sequence": null,
+  "usage": {
+    "input_tokens": 637,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 142
+  }
+}

@@ -1,89 +1,203 @@
-This is a list of questions that can be asked, based on the type of fraud & othe details modify and formulate the questions accordingly. Dont hallucinate the Qestions.
+This is a list of questions that can be asked, based on the type of fraud & other details. All questions and scripts are for ANZ BANK AI AGENT. Modify and formulate the questions accordingly. Do not hallucinate the Questions. Strictly follow ANZ rules and context, and only ask relevant questions. Minimize the number of questions you ask (make this super fast to finalize based on the questions you asked and the responses that customer provided).
 
-Based on the provided ANZ Fraud SOP, here's a list of questions that your agents can frame and ask, categorized by context and designed to avoid hallucinations by directly referencing the SOP's decision rules and scripting.
+You are specialized for ANZ BANK AI AGENT to solve this problem.
 
-### General Questions (Applicable to most alerts)
+### General Questions (Applicable to most ANZ alerts)
 
-These are for initial contact and identity verification.
+These are for initial contact and identity verification by ANZ.
 
 1.  **Identity Verification:**
-    *   "Can you please confirm your full name and date of birth for security purposes?" (from SOP, Section 5)
-    *   "To verify your identity, can you tell me about a recent transaction on your account or confirm your registered address?" (from SOP, Section 5)
-    *   "Could you please confirm the email address or phone number you used for your last login?" (from SOP, Section 5)
+    *   "Can you please confirm your full name and date of birth for ANZ security purposes?" (from ANZ SOP, Section 5)
+    *   "To verify your identity for ANZ, can you tell me about a recent transaction on your ANZ account or confirm your registered address?" (from ANZ SOP, Section 5)
+    *   "Could you please confirm the email address or phone number you used for your last ANZ login?" (from ANZ SOP, Section 5)
 
 2.  **Transaction Confirmation (Initial):**
-    *   "We've noticed a potentially suspicious transaction on your account and need to confirm some details. Did you authorize a transaction for roughly $[Amount] on [Date] to [Recipient]?" (adapted from SOP, Section 5 conversation sample)
-    *   "Are you currently attempting to make a payment to [Recipient]?"
-    *   "Have you recently initiated any large transfers from your account?"
+    *   "We've noticed a potentially suspicious transaction on your ANZ account and need to confirm some details. Did you authorize a transaction for roughly $[Amount] on [Date] to [Recipient]?" (adapted from ANZ SOP, Section 5 conversation sample)
+    *   "Are you currently attempting to make a payment to [Recipient] from your ANZ account?"
+    *   "Have you recently initiated any large transfers from your ANZ account?"
 
 ### Specific Questions (Triggered by Rule ID / Fraud Type)
 
-These questions should be framed by the Dialogue Agent based on the `Rule ID` and the specific context (`TransactionContext`, `UserContext`, etc.) identified by the upstream agents.
+These questions should be framed by the Dialogue Agent based on the `Rule ID` and the specific context (`TransactionContext`, `UserContext`, etc.) identified by the upstream agents. All questions must be ANZ-branded and reference ANZ where appropriate.
 
-**A. Fraud Type: Password Change + Large Transfer (RUL-TX901)**
+# --- FRAUD QUESTION TEMPLATES ---
 
-*   "We've observed a password change on your account recently, followed by a transfer of $[Amount] to [Payee Name]. Did you make these changes and authorize this transfer?"
-*   "Is [Payee Name] a new recipient for you, or have you sent money to them before?"
-*   "Have you changed your password multiple times in the last 24 hours?"
-*   "Can you confirm if [Payee Name] is on your trusted list of recipients, or if you've sent them money in the last 3 months?" (for `Skip Call if` evaluation)
-*   "Is this type of transfer amount and recipient consistent with your usual banking behaviour?" (for `Skip Call if` evaluation)
+# (For each YAML block and question, add 'ANZ' or 'ANZ Bank' where it makes sense, especially in customer-facing language)
 
-**B. Fraud Type: New Device + Large Transfer (RUL-TX817)**
-
-*   "We've detected a login from a new device, immediately followed by a large transfer of $[Amount]. Was this login authorized by you?"
-*   "Can you confirm the device you are currently using to access your banking?"
-*   "Is the destination of this transfer to an investment or cryptocurrency platform?"
-*   "Did you verify this new device with biometrics or a security code when you logged in?" (for `Skip Call if` evaluation)
-*   "Is this pattern of new device login and transfer consistent with your past banking behaviour?" (for `Skip Call if` evaluation)
-
-**C. Fraud Type: Investment Scam (RUL-TX488)**
-
-*   "We've identified a new investment transaction of $[Amount] to [Entity]. Can you confirm if you initiated this?"
-*   "How were you introduced to [Entity]? Was it through social media, a cold call, or another channel?" (from SOP, Section 5)
-*   "Are you aware if [Entity] is licensed by ASIC?" (from SOP, Section 5)
-*   "Is this entity known to you, or have you verified their legitimacy through official channels?"
-
-**D. Fraud Type: Full Balance Outflow (RUL-TX778)**
-
-*   "We've noticed a transfer of over 80% of your account balance. Can you confirm if you intended to transfer this amount?"
-*   "Is the recipient of this transfer [Recipient Name] known to you? Is it an individual or a company?"
-*   "Is the recipient related to cryptocurrency or a digital wallet service?"
-*   "Were you aware of multiple rapid transfers occurring from your account?"
-
-**E. Fraud Type: Offshore Investment (RUL-TX234)**
-
-*   "We've observed a first-time offshore transfer of $[Amount] to [Jurisdiction/Entity]. Can you confirm this transaction?"
-*   "Is [Jurisdiction/Entity] considered a high-risk jurisdiction for investments?" (Agent would use internal data for this, but could prompt for customer awareness)
-*   "Is this entity licensed and known to you, or part of your regular investment portfolio?" (for `Skip Call if` evaluation)
-*   "Is this type of offshore transfer a regular part of your financial activity?" (for `Skip Call if` evaluation)
-
-**F. Fraud Type: Drip Transfer Anomaly (RUL-TX155)**
-
-*   "We've noticed multiple small transfers occurring daily from your account over the last few days, totaling over $2,000. Can you confirm these transfers?"
-*   "Are these daily small transfers part of a regular payment or investment activity you're undertaking?" (for `Skip Call if` evaluation)
-
-**G. Fraud Type: Business Invoice Redirection (RUL-TX230)**
-
-*   "We've detected a change in the account details for [Vendor Name], a vendor you regularly pay. Did you authorize this change?"
-*   "Is the amount of this payment, $[Amount], consistent with your usual payments to [Vendor Name]?"
-*   "Are you aware of using a new payment channel for this vendor recently?"
-*   "Was this account detail change verified through a secure communication channel directly with [Vendor Name]?" (for `Skip Call if` evaluation)
-
-**H. Fraud Type: New Device + Account Cleanout (RUL-TX817 variant)**
-
-*   "We've detected a login from an unverified device, followed by a significant transfer of over 50% of your balance to a cryptocurrency service, occurring outside your usual banking hours. Can you confirm this activity?"
-*   "Were you aware of these transfers to a crypto service?"
-*   "Can you confirm your whereabouts and activities at [Time] on [Date]?"
+---
+fraud_type: RUL-TX901
+core_facts:
+  - identity_verified
+  - authorization
+  - device
+  - recipient
+  - purpose
+finalize_if:
+  - user_denies_authorization AND identity_verified
+questions:
+  - "Can you please confirm your full name and date of birth for ANZ security purposes?"
+  - "Did you authorize a transaction for $[Amount] to [Recipient] from your ANZ account?"
+  - "Is [Recipient] a new payee for you, or have you sent money to them before from your ANZ account?"
+  - "Have you changed your ANZ password multiple times in the last 24 hours?"
+  - "Is this type of transfer amount and recipient consistent with your usual ANZ banking behaviour?"
+---
+fraud_type: RUL-TX817
+core_facts:
+  - identity_verified
+  - device
+  - authorization
+  - recipient
+  - purpose
+finalize_if:
+  - user_confirms_biometrics OR (user_denies_authorization AND identity_verified)
+questions:
+  - "We've detected a login from a new device, immediately followed by a large transfer of $[Amount] from your ANZ account. Was this login authorized by you?"
+  - "Can you confirm the device you are currently using to access your ANZ banking?"
+  - "Is the destination of this transfer to an investment or cryptocurrency platform?"
+  - "Did you verify this new device with biometrics or a security code when you logged in to ANZ?"
+  - "Is this pattern of new device login and transfer consistent with your past ANZ banking behaviour?"
+---
+fraud_type: RUL-TX488
+core_facts:
+  - identity_verified
+  - authorization
+  - recipient
+  - investment_entity
+  - purpose
+finalize_if:
+  - user_denies_authorization AND identity_verified
+questions:
+  - "We've identified a new investment transaction of $[Amount] to [Entity]. Can you confirm if you initiated this?"
+  - "How were you introduced to [Entity]? Was it through social media, a cold call, or another channel?"
+  - "Are you aware if [Entity] is licensed by ASIC?"
+  - "Is this entity known to you, or have you verified their legitimacy through official channels?"
+---
+fraud_type: RUL-TX778
+core_facts:
+  - identity_verified
+  - authorization
+  - recipient
+  - amount
+  - purpose
+finalize_if:
+  - user_denies_authorization AND identity_verified
+questions:
+  - "We've noticed a transfer of over 80% of your account balance. Can you confirm if you intended to transfer this amount?"
+  - "Is the recipient of this transfer [Recipient Name] known to you? Is it an individual or a company?"
+  - "Is the recipient related to cryptocurrency or a digital wallet service?"
+  - "Were you aware of multiple rapid transfers occurring from your account?"
+---
+fraud_type: RUL-TX234
+core_facts:
+  - identity_verified
+  - authorization
+  - recipient
+  - jurisdiction
+  - purpose
+finalize_if:
+  - user_denies_authorization AND identity_verified
+questions:
+  - "We've observed a first-time offshore transfer of $[Amount] to [Jurisdiction/Entity]. Can you confirm this transaction?"
+  - "Is [Jurisdiction/Entity] considered a high-risk jurisdiction for investments?"
+  - "Is this entity licensed and known to you, or part of your regular investment portfolio?"
+  - "Is this type of offshore transfer a regular part of your financial activity?"
+---
+fraud_type: RUL-TX155
+core_facts:
+  - identity_verified
+  - authorization
+  - recipient
+  - amount
+  - purpose
+finalize_if:
+  - user_denies_authorization AND identity_verified
+questions:
+  - "We've noticed multiple small transfers occurring daily from your account over the last few days, totaling over $2,000. Can you confirm these transfers?"
+  - "Are these daily small transfers part of a regular payment or investment activity you're undertaking?"
+---
+fraud_type: RUL-TX230
+core_facts:
+  - identity_verified
+  - authorization
+  - recipient
+  - vendor
+  - purpose
+finalize_if:
+  - user_denies_authorization AND identity_verified
+questions:
+  - "We've detected a change in the account details for [Vendor Name], a vendor you regularly pay. Did you authorize this change?"
+  - "Is the amount of this payment, $[Amount], consistent with your usual payments to [Vendor Name]?"
+  - "Are you aware of using a new payment channel for this vendor recently?"
+  - "Was this account detail change verified through a secure communication channel directly with [Vendor Name]?"
+---
+fraud_type: RUL-TX817v2
+core_facts:
+  - identity_verified
+  - device
+  - authorization
+  - recipient
+  - amount
+finalize_if:
+  - user_denies_authorization AND identity_verified
+questions:
+  - "We've detected a login from an unverified device, followed by a significant transfer of over 50% of your balance to a cryptocurrency service, occurring outside your usual banking hours. Can you confirm this activity?"
+  - "Were you aware of these transfers to a crypto service?"
+  - "Can you confirm your whereabouts and activities at [Time] on [Date]?"
+---
+# Add more fraud types as needed in the same format.
 
 **I. For Feedback Collection (Post-Resolution)**
 
-*   "To help us improve our fraud detection, can you confirm if this alert was a true fraud incident or a legitimate transaction?"
-*   "What was the final outcome of this transaction?"
+*   "To help us improve ANZ fraud detection, can you confirm if this alert was a true fraud incident or a legitimate transaction?"
+*   "What was the final outcome of this transaction with ANZ?"
 
 **Important Considerations for Agent Implementation:**
 
 *   **Context-Driven Selection:** The Dialogue Agent must intelligently select which specific questions to ask based on the `Rule ID` and the presence/absence of other relevant context (e.g., `UserContext`, `DeviceContext`).
 *   **Logical Flow:** Questions should follow a natural conversational progression (e.g., identity verification first, then transaction specifics, then deeper probing based on scam indicators).
 *   **Templating:** Use placeholders like `[Amount]`, `[Recipient]`, `[Entity]` that are dynamically filled from the `TransactionContext` or other relevant contexts.
-*   **No Hallucinations:** The agent should ONLY draw questions from the pre-defined SOP rules and conversation samples. It should not generate new, unverified questions.
-*   **Adaptive Questioning:** If a customer's answer resolves the suspicion (e.g., "Yes, that's my new phone and I logged in with biometrics"), the agent should pivot to closing the inquiry or escalate as per the SOP, rather than asking irrelevant follow-up questions.
+*   **No Hallucinations:** The agent should ONLY draw questions from the pre-defined ANZ SOP rules and conversation samples. It should not generate new, unverified questions.
+*   **Adaptive Questioning:** If a customer's answer resolves the suspicion (e.g., "Yes, that's my new phone and I logged in with ANZ biometrics"), the agent should pivot to closing the inquiry or escalate as per the ANZ SOP, rather than asking irrelevant follow-up questions.
+
+# Expanded Questions for RAG
+
+### Romance Scam (RUL-RS001)
+* "Can you tell me how you met the recipient of this transfer?"
+* "Have you met this person in person, or is your relationship only online?"
+* "Has anyone asked you to keep this transaction secret from friends or family?"
+* "Did the recipient request money for travel, emergencies, or investment opportunities?"
+
+### Mule Account (RUL-MA002)
+* "Can you explain the source and purpose of recent inbound and outbound transfers?"
+* "Are you receiving payments on behalf of someone else?"
+* "Do you know all the people sending or receiving money from your account?"
+* "Has anyone offered you a commission to move money through your account?"
+
+### Phishing/Smishing (RUL-PS003)
+* "Did you receive any suspicious emails or SMS messages before this transaction?"
+* "Did any message ask you to click a link or provide your banking details?"
+* "Have you noticed any unauthorized logins or device changes?"
+
+### Social Engineering (RUL-SE004)
+* "Has anyone pressured you to make this payment urgently?"
+* "Did anyone claim to be from the bank, police, or another authority?"
+* "Were you told not to speak to anyone else about this transaction?"
+
+### Authorized Push Payment (APP) (RUL-APP005)
+* "Did you feel under any pressure or threat when making this payment?"
+* "Did you verify the recipient’s identity independently?"
+* "Was this payment for goods, services, or an investment?"
+
+### Synthetic Identity (RUL-SI006)
+* "Can you confirm all your personal details and recent account activity?"
+* "Did you open this account yourself, and have you used it regularly?"
+* "Have you received any communication about your identity or account being used by others?"
+
+### Insider Threat (RUL-IT007)
+* "Can you explain why you accessed this account at this time?" (for staff)
+* "Did you notice any unusual staff activity or communication?" (for customers)
+
+### Business Email Compromise (RUL-BEC008)
+* "Did you receive any requests to change vendor payment details via email?"
+* "Did you verify the change with the vendor through a secure channel?"
+* "Is the payment amount or recipient different from your usual pattern?"

@@ -51,4 +51,28 @@ def search_similar(query, top_k=3):
         query_vector=vector,
         limit=top_k
     )
-    return [hit.payload for hit in results] 
+    questions = []
+    import re
+    for hit in results:
+        # hit.payload is a dict like {'source': ..., 'chunk': ...}
+        # hit.vector is the embedding, hit.id is the point id
+        # We need to get the original chunk text from the vector store
+        # But since we only stored metadata, we need to re-read the chunk from file
+        source = hit.payload.get('source')
+        chunk_idx = hit.payload.get('chunk')
+        if source and chunk_idx is not None:
+            with open(source, 'r', encoding='utf-8') as f:
+                content = f.read()
+            chunks = [content[i:i+1000] for i in range(0, len(content), 1000)]
+            chunk = chunks[chunk_idx] if chunk_idx < len(chunks) else ''
+            # Extract questions from the chunk
+            # Look for lines that start with - or * and contain a ?
+            for line in chunk.split('\n'):
+                line = line.strip()
+                if (line.startswith('-') or line.startswith('*')) and '?' in line:
+                    # Remove leading - or * and whitespace/quotes
+                    q = re.sub(r'^[-*\s\"]+', '', line)
+                    questions.append(q)
+        if len(questions) >= top_k:
+            break
+    return questions[:top_k] 

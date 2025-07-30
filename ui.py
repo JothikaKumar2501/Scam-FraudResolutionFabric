@@ -4,6 +4,10 @@ import os
 from agents_multi import SupervisorAgent, DialogueAgent
 from context_store import ContextStore
 import copy
+from langgraph_multi_agent import run_langgraph_multi_agent, stream_langgraph_steps
+import time
+import re
+import types
 
 # Try to import vector search if available
 try:
@@ -11,6 +15,23 @@ try:
     VECTOR_SEARCH = True
 except ImportError:
     VECTOR_SEARCH = False
+
+# Helper to parse markdown into sections (simple splitter)
+def parse_markdown_sections(md):
+    # Split on headings (## or #)
+    sections = re.split(r'(^# .*$|^## .*$)', md, flags=re.MULTILINE)
+    parsed = []
+    current = ''
+    for part in sections:
+        if part.startswith('#'):
+            if current:
+                parsed.append(current.strip())
+            current = part
+        else:
+            current += '\n' + part
+    if current:
+        parsed.append(current.strip())
+    return [s for s in parsed if s.strip()]
 
 def load_alerts():
     with open('datasets/FTP.json', encoding='utf-8') as f:
@@ -23,6 +44,44 @@ def load_sop():
 def load_questions():
     with open('datasets/questions.md', encoding='utf-8') as f:
         return f.read()
+
+# --- Dynamic Question Selection ---
+def get_dynamic_question(alert, dialogue_history, questions_md, sop_md):
+    # Try to select a question based on ruleId, context, and previous questions
+    rule_id = alert.get('ruleId', '')
+    # Parse questions.md into a dict by fraud type/rule
+    question_blocks = re.split(r'^### ', questions_md, flags=re.MULTILINE)
+    question_map = {}
+    for block in question_blocks:
+        if not block.strip():
+            continue
+        lines = block.split('\n')
+        header = lines[0].strip()
+        questions = [l.strip('* ').strip() for l in lines[1:] if l.strip().startswith('*')]
+        question_map[header] = questions
+    # Try to match ruleId to a block
+    for header, qs in question_map.items():
+        if rule_id in header or rule_id.replace('-', '') in header.replace('-', ''):
+            # Avoid repeating questions
+            asked = set(turn.get('question') for turn in dialogue_history if 'question' in turn)
+            for q in qs:
+                if q not in asked:
+                    return q
+    # Fallback: General Questions
+    general_qs = question_map.get('General Questions (Applicable to most alerts)', [])
+    asked = set(turn.get('question') for turn in dialogue_history if 'question' in turn)
+    for q in general_qs:
+        if q not in asked:
+            return q
+    # Fallback: SOP identity verification
+    if 'Identity Verification' in sop_md:
+        match = re.search(r'Identity Verification:(.*?)\n\n', sop_md, re.DOTALL)
+        if match:
+            lines = [l.strip('- ').strip() for l in match.group(1).split('\n') if l.strip()]
+            for q in lines:
+                if q not in asked:
+                    return q
+    return "Can you confirm your identity and details for this transaction?"
 
 def dashboard_page():
     st.title('📊 Dashboard')
@@ -41,335 +100,312 @@ def dashboard_page():
     else:
         st.dataframe(df)
 
+    # --- Flowchart Panel ---
+    st.markdown("---")
+    st.subheader("System Flowchart", help="Overview of the multi-agent fraud analysis system.")
+    st.image("flowchart.png", caption="System Flowchart Image")
+    st.image("payments_pic.png", caption="System Architecture Image")
+
 def alerts_page():
     st.title('🔔 Alerts')
     alerts = load_alerts()
     st.dataframe(alerts)
 
 def agentic_system_page():
-    # --- Ensure session state for checkpoints and edit mode is initialized ---
-    if 'checkpoints' not in st.session_state:
-        st.session_state['checkpoints'] = {}
-    if 'edit_mode' not in st.session_state:
-        st.session_state['edit_mode'] = None
-    if 'edit_value' not in st.session_state:
-        st.session_state['edit_value'] = ''
-    if 'chat_versions' not in st.session_state or not isinstance(st.session_state['chat_versions'], dict):
-        st.session_state['chat_versions'] = {}
-    if 'show_version' not in st.session_state:
-        st.session_state['show_version'] = {}  # {idx: version_number}
-    # --- Reconstruct missing checkpoints for all user messages ---
-    if 'chat_history' in st.session_state:
-        user_indices = [i for i, m in enumerate(st.session_state['chat_history']) if m['role'] == 'user']
-        for user_idx in user_indices:
-            if user_idx not in st.session_state['checkpoints']:
-                # Save a minimal checkpoint (best effort, may not be perfect for old messages)
-                st.session_state['checkpoints'][user_idx] = {
-                    k: copy.deepcopy(st.session_state[k]) if k in st.session_state else None for k in [
-                        'chat_history', 'agent_log', 'final_report', 'awaiting_user', 'current_question', 'context', 'user_response', 'analysis_started', 'step', 'error'
-                    ]
-                }
-    # --- Enhanced UI: Alert selection and Start Analysis ---
-    alerts = load_alerts()
-    alert_options = [f"[{a['alertId']}] {a['description']}" for a in alerts]
-    selected = st.selectbox('Fraud Alerts', alert_options, help='Select a fraud alert to analyze')
-    alert = alerts[alert_options.index(selected)]
-
-    # Context panel: show alert/customer/summary info
-    with st.expander('ℹ️ Alert & Customer Context', expanded=True):
-        st.markdown(f"""
-        <b>Alert ID:</b> {alert.get('alertId','')}<br>
-        <b>Description:</b> {alert.get('description','')}<br>
-        <b>Priority:</b> {alert.get('priority','')}<br>
-        <b>Status:</b> {alert.get('status','')}<br>
-        <b>Customer ID:</b> {alert.get('customerId','')}<br>
-        <b>Date:</b> {alert.get('alertDate','')}<br>
-        <b>Time:</b> {alert.get('alertTime','')}<br>
-        """, unsafe_allow_html=True)
-        # Optionally, show more context (e.g., customer info) if available
-
-    # Robust session state initialization
-    for k, v in [
-        ('chat_history', []),
-        ('agent_log', []),
-        ('final_report', ''),
-        ('awaiting_user', False),
-        ('current_question', None),
-        ('context', None),
-        ('user_response', None),
-        ('analysis_started', False),
-        ('step', 0),
-        ('error', None),
-    ]:
+    # --- Robust session state initialization ---
+    session_defaults = dict(
+        analysis_running=False,
+        analysis_complete=False,
+        agent_logs=[],
+        agent_responses=[],
+        progress=0,
+        dialogue_history=[],
+        chat_turn=0,
+        chat_done=False,
+        asked_questions=set(),
+        backend_state=None,
+        selected_alert=None,
+        # Track which agents have been displayed
+        displayed_agents=set(),
+        # Track streaming content
+        streaming_content={},
+        # Track streaming generator and current state
+        streaming_generator=None,
+        current_state=None
+    )
+    for k, v in session_defaults.items():
         if k not in st.session_state:
-            st.session_state[k] = v
-
-    # Show Start Analysis button below alert selection/context only if not started
-    if not st.session_state['analysis_started']:
-        st.markdown('---')
-        if st.button('🚀 Start Analysis', help='Begin multi-agent fraud analysis for the selected alert'):
-            st.session_state['analysis_started'] = True
+            st.session_state[k] = copy.deepcopy(v)
+    alerts = load_alerts()
+    questions_md = load_questions()
+    sop_md = load_sop()
+    alert_options = [f"{a['alertId']}: {a.get('description','')}" for a in alerts]
+    selected_idx = st.selectbox('Select an alert to analyze:', list(range(len(alert_options))), format_func=lambda i: alert_options[i] if alert_options else '', key='alert_select')
+    selected_alert = alerts[selected_idx] if alerts else None
+    if not st.session_state.analysis_running and not st.session_state.analysis_complete:
+        if st.button('Start Analysis', key='start_analysis_btn', disabled=selected_alert is None):
+            st.session_state.analysis_running = True
+            st.session_state.analysis_complete = False
+            st.session_state.agent_logs = []
+            st.session_state.agent_responses = []
+            st.session_state.progress = 0
+            st.session_state.selected_alert = selected_alert
+            st.session_state.dialogue_history = []
+            st.session_state.chat_turn = 0
+            st.session_state.chat_done = False
+            st.session_state.asked_questions = set()
+            st.session_state.displayed_agents = set()
+            st.session_state.streaming_content = {}
+            st.session_state.streaming_generator = None
+            st.session_state.current_state = None
+            # Initialize state for backend
+            st.session_state.backend_state = {'transaction': selected_alert, 'logs': [], 'agent_responses': [], 'dialogue_history': []}
             st.rerun()
         return
-
-    # --- Only show below after analysis started ---
-    # Persistent Restart button
-    if st.button('🔄 Restart', key='restart-top', help='Restart the analysis and clear all progress'):
-        for k in list(st.session_state.keys()):
-            if k not in ['checkpoints', 'edit_mode', 'edit_value']:
-                del st.session_state[k]
-        st.rerun()
-
-    context_store = ContextStore()
-    supervisor = SupervisorAgent(context_store)
-
-    st.markdown("---")
-    st.subheader("Conversation", help='Dialogue between agents and user. User responses are editable.')
-    chat_placeholder = st.container()
-    with chat_placeholder:
-        for idx, msg in enumerate(st.session_state.chat_history):
-            if msg['role'] == 'agent':
-                st.markdown(f"<div style='background:#001F3F;color:#fff;padding:10px;border-radius:8px;margin-bottom:4px;'><b>{msg['agent']}:</b> {msg['content']}</div>", unsafe_allow_html=True)
-            else:
-                col1, col2 = st.columns([10,1])
-                with col1:
-                    st.markdown(f"<div style='background:#2E003E;color:#fff;padding:10px;border-radius:8px;margin-bottom:8px;text-align:right;'><b>You:</b> {msg['content']}</div>", unsafe_allow_html=True)
-                    # Show version history as numbered buttons below the message
-                    versions = st.session_state['chat_versions'].get(idx, [])
-                    if versions:
-                        st.markdown('<div style="margin-bottom:4px;">', unsafe_allow_html=True)
-                        btn_cols = st.columns(len(versions))
-                        for vnum, v in enumerate(versions, 1):
-                            if btn_cols[vnum-1].button(str(vnum), key=f'ver_btn_{idx}_{vnum}'):
-                                st.session_state['show_version'][idx] = vnum
-                        st.markdown('</div>', unsafe_allow_html=True)
-                        # Show selected version inline
-                        if idx in st.session_state['show_version']:
-                            vnum = st.session_state['show_version'][idx]
-                            if 1 <= vnum <= len(versions):
-                                st.markdown(f"<div style='background:#444;color:#fff;padding:6px;border-radius:6px;margin-bottom:4px;'><b>Version {vnum}:</b> {versions[vnum-1]}</div>", unsafe_allow_html=True)
-                            if st.button('Hide', key=f'hide_ver_{idx}'):
-                                del st.session_state['show_version'][idx]
-                with col2:
-                    if st.session_state['edit_mode'] is None and st.button('✏️', key=f'edit_{idx}', help='Edit this response'):
-                        st.session_state['edit_mode'] = idx
-                        st.session_state['edit_value'] = msg['content']
-                if st.session_state['edit_mode'] == idx:
-                    new_val = st.text_area('Edit your response:', st.session_state['edit_value'], key=f'edit_input_{idx}', help='Modify your previous answer')
-                    st.session_state['edit_value'] = new_val
-                    checkpoint = st.session_state['checkpoints'].get(idx)
-                    if checkpoint is None:
-                        st.warning('No checkpoint available for this response. Edit is not possible.')
+    
+    if st.session_state.analysis_running:
+        # Use backend_state for all backend calls
+        if st.session_state.backend_state is None:
+            st.session_state.backend_state = {'transaction': selected_alert, 'logs': [], 'agent_responses': [], 'dialogue_history': []}
+        backend_state = st.session_state.backend_state
+        
+        # Create containers for real-time updates
+        progress_bar = st.progress(0)
+        status_placeholder = st.empty()
+        
+        # Create containers for each section that will update in real-time
+        context_container = st.container()
+        risk_container = st.container()
+        triage_container = st.container()
+        chat_container = st.container()
+        final_risk_container = st.container()
+        policy_container = st.container()
+        feedback_container = st.container()
+        
+        # --- Process streaming updates step by step ---
+        # Always re-initialize the generator if it's None (e.g., after a reload)
+        if st.session_state.streaming_generator is None:
+            st.session_state.streaming_generator = stream_langgraph_steps(backend_state)
+            st.session_state.current_state = None
+        
+        # Get next state from generator
+        try:
+            if st.session_state.current_state is None:
+                st.session_state.current_state = next(st.session_state.streaming_generator)
+            
+            state = st.session_state.current_state
+            st.session_state.backend_state = state.copy()
+            logs = state.get('logs', [])
+            responses = state.get('agent_responses', [])
+            
+            # Update progress
+            current_step = state.get('current_step', 0)
+            total_steps = state.get('total_steps', 10)
+            progress = current_step / total_steps if total_steps > 0 else 0
+            progress_bar.progress(progress)
+            status_placeholder.info(f"Analysis Progress: Step {current_step} / {total_steps}")
+            # Show the latest agent response right below progress
+            if responses:
+                latest_response = responses[-1]
+                if not isinstance(latest_response, str):
+                    if hasattr(latest_response, '__iter__') and not isinstance(latest_response, str):
+                        latest_response = ''.join(list(latest_response))
                     else:
-                        if st.button('Save', key=f'save_{idx}', help='Save edited response and replay from here'):
-                            # Save previous version before editing
-                            if idx not in st.session_state['chat_versions']:
-                                st.session_state['chat_versions'][idx] = []
-                            st.session_state['chat_versions'][idx].append(st.session_state['chat_history'][idx]['content'])
-                            for k, v in checkpoint.items():
-                                st.session_state[k] = copy.deepcopy(v)
-                            st.session_state['chat_history'][idx]['content'] = new_val
-                            if st.session_state['context'] and 'dialogue_history' in st.session_state['context']:
-                                # Map nth user message in chat_history to nth user message in dialogue_history
-                                chat_user_indices = [i for i, m in enumerate(st.session_state['chat_history']) if m['role'] == 'user']
-                                dialogue_user_indices = [i for i, m in enumerate(st.session_state['context']['dialogue_history']) if 'user' in m]
-                                if idx in chat_user_indices:
-                                    user_order = chat_user_indices.index(idx)
-                                    if user_order < len(dialogue_user_indices):
-                                        st.session_state['context']['dialogue_history'][dialogue_user_indices[user_order]]['user'] = new_val
-                            st.session_state['edit_mode'] = None
-                            st.session_state['edit_value'] = ''
-                            st.session_state['step'] = 6  # Resume from DialogueAgent
-                            st.session_state['awaiting_user'] = False
-                            st.rerun()
-                    if st.button('Cancel', key=f'cancel_{idx}', help='Cancel editing'):
-                        st.session_state['edit_mode'] = None
-                        st.session_state['edit_value'] = ''
+                        latest_response = str(latest_response)
+                status_placeholder.markdown(f"**Latest Agent Response:**\n\n{latest_response}")
+            
+            # Handle streaming token if present
+            if 'streaming_token' in state:
+                token = state['streaming_token']
+                if 'DialogueAgent' in logs and len(logs) > 0:
+                    agent_key = 'DialogueAgent'
+                    if agent_key not in st.session_state.streaming_content:
+                        st.session_state.streaming_content[agent_key] = ''
+                    st.session_state.streaming_content[agent_key] += token
+            
+            # Update agent logs and responses
+            if len(logs) > len(st.session_state.agent_logs):
+                new_logs = logs[len(st.session_state.agent_logs):]
+                st.session_state.agent_logs.extend(new_logs)
+            
+            if len(responses) > len(st.session_state.agent_responses):
+                new_responses = responses[len(st.session_state.agent_responses):]
+                st.session_state.agent_responses.extend(new_responses)
+            
+            # Check if waiting for user input
+            dialogue_history = state.get('dialogue_history', [])
+            if dialogue_history and dialogue_history[-1].get('role') == 'assistant' and not state.get('chat_done', False):
+                # Wait for user input, don't advance generator
+                pass
+            elif current_step >= 10:
+                # Analysis complete
+                st.session_state.analysis_running = False
+                st.session_state.analysis_complete = True
+            else:
+                # Advance to next state
+                if st.session_state.streaming_generator is None:
+                    st.session_state.streaming_generator = stream_langgraph_steps(st.session_state.backend_state)
+                st.session_state.current_state = next(st.session_state.streaming_generator)
+                st.rerun()
+                
+        except StopIteration:
+            # Generator exhausted
+            st.session_state.analysis_running = False
+            st.session_state.analysis_complete = True
+        
+        # --- Render UI sections in real-time ---
 
-    st.markdown("---")
-    st.subheader("Agent Log", help='Chronological log of agent actions and steps')
-    st.write(", ".join(st.session_state.agent_log))
-
-    if st.session_state['error']:
-        st.error(st.session_state['error'])
-        if st.button('Restart', key='restart-error', help='Restart after error'):
-            for k in list(st.session_state.keys()):
-                if k not in ['checkpoints', 'edit_mode', 'edit_value']:
-                    del st.session_state[k]
-            st.rerun()
-        return
-
-    # Progress bar for agent steps
-    steps = [
-        'TransactionContextAgent',
-        'CustomerInfoAgent',
-        'MerchantInfoAgent',
-        'BehavioralPatternAgent',
-        'RiskSynthesizerAgent',
-        'TriageAgent',
-        'DialogueAgent',
-        'RiskAssessorAgent',
-        'PolicyDecisionAgent',
-        'FeedbackCollectorAgent',
-        'FinalReport',
-    ]
-    progress_value = min(st.session_state['step'] / (len(steps)-1), 1.0)
-    st.progress(progress_value)
-
-    # Main agentic system logic, step by step, with loading spinner
-    try:
-        if st.session_state['step'] == 6:
-            if st.session_state['awaiting_user'] and 'dialogue_history' in st.session_state['context']:
-                user_msg_idx = len([m for m in st.session_state['chat_history'] if m['role'] == 'user']) - 1
-                st.session_state['checkpoints'][user_msg_idx] = {
-                    k: copy.deepcopy(st.session_state[k]) for k in [
-                        'chat_history', 'agent_log', 'final_report', 'awaiting_user', 'current_question', 'context', 'user_response', 'analysis_started', 'step', 'error'
-                    ]
+        # Show all agent responses in order, always, including final summary and policy
+        with st.container():
+            st.markdown('---')
+            st.subheader('📊 All Agent Responses (Complete Analysis)')
+            
+            # Group responses by type for better organization
+            context_agents = ['TransactionContextAgent', 'CustomerInfoAgent', 'MerchantInfoAgent', 'BehavioralPatternAgent']
+            risk_agents = ['RiskSynthesizerAgent', 'TriageAgent']
+            dialogue_agents = ['DialogueAgent']
+            final_agents = ['RiskAssessorAgentFinalSummary', 'PolicyDecisionAgent']
+            
+            for i, (log, resp) in enumerate(zip(st.session_state.agent_logs, st.session_state.agent_responses)):
+                # Determine agent type for styling
+                agent_type = "Context"
+                if log in context_agents:
+                    agent_type = "Context Building"
+                elif log in risk_agents:
+                    agent_type = "Risk Analysis"
+                elif log in dialogue_agents:
+                    agent_type = "Dialogue"
+                elif log in final_agents:
+                    agent_type = "Final Decision"
+                elif 'RiskAssessorAgent_DialogueTurn' in log:
+                    agent_type = "Risk Assessment"
+                else:
+                    agent_type = "Analysis"
+                
+                # Color coding based on agent type
+                color_map = {
+                    "Context Building": "🔍",
+                    "Risk Analysis": "⚠️",
+                    "Dialogue": "💬",
+                    "Risk Assessment": "🔍",
+                    "Final Decision": "🎯",
+                    "Analysis": "📋"
                 }
-        with st.spinner('Running agentic step...'):
-            # ... existing code for agentic steps ...
-            if st.session_state['step'] == 0:
-                context = {'transaction': alert}
-                context = supervisor.transaction_agent.act('Build transaction context', context)
-                st.session_state.context = context
-                st.session_state.chat_history.append({'role': 'agent', 'agent': 'TransactionContextAgent', 'content': str(context.get('transaction_context', ''))})
-                st.session_state.agent_log.append('TransactionContextAgent')
-                st.session_state['step'] += 1
-                st.rerun()
-            elif st.session_state['step'] == 1:
-                context = st.session_state.context
-                context = supervisor.customer_agent.act('Build customer context', context)
-                st.session_state.context = context
-                st.session_state.chat_history.append({'role': 'agent', 'agent': 'CustomerInfoAgent', 'content': str(context.get('customer_context', ''))})
-                st.session_state.agent_log.append('CustomerInfoAgent')
-                st.session_state['step'] += 1
-                st.rerun()
-            elif st.session_state['step'] == 2:
-                context = st.session_state.context
-                context = supervisor.merchant_agent.act('Build merchant context', context)
-                st.session_state.context = context
-                st.session_state.chat_history.append({'role': 'agent', 'agent': 'MerchantInfoAgent', 'content': str(context.get('merchant_context', ''))})
-                st.session_state.agent_log.append('MerchantInfoAgent')
-                st.session_state['step'] += 1
-                st.rerun()
-            elif st.session_state['step'] == 3:
-                context = st.session_state.context
-                context = supervisor.behavior_agent.act('Build anomaly context', context)
-                st.session_state.context = context
-                st.session_state.chat_history.append({'role': 'agent', 'agent': 'BehavioralPatternAgent', 'content': str(context.get('anomaly_context', ''))})
-                st.session_state.agent_log.append('BehavioralPatternAgent')
-                st.session_state['step'] += 1
-                st.rerun()
-            elif st.session_state['step'] == 4:
-                context = st.session_state.context
-                context = supervisor.risk_synth_agent.act('Synthesize risk', context)
-                st.session_state.context = context
-                st.session_state.chat_history.append({'role': 'agent', 'agent': 'RiskSynthesizerAgent', 'content': str(context.get('risk_summary_context', ''))})
-                st.session_state.agent_log.append('RiskSynthesizerAgent')
-                st.session_state['step'] += 1
-                st.rerun()
-            elif st.session_state['step'] == 5:
-                context = st.session_state.context
-                context = supervisor.triage_agent.act('Triage', context)
-                st.session_state.context = context
-                st.session_state.chat_history.append({'role': 'agent', 'agent': 'TriageAgent', 'content': str(context.get('triage_decision', ''))})
-                st.session_state.agent_log.append('TriageAgent')
-                st.session_state['step'] += 1
-                st.rerun()
-            elif st.session_state['step'] == 6:
-                context = st.session_state.context
-                if 'dialogue_history' not in context:
-                    context['dialogue_history'] = []
-                dialogue_agent = supervisor.dialogue_agent
-                if not context['dialogue_history'] or ('user' in context['dialogue_history'][-1]):
-                    next_q, agent_name, _ = dialogue_agent.get_next_question_and_agent(context['dialogue_history'], context)
-                    if next_q:
-                        context['dialogue_history'].append({'agent': agent_name, 'question': next_q, 'agent_log': agent_name})
-                        st.session_state.chat_history.append({'role': 'agent', 'agent': agent_name, 'content': next_q})
-                        st.session_state.agent_log.append(agent_name)
-                        st.session_state.current_question = next_q
-                        st.session_state.awaiting_user = True
-                        st.session_state.context = context
-                        st.rerun()
-                if st.session_state.awaiting_user:
+                
+                icon = color_map.get(agent_type, "📋")
+                expanded = (i == len(st.session_state.agent_logs) - 1) or agent_type in ["Final Decision", "Risk Analysis"]
+                
+                with st.expander(f"{icon} {log} ({agent_type})", expanded=expanded):
+                    if not isinstance(resp, str):
+                        if hasattr(resp, '__iter__') and not isinstance(resp, str):
+                            resp = ''.join(list(resp))
+                            st.session_state.agent_responses[i] = resp
+                        else:
+                            resp = str(resp)
+                    
+                    # Format the response nicely
+                    if agent_type == "Context Building":
+                        st.info("🔍 **Context Analysis**")
+                    elif agent_type == "Risk Analysis":
+                        st.warning("⚠️ **Risk Assessment**")
+                    elif agent_type == "Final Decision":
+                        st.success("🎯 **Final Decision**")
+                    elif agent_type == "Risk Assessment":
+                        st.info("🔍 **Risk Evaluation**")
+                    
+                    for section in parse_markdown_sections(resp):
+                        st.markdown(section)
+
+        # --- Conversational Chat Loop (show in real-time, persistent chat bubbles) ---
+        if len(st.session_state.agent_logs) >= 7:
+            with chat_container:
+                st.markdown('---')
+                st.subheader('💬 Dialogue & Risk Chat')
+                
+                # Only show true chat turns from dialogue_history, ensuring no duplicates
+                dialogue_history = state.get('dialogue_history', [])
+                seen_questions = set()
+                seen_answers = set()
+                
+                # Helper to deduplicate and clean repeated lines in chat bubbles
+                def clean_chat_text(text):
+                    # Remove repeated lines and excessive duplication
+                    lines = text.split('\n')
+                    seen = set()
+                    cleaned = []
+                    for line in lines:
+                        l = line.strip()
+                        if l and l not in seen:
+                            cleaned.append(l)
+                            seen.add(l)
+                    return '\n'.join(cleaned)
+                
+                for turn in dialogue_history:
+                    if isinstance(turn, dict):
+                        if turn.get('role') == 'assistant' and 'question' in turn:
+                            question_text = clean_chat_text(turn['question'])
+                            # Only show if not already seen
+                            if question_text not in seen_questions:
+                                with st.chat_message("assistant"):
+                                    st.markdown(question_text)
+                                seen_questions.add(question_text)
+                        if turn.get('role') == 'user' and 'user' in turn:
+                            answer_text = clean_chat_text(turn['user'])
+                            # Only show if not already seen
+                            if answer_text not in seen_answers:
+                                with st.chat_message("user"):
+                                    st.markdown(answer_text)
+                                seen_answers.add(answer_text)
+                
+                # Only allow user input if last message is from agent and chat not done
+                if (not st.session_state.get('chat_done', False) and dialogue_history and dialogue_history[-1].get('role') == 'assistant'):
                     user_input = st.chat_input('Your response:')
                     if user_input:
-                        context['dialogue_history'][-1]['user'] = user_input
-                        st.session_state.chat_history.append({'role': 'user', 'agent': 'User', 'content': user_input})
-                        # Create a checkpoint for this user message
-                        user_msg_idx = len([m for m in st.session_state['chat_history'] if m['role'] == 'user']) - 1
-                        st.session_state['checkpoints'][user_msg_idx] = {
-                            k: copy.deepcopy(st.session_state[k]) for k in [
-                                'chat_history', 'agent_log', 'final_report', 'awaiting_user', 'current_question', 'context', 'user_response', 'analysis_started', 'step', 'error'
-                            ]
-                        }
-                        st.session_state.awaiting_user = False
-                        st.session_state.context = context
+                        st.session_state.backend_state['dialogue_history'].append({'role': 'user', 'user': user_input})
+                        if st.session_state.streaming_generator is None:
+                            st.session_state.streaming_generator = stream_langgraph_steps(st.session_state.backend_state)
+                        st.session_state.current_state = next(st.session_state.streaming_generator)
                         st.rerun()
-                    return
-                context, done = dialogue_agent.act('Continue', context, user_response=context['dialogue_history'][-1].get('user'), max_turns=12)
-                st.session_state.context = context
-                if done:
-                    st.session_state['step'] += 1
-                    st.rerun()
-                else:
-                    st.rerun()
-            elif st.session_state['step'] == 7:
-                context = st.session_state.context
-                context = supervisor.risk_assessor_agent.act('Assess risk', context)
-                st.session_state.context = context
-                st.session_state.chat_history.append({'role': 'agent', 'agent': 'RiskAssessorAgent', 'content': str(context.get('risk_assessment', ''))})
-                st.session_state.agent_log.append('RiskAssessorAgent')
-                st.session_state['step'] += 1
-                st.rerun()
-            elif st.session_state['step'] == 8:
-                context = st.session_state.context
-                context = supervisor.policy_agent.act('Policy decision', context)
-                st.session_state.context = context
-                st.session_state.chat_history.append({'role': 'agent', 'agent': 'PolicyDecisionAgent', 'content': str(context.get('policy_decision', ''))})
-                st.session_state.agent_log.append('PolicyDecisionAgent')
-                st.session_state['step'] += 1
-                st.rerun()
-            elif st.session_state['step'] == 9:
-                context = st.session_state.context
-                context = supervisor.feedback_agent.act('Collect feedback', context)
-                st.session_state.context = context
-                st.session_state.chat_history.append({'role': 'agent', 'agent': 'FeedbackCollectorAgent', 'content': str(context.get('feedback', ''))})
-                st.session_state.agent_log.append('FeedbackCollectorAgent')
-                st.session_state['step'] += 1
-                st.rerun()
-            elif st.session_state['step'] == 10:
-                # --- Finalization logic: only finalize if all required questions are answered ---
-                context = st.session_state.context
-                missing_questions = []
-                if context and 'dialogue_history' in context:
-                    for turn in context['dialogue_history']:
-                        if 'question' in turn and (('user' not in turn) or (not str(turn['user']).strip())):
-                            missing_questions.append(turn['question'])
-                if missing_questions:
-                    st.warning('Cannot finalize: Please answer all required questions before generating the final report.')
-                    st.markdown('<b>Missing answers for:</b>', unsafe_allow_html=True)
-                    for q in missing_questions:
-                        st.markdown(f'- {q}')
-                    return
-                st.info('Finalizing... Generating fraud analysis report.')
-                report = supervisor._finalize_report(context)
-                st.session_state.final_report = report
-                st.session_state.chat_history.append({'role': 'agent', 'agent': 'SupervisorAgent', 'content': report})
-                st.session_state.agent_log.append('SupervisorAgent')
-                st.session_state['step'] += 1
-                st.rerun()
-            elif st.session_state['step'] == 11:
-                st.success('Dialogue complete. Final report below:')
-                st.markdown(f"<div style='background:#004D40;color:#fff;padding:12px;border-radius:10px;margin-top:12px;'><b>Final Fraud Analysis Report</b><br>{st.session_state.final_report}</div>", unsafe_allow_html=True)
-                if st.button('Restart', key='restart-final', help='Restart after completion'):
-                    for k in list(st.session_state.keys()):
-                        if k not in ['checkpoints', 'edit_mode', 'edit_value']:
-                            del st.session_state[k]
-                    st.rerun()
-    except Exception as e:
-        st.session_state['error'] = f"Error: {e}"
-        st.rerun()
+                elif st.session_state.get('chat_done', False):
+                    st.success('Dialogue complete. Proceeding to Policy Decision...')
+
+        # --- Show post-dialogue steps in real-time ---
+        if st.session_state.get('chat_done', False):
+            # Final Risk Assessment Summary
+            if len(st.session_state.agent_logs) >= 8 and 'RiskAssessorAgentFinalSummary' not in st.session_state.displayed_agents:
+                with final_risk_container:
+                    st.markdown('---')
+                    st.subheader('🎯 Final Risk Assessment Summary')
+                    st.info("Comprehensive analysis based on complete dialogue and all context")
+                    for i, log in enumerate(st.session_state.agent_logs):
+                        if 'RiskAssessorAgentFinalSummary' in log and i < len(st.session_state.agent_responses):
+                            with st.expander("Final Risk Determination", expanded=True):
+                                resp = st.session_state.agent_responses[i]
+                                if not isinstance(resp, str):
+                                    resp = str(resp)
+                                st.markdown(resp)
+                            st.session_state.displayed_agents.add('RiskAssessorAgentFinalSummary')
+                            break
+            # Policy Decision
+            if len(st.session_state.agent_logs) >= 9 and 'PolicyDecisionAgent' not in st.session_state.displayed_agents:
+                with policy_container:
+                    st.markdown('---')
+                    st.subheader('📋 Policy Decision')
+                    for i, log in enumerate(st.session_state.agent_logs):
+                        if 'PolicyDecisionAgent' in log and i < len(st.session_state.agent_responses):
+                            with st.expander("Policy Action & Compliance", expanded=True):
+                                resp = st.session_state.agent_responses[i]
+                                if not isinstance(resp, str):
+                                    if hasattr(resp, '__iter__'):
+                                        resp = ''.join(list(resp))
+                                st.markdown(resp)
+                            st.session_state.displayed_agents.add('PolicyDecisionAgent')
+                            break
+        # Feedback Collection section is now removed.
+    
+    if st.session_state.analysis_complete:
+        st.success('Analysis complete!')
+        st.button('Restart', on_click=lambda: st.session_state.clear(), key='restart_btn_final')
 
 def semantic_search_page():
     st.title('🔎 Semantic Search')
@@ -419,9 +455,32 @@ def docs_page():
             st.json(schema.__annotations__)
     except Exception:
         st.info('Schemas not available.')
-    st.markdown('---')
-    st.write('**SOP.md Preview:**')
+    # --- Domain Data Panel ---
+    st.markdown("---")
+    st.subheader("Domain Data", help="Previews of SOPs and questions, and RAG results for each agent step.")
+    st.markdown("**SOP.md Preview:**")
     st.code(load_sop()[:1000])
+    st.markdown("**Questions.md Preview:**")
+    st.code(load_questions()[:1000])
+
+# --- Helper to deduplicate identical turns (not just consecutive) ---
+def deduplicate_dialogue_history(dialogue_history):
+    seen = set()
+    deduped = []
+    for turn in dialogue_history:
+        if isinstance(turn, dict):
+            if turn.get('role') == 'assistant' and 'question' in turn:
+                key = ('assistant', str(turn['question']))
+            elif turn.get('role') == 'user' and 'user' in turn:
+                key = ('user', str(turn['user']))
+            else:
+                key = None
+            if key and key not in seen:
+                deduped.append(turn)
+                seen.add(key)
+        else:
+            deduped.append(turn)
+    return deduped
 
 # --- Main App ---
 st.set_page_config(page_title="GenAI FraudOps Suite for Authorized Scams", layout="wide")
@@ -435,12 +494,13 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.sidebar.title("Navigation")
-page = st.sidebar.radio("Go to", ["Dashboard", "Alerts", "Agentic System", "Semantic Search", "Docs"])
+# page = st.sidebar.radio("Go to", ["Dashboard", "Alerts", "Agentic System", "Semantic Search", "Docs"])
+page = st.sidebar.radio("Go to", ["Dashboard", "Agentic System", "Semantic Search", "Docs"])
 
 if page == "Dashboard":
     dashboard_page()
-elif page == "Alerts":
-    alerts_page()
+# elif page == "Alerts":
+#     alerts_page()
 elif page == "Agentic System":
     agentic_system_page()
 elif page == "Semantic Search":

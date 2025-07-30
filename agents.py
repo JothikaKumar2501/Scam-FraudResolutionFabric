@@ -235,7 +235,7 @@ def policy_decision_agent(state):
         raise
 
 # --- DialogueAgent ---
-def dialogue_agent(state, customer_answer=None, max_turns=5):
+def dialogue_agent(state, customer_answer=None, max_turns=12):
     import logging
     from vector_utils import search_similar
     rule_id = state["transaction_context"].get("rule_id", "")

@@ -1,0 +1,247 @@
+# ANZ Bank Customer Protection Measures for Authorized Scam Detection
+# Dynamic, intelligent customer protection for production-ready fraud prevention
+
+# Vulnerable Customer Identification
+vulnerable_customer_identification:
+  demographic_indicators:
+    elderly_customers:
+      age_threshold: 65
+      risk_factors:
+        - "limited_digital_literacy"
+        - "isolation_indicators"
+        - "cognitive_decline"
+        - "financial_dependence"
+      protection_measures:
+        - "enhanced_monitoring"
+        - "education_programs"
+        - "family_contact"
+        - "transaction_limits"
+    young_customers:
+      age_threshold: 25
+      risk_factors:
+        - "limited_financial_experience"
+        - "social_media_exposure"
+        - "peer_pressure"
+        - "impulsive_behavior"
+      protection_measures:
+        - "education_programs"
+        - "spending_limits"
+        - "parental_guidance"
+        - "scam_awareness"
+    financially_stressed:
+      indicators:
+        - "debt_indicators"
+        - "overdraft_frequency"
+        - "late_payments"
+        - "financial_pressure"
+      protection_measures:
+        - "financial_counseling"
+        - "budgeting_tools"
+        - "debt_management"
+        - "scam_education"
+
+# Scam Education Programs
+scam_education_programs:
+  mandatory_training:
+    required_for:
+      - "high_risk_customers"
+      - "vulnerable_demographics"
+      - "prior_scam_victims"
+    content:
+      - "common_scam_types"
+      - "red_flag_identification"
+      - "verification_methods"
+      - "reporting_procedures"
+    delivery_methods:
+      - "online_modules"
+      - "in_branch_sessions"
+      - "phone_consultations"
+      - "family_education"
+  ongoing_education:
+    frequency: "quarterly"
+    content_updates:
+      - "new_scam_types"
+      - "emerging_threats"
+      - "case_studies"
+      - "prevention_tips"
+    delivery_channels:
+      - "email_alerts"
+      - "sms_notifications"
+      - "mobile_app_notifications"
+      - "branch_displays"
+
+# Transaction Protection Measures
+transaction_protection:
+  enhanced_monitoring:
+    triggers:
+      - "high_risk_customer"
+      - "large_transaction"
+      - "unusual_pattern"
+      - "vulnerable_demographics"
+    monitoring_levels:
+      - "standard_monitoring"
+      - "enhanced_monitoring"
+      - "intensive_monitoring"
+  transaction_limits:
+    automatic_limits:
+      - "daily_transaction_limit"
+      - "single_transaction_limit"
+      - "overseas_transaction_limit"
+      - "online_transaction_limit"
+    customer_controlled_limits:
+      - "self_set_limits"
+      - "temporary_limits"
+      - "category_limits"
+      - "time_based_limits"
+  cooling_off_periods:
+    large_transactions:
+      threshold: 10000
+      period: "24_hours"
+      notification: "mandatory"
+    unusual_patterns:
+      triggers:
+        - "new_recipient"
+        - "unusual_amount"
+        - "unusual_timing"
+      period: "48_hours"
+      notification: "mandatory"
+
+# Customer Support Services
+customer_support_services:
+  scam_victim_support:
+    immediate_assistance:
+      - "transaction_blocking"
+      - "account_security"
+      - "police_reporting"
+      - "emotional_support"
+    ongoing_support:
+      - "recovery_assistance"
+      - "financial_counseling"
+      - "legal_guidance"
+      - "family_support"
+  prevention_support:
+    proactive_measures:
+      - "scam_education"
+      - "security_tools"
+      - "monitoring_services"
+      - "alert_systems"
+    reactive_measures:
+      - "incident_response"
+      - "damage_assessment"
+      - "recovery_planning"
+      - "prevention_planning"
+
+# Communication Protocols
+communication_protocols:
+  customer_notifications:
+    scam_alerts:
+      channels:
+        - "sms"
+        - "email"
+        - "mobile_app"
+        - "phone_call"
+      content:
+        - "scam_type_identification"
+        - "risk_level_assessment"
+        - "prevention_advice"
+        - "support_contact"
+    transaction_alerts:
+      triggers:
+        - "large_transaction"
+        - "unusual_pattern"
+        - "new_recipient"
+        - "overseas_transaction"
+      content:
+        - "transaction_details"
+        - "risk_assessment"
+        - "verification_questions"
+        - "support_contact"
+  family_communication:
+    vulnerable_customers:
+      consent_required: true
+      communication_methods:
+        - "family_meetings"
+        - "joint_account_holders"
+        - "trusted_contacts"
+        - "legal_guardians"
+    emergency_contacts:
+      setup_requirements:
+        - "customer_consent"
+        - "contact_verification"
+        - "relationship_confirmation"
+        - "communication_preferences"
+
+# Recovery and Remediation
+recovery_remediation:
+  immediate_response:
+    transaction_blocking:
+      - "real_time_blocking"
+      - "account_restrictions"
+      - "payment_recall"
+      - "fraud_investigation"
+    customer_protection:
+      - "account_security"
+      - "identity_protection"
+      - "credit_monitoring"
+      - "legal_guidance"
+  long_term_support:
+    financial_recovery:
+      - "loss_assessment"
+      - "recovery_planning"
+      - "financial_counseling"
+      - "debt_management"
+    emotional_support:
+      - "counseling_services"
+      - "support_groups"
+      - "family_education"
+      - "community_resources"
+
+# Technology Protection Tools
+technology_protection:
+  security_tools:
+    account_protection:
+      - "multi_factor_authentication"
+      - "biometric_authentication"
+      - "device_verification"
+      - "location_monitoring"
+    transaction_protection:
+      - "real_time_monitoring"
+      - "pattern_detection"
+      - "risk_assessment"
+      - "alert_generation"
+  education_tools:
+    interactive_learning:
+      - "scam_simulation_games"
+      - "interactive_quizzes"
+      - "case_study_reviews"
+      - "role_playing_exercises"
+    awareness_materials:
+      - "educational_videos"
+      - "infographics"
+      - "checklists"
+      - "quick_reference_guides"
+
+# Performance Monitoring
+performance_monitoring:
+  customer_protection_metrics:
+    prevention_effectiveness:
+      - "scam_detection_rate"
+      - "false_positive_rate"
+      - "customer_education_completion"
+      - "protection_tool_usage"
+    customer_outcomes:
+      - "financial_loss_prevention"
+      - "customer_satisfaction"
+      - "recovery_success_rate"
+      - "repeat_victimization_rate"
+  continuous_improvement:
+    feedback_collection:
+      - "customer_surveys"
+      - "focus_groups"
+      - "incident_reviews"
+      - "stakeholder_feedback"
+    program_enhancement:
+      - "content_updates"
+      - "delivery_methods"
+      - "protection_measures"
+      - "support_services" 

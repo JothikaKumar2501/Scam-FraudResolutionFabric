@@ -1,6 +1,14 @@
-This is a list of questions that can be asked, based on the type of fraud & other details. All questions and scripts are for ANZ BANK AI AGENT. Modify and formulate the questions accordingly. Do not hallucinate the Questions. Strictly follow ANZ rules and context, and only ask relevant questions. Minimize the number of questions you ask (make this super fast to finalize based on the questions you asked and the responses that customer provided).
+# ANZ BANK AI AGENT - Enhanced Fraud Detection Questions & Scripts
+
+This is a comprehensive list of questions and scripts for the ANZ BANK AI AGENT, based on the enhanced dataset structure and current ANZ Bank policies. All questions and scripts are for ANZ BANK AI AGENT. Modify and formulate the questions accordingly. Do not hallucinate the Questions. Strictly follow ANZ rules and context, and only ask relevant questions. Minimize the number of questions you ask (make this super fast to finalize based on the questions you asked and the responses that customer provided).
 
 You are specialized for ANZ BANK AI AGENT to solve this problem.
+
+**Enhanced Dataset Integration:**
+- Customer Demographics: KYC status, AML risk level, CDD level, digital literacy
+- Transaction History: Device fingerprinting, location risk, velocity risk, amount risk
+- Call History: Analyst details, call quality, regulatory reporting requirements
+- FTP Alerts: Enhanced risk scoring (0-1000), escalation levels (L1/L2/L3), compliance flags
 
 ### General Questions (Applicable to most ANZ alerts)
 
@@ -159,6 +167,14 @@ questions:
 *   **No Hallucinations:** The agent should ONLY draw questions from the pre-defined ANZ SOP rules and conversation samples. It should not generate new, unverified questions.
 *   **Adaptive Questioning:** If a customer's answer resolves the suspicion (e.g., "Yes, that's my new phone and I logged in with ANZ biometrics"), the agent should pivot to closing the inquiry or escalate as per the ANZ SOP, rather than asking irrelevant follow-up questions.
 
+**Enhanced Risk Assessment Questions:**
+
+*   **Digital Literacy Assessment:** "How comfortable are you with online banking and security features?"
+*   **Device Verification:** "Can you confirm if you're using your usual device for ANZ banking?"
+*   **Location Verification:** "Are you currently in [Location] where this transaction originated?"
+*   **Behavioral Pattern:** "Is this transaction amount and timing consistent with your usual ANZ banking behavior?"
+*   **Education Material:** "Have you completed ANZ's scam education materials recently?"
+
 # Expanded Questions for RAG
 
 ### Romance Scam (RUL-RS001)
@@ -198,6 +214,8 @@ questions:
 * "Did you notice any unusual staff activity or communication?" (for customers)
 
 ### Business Email Compromise (RUL-BEC008)
-* "Did you receive any requests to change vendor payment details via email?"
-* "Did you verify the change with the vendor through a secure channel?"
-* "Is the payment amount or recipient different from your usual pattern?"
+* "Did you receive any requests to change vendor payment details via email?" (ANZ)
+* "Did you verify the new bank details directly with the vendor using a phone number from a previous ANZ invoice or their official website?" (ANZ secure verification)
+* "Is the payment amount or recipient consistent with your usual pattern for this vendor?" (ANZ)
+* "Was the vendor name or email slightly different (e.g., abbreviation or small change)?" (ANZ)
+* "Did you receive duplicate invoices or a follow-up asking to ‘redirect’ the payment?" (ANZ)

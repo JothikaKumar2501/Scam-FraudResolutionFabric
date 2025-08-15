@@ -1,0 +1,224 @@
+# ANZ Bank Regulatory Requirements for Authorized Scam Detection
+# Dynamic, intelligent regulatory compliance for production-ready fraud prevention
+
+# AUSTRAC (Australian Transaction Reports and Analysis Centre) Requirements
+AUSTRAC:
+  reporting_threshold: 10000
+  suspicious_matter_report:
+    required: true
+    timeframe: "24_hours"
+    triggers:
+      - "large_transaction"
+      - "suspicious_pattern"
+      - "unusual_activity"
+      - "scam_confirmation"
+    reporting_requirements:
+      - "customer_identification"
+      - "transaction_details"
+      - "suspicious_indicators"
+      - "risk_assessment"
+      - "action_taken"
+  enhanced_due_diligence:
+    required: true
+    triggers:
+      - "high_risk_customer"
+      - "large_transaction"
+      - "unusual_pattern"
+    requirements:
+      - "additional_verification"
+      - "source_of_funds"
+      - "purpose_of_transaction"
+      - "beneficial_ownership"
+  customer_identification:
+    required: true
+    verification_methods:
+      - "government_issued_id"
+      - "address_verification"
+      - "contact_verification"
+      - "risk_assessment"
+
+# APRA CPG 234 (Information Security) Requirements
+APRA_CPG_234:
+  information_security_controls:
+    required: true
+    areas:
+      - "access_controls"
+      - "data_protection"
+      - "system_security"
+      - "incident_response"
+  customer_protection:
+    required: true
+    measures:
+      - "fraud_monitoring"
+      - "scam_prevention"
+      - "customer_education"
+      - "vulnerable_customer_protection"
+  fraud_monitoring:
+    required: true
+    capabilities:
+      - "real_time_monitoring"
+      - "pattern_detection"
+      - "risk_assessment"
+      - "alert_generation"
+
+# ASIC RG 271 (Consumer Harm Prevention) Requirements
+ASIC_RG_271:
+  consumer_harm_prevention:
+    required: true
+    obligations:
+      - "reasonable_steps_prevention"
+      - "customer_protection"
+      - "scam_prevention"
+      - "vulnerable_customer_support"
+  reasonable_steps:
+    required: true
+    measures:
+      - "fraud_detection_systems"
+      - "customer_education"
+      - "scam_prevention_tools"
+      - "vulnerable_customer_identification"
+  customer_outcomes:
+    required: true
+    focus_areas:
+      - "financial_loss_prevention"
+      - "customer_education"
+      - "support_services"
+      - "recovery_assistance"
+
+# Banking Code of Practice (2023) Requirements
+Banking_Code_of_Practice:
+  customer_protection:
+    required: true
+    obligations:
+      - "scam_prevention"
+      - "customer_education"
+      - "vulnerable_customer_support"
+      - "dispute_resolution"
+  scam_prevention:
+    required: true
+    measures:
+      - "fraud_detection"
+      - "customer_alerts"
+      - "education_programs"
+      - "support_services"
+  vulnerable_customers:
+    required: true
+    protections:
+      - "enhanced_monitoring"
+      - "education_programs"
+      - "support_services"
+      - "transaction_limits"
+
+# Financial Services Council Authorized Push Payment Scam Code
+FSC_APP_Scam_Code:
+  intervention_requirements:
+    required: true
+    triggers:
+      - "high_risk_indicators"
+      - "suspicious_patterns"
+      - "customer_vulnerability"
+      - "scam_typology_match"
+  customer_protection:
+    required: true
+    measures:
+      - "transaction_blocks"
+      - "customer_education"
+      - "support_services"
+      - "recovery_assistance"
+
+# Privacy Act 1988 Requirements
+Privacy_Act_1988:
+  data_protection:
+    required: true
+    principles:
+      - "data_minimization"
+      - "purpose_limitation"
+      - "security_safeguards"
+      - "access_controls"
+  customer_consent:
+    required: true
+    requirements:
+      - "informed_consent"
+      - "purpose_disclosure"
+      - "data_usage_transparency"
+      - "opt_out_mechanisms"
+
+# Competition and Consumer Act 2010 Requirements
+Competition_and_Consumer_Act:
+  consumer_protection:
+    required: true
+    obligations:
+      - "fair_trading"
+      - "consumer_guarantees"
+      - "misleading_conduct_prevention"
+      - "unconscionable_conduct_prevention"
+
+# State and Territory Requirements
+State_Territory_Requirements:
+  victoria:
+    consumer_affairs:
+      - "consumer_protection"
+      - "scam_prevention"
+      - "vulnerable_customer_support"
+  new_south_wales:
+    fair_trading:
+      - "consumer_protection"
+      - "scam_prevention"
+      - "vulnerable_customer_support"
+  queensland:
+    office_of_fair_trading:
+      - "consumer_protection"
+      - "scam_prevention"
+      - "vulnerable_customer_support"
+
+# Industry-Specific Requirements
+Industry_Requirements:
+  banking_industry:
+    obligations:
+      - "fraud_prevention"
+      - "customer_protection"
+      - "regulatory_compliance"
+      - "industry_standards"
+  financial_services:
+    obligations:
+      - "client_money_protection"
+      - "fraud_prevention"
+      - "regulatory_compliance"
+      - "industry_standards"
+
+# Reporting Requirements
+Reporting_Requirements:
+  suspicious_matter_reports:
+    timeframe: "24_hours"
+    required_fields:
+      - "customer_identification"
+      - "transaction_details"
+      - "suspicious_indicators"
+      - "risk_assessment"
+      - "action_taken"
+  incident_reports:
+    timeframe: "72_hours"
+    required_fields:
+      - "incident_description"
+      - "impact_assessment"
+      - "remediation_actions"
+      - "lessons_learned"
+  regulatory_reports:
+    timeframe: "as_required"
+    types:
+      - "breach_reports"
+      - "compliance_reports"
+      - "performance_reports"
+
+# Compliance Monitoring
+Compliance_Monitoring:
+  ongoing_requirements:
+    - "regular_assessments"
+    - "system_updates"
+    - "training_programs"
+    - "audit_reviews"
+  performance_metrics:
+    - "detection_accuracy"
+    - "false_positive_rate"
+    - "customer_protection_effectiveness"
+    - "regulatory_compliance_rate" 

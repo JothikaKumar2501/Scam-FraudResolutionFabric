@@ -1,0 +1,386 @@
+# ANZ Bank Intelligent Question Generation for Authorized Scam Detection
+# Dynamic, context-aware questions for production-ready fraud detection
+
+# Business Email Compromise (BEC) Questions
+business_email_compromise:
+  fraud_type: "business_email_compromise"
+  core_facts:
+    - "verification"
+    - "recipient"
+    - "authorization"
+    - "purpose"
+    - "relationship"
+    - "amount"
+    - "contact_method"
+  questions:
+    verification:
+      - "Was this account detail change verified through a secure communication channel directly with the vendor?"
+      - "Did you contact the vendor using previously established contact information?"
+      - "Have you verified the new banking details independently?"
+      - "Did you receive this change request via email or phone call?"
+    recipient:
+      - "Who is the recipient of this payment?"
+      - "Is this a regular vendor you've worked with before?"
+      - "Have you made payments to this vendor in the past?"
+      - "What is the vendor's business name?"
+    authorization:
+      - "Did you authorize this payment?"
+      - "Were you pressured to make this payment quickly?"
+      - "Did anyone else have access to your account?"
+      - "Did you receive any unusual requests for payment?"
+    purpose:
+      - "What is the purpose of this payment?"
+      - "Is this for an invoice you received?"
+      - "What goods or services are you paying for?"
+      - "Is this payment for a legitimate business expense?"
+    relationship:
+      - "How long have you been working with this vendor?"
+      - "Is this a new vendor or an existing relationship?"
+      - "Have you met with this vendor in person?"
+      - "Do you have a written contract with this vendor?"
+    amount:
+      - "Is this amount consistent with your usual payments to this vendor?"
+      - "Is this payment amount higher than usual?"
+      - "Did you receive an invoice for this amount?"
+      - "Is this payment for multiple invoices?"
+    contact_method:
+      - "How did you receive the request for banking detail changes?"
+      - "Did you receive this request via email, phone, or text?"
+      - "Did the request come from a familiar contact?"
+      - "Were you asked to keep this change confidential?"
+
+# Romance Scam Questions
+romance_scam:
+  fraud_type: "romance_scam"
+  core_facts:
+    - "verification"
+    - "recipient"
+    - "authorization"
+    - "purpose"
+    - "relationship"
+    - "amount"
+    - "emotional_pressure"
+  questions:
+    verification:
+      - "Have you met this person in person?"
+      - "How long have you known this person?"
+      - "Have you verified their identity independently?"
+      - "Do you have mutual friends or connections?"
+    recipient:
+      - "Who is the recipient of this payment?"
+      - "How did you meet this person?"
+      - "What is their full name and location?"
+      - "Have you seen their photo or video called them?"
+    authorization:
+      - "Did you authorize this payment willingly?"
+      - "Are you being pressured to make this payment?"
+      - "Did they ask you to keep this relationship secret?"
+      - "Are they asking you to lie to family or friends?"
+    purpose:
+      - "What is the purpose of this payment?"
+      - "What emergency or urgent need are they claiming?"
+      - "Is this for travel, medical, or business expenses?"
+      - "Have they asked for money before?"
+    relationship:
+      - "How long have you been in a relationship with this person?"
+      - "Have you met them in person or only online?"
+      - "Do they live in another country or city?"
+      - "Have they made promises about visiting or moving closer?"
+    amount:
+      - "Is this amount significant for you?"
+      - "Have you sent money to this person before?"
+      - "Are they asking for more money than you can afford?"
+      - "Is this payment for an emergency they're claiming?"
+    emotional_pressure:
+      - "Are they pressuring you to act quickly?"
+      - "Are they making you feel guilty if you don't help?"
+      - "Are they claiming to be in a desperate situation?"
+      - "Are they asking you to keep this secret from others?"
+
+# Investment Scam Questions
+investment_scam:
+  fraud_type: "investment_scam"
+  core_facts:
+    - "verification"
+    - "recipient"
+    - "authorization"
+    - "purpose"
+    - "relationship"
+    - "amount"
+    - "promised_returns"
+  questions:
+    verification:
+      - "Have you researched this investment platform?"
+      - "Is this platform registered with ASIC?"
+      - "Have you verified the company's legitimacy?"
+      - "Did you find this investment through social media or email?"
+    recipient:
+      - "Who is the recipient of this payment?"
+      - "What company or platform are you investing with?"
+      - "Have you verified their contact information?"
+      - "Is this an overseas investment platform?"
+    authorization:
+      - "Did you authorize this investment payment?"
+      - "Are you being pressured to invest quickly?"
+      - "Did they promise guaranteed returns?"
+      - "Are they claiming limited time opportunities?"
+    purpose:
+      - "What type of investment is this?"
+      - "What returns are they promising?"
+      - "Is this cryptocurrency, forex, or another investment?"
+      - "What is the investment timeline?"
+    relationship:
+      - "How did you learn about this investment?"
+      - "Do you know anyone who has invested with them?"
+      - "Have you worked with this company before?"
+      - "Did they contact you or did you find them?"
+    amount:
+      - "Is this amount significant for your financial situation?"
+      - "Are they asking for more money than you can afford?"
+      - "Have you made previous investments with them?"
+      - "Is this your first investment with this company?"
+    promised_returns:
+      - "What returns are they promising?"
+      - "Are they claiming guaranteed profits?"
+      - "How quickly do they say you'll see returns?"
+      - "Are they pressuring you to invest more for better returns?"
+
+# Tech Support Scam Questions
+tech_support_scam:
+  fraud_type: "tech_support_scam"
+  core_facts:
+    - "verification"
+    - "recipient"
+    - "authorization"
+    - "purpose"
+    - "relationship"
+    - "amount"
+    - "technical_issue"
+  questions:
+    verification:
+      - "Who contacted you about the technical issue?"
+      - "Did they claim to be from Microsoft, Apple, or another company?"
+      - "Have you verified their identity independently?"
+      - "Did they ask for remote access to your computer?"
+    recipient:
+      - "Who are you paying for this technical support?"
+      - "What company do they claim to represent?"
+      - "Have you worked with this company before?"
+      - "Did you find them online or did they contact you?"
+    authorization:
+      - "Did you authorize this payment?"
+      - "Are they pressuring you to pay quickly?"
+      - "Did they claim your computer was compromised?"
+      - "Are they threatening legal action if you don't pay?"
+    purpose:
+      - "What technical issue are they claiming to fix?"
+      - "Did they say your computer had a virus?"
+      - "Are they claiming to remove malware or spyware?"
+      - "What service are they providing?"
+    relationship:
+      - "How did they contact you about this issue?"
+      - "Did you call them or did they call you?"
+      - "Have you used their services before?"
+      - "Do you have an existing relationship with this company?"
+    amount:
+      - "How much are they charging for this service?"
+      - "Is this amount reasonable for the service provided?"
+      - "Are they asking for payment in unusual ways?"
+      - "Have you paid them before for similar services?"
+    technical_issue:
+      - "What problem did they claim to find on your computer?"
+      - "Did they show you error messages or warnings?"
+      - "Are they claiming your computer is sending spam?"
+      - "Did they say your computer was hacked?"
+
+# Impersonation Scam Questions
+impersonation_scam:
+  fraud_type: "impersonation_scam"
+  core_facts:
+    - "verification"
+    - "recipient"
+    - "authorization"
+    - "purpose"
+    - "relationship"
+    - "amount"
+    - "authority_claims"
+  questions:
+    verification:
+      - "Who claimed to be contacting you?"
+      - "What authority did they claim to have?"
+      - "Have you verified their identity independently?"
+      - "Did they ask for personal information?"
+    recipient:
+      - "Who are you making this payment to?"
+      - "What government agency or company do they claim to represent?"
+      - "Have you verified their contact information?"
+      - "Is this payment to an official account?"
+    authorization:
+      - "Did you authorize this payment?"
+      - "Are they threatening legal action if you don't pay?"
+      - "Are they claiming you owe money or have committed a crime?"
+      - "Are they pressuring you to act quickly?"
+    purpose:
+      - "What is the purpose of this payment?"
+      - "Are they claiming you owe taxes or fines?"
+      - "Are they claiming you've won a prize or lottery?"
+      - "What official reason are they giving for this payment?"
+    relationship:
+      - "How did they contact you?"
+      - "Do you have an existing relationship with this agency?"
+      - "Have you received official correspondence from them?"
+      - "Did you initiate contact or did they contact you?"
+    amount:
+      - "How much are they asking you to pay?"
+      - "Is this amount reasonable for the claimed purpose?"
+      - "Are they asking for payment in unusual ways?"
+      - "Have you made similar payments before?"
+    authority_claims:
+      - "What authority do they claim to have?"
+      - "Are they claiming to be from a government agency?"
+      - "Did they provide official identification?"
+      - "Are they threatening consequences if you don't comply?"
+
+# Purchase Scam Questions
+purchase_scam:
+  fraud_type: "purchase_scam"
+  core_facts:
+    - "verification"
+    - "recipient"
+    - "authorization"
+    - "purpose"
+    - "relationship"
+    - "amount"
+    - "seller_legitimacy"
+  questions:
+    verification:
+      - "What are you purchasing?"
+      - "Have you verified the seller's identity?"
+      - "Is this from a legitimate marketplace or website?"
+      - "Have you checked seller reviews and ratings?"
+    recipient:
+      - "Who are you paying for this purchase?"
+      - "What is the seller's name and contact information?"
+      - "Is this a new seller or one you've used before?"
+      - "Have you verified their contact details?"
+    authorization:
+      - "Did you authorize this purchase payment?"
+      - "Are you being pressured to pay quickly?"
+      - "Are they asking for payment outside the platform?"
+      - "Are they offering a deal that seems too good to be true?"
+    purpose:
+      - "What item or service are you purchasing?"
+      - "Is this a legitimate product or service?"
+      - "Have you seen photos or descriptions of what you're buying?"
+      - "Is the price significantly lower than market value?"
+    relationship:
+      - "How did you find this seller?"
+      - "Do you have an existing relationship with them?"
+      - "Have you purchased from them before?"
+      - "Did they contact you or did you find their listing?"
+    amount:
+      - "How much are you paying for this item?"
+      - "Is this amount reasonable for the item or service?"
+      - "Are they asking for additional fees or charges?"
+      - "Have you compared prices with other sellers?"
+    seller_legitimacy:
+      - "Is the seller registered and verified?"
+      - "Do they have positive reviews and ratings?"
+      - "Have you checked their business registration?"
+      - "Are they asking for unusual payment methods?"
+
+# General Scam Detection Questions
+general_scam_detection:
+  fraud_type: "general_scam"
+  core_facts:
+    - "verification"
+    - "recipient"
+    - "authorization"
+    - "purpose"
+    - "relationship"
+    - "amount"
+    - "urgency_pressure"
+  questions:
+    verification:
+      - "Have you verified the recipient's identity?"
+      - "Did you initiate this transaction or were you contacted?"
+      - "Have you checked if this is a legitimate request?"
+      - "Are you being asked to keep this transaction secret?"
+    recipient:
+      - "Who are you making this payment to?"
+      - "Do you know this person or company?"
+      - "Have you verified their contact information?"
+      - "Is this a new recipient or one you've used before?"
+    authorization:
+      - "Did you authorize this payment?"
+      - "Are you being pressured to act quickly?"
+      - "Are you being threatened with consequences if you don't pay?"
+      - "Did anyone else have access to your account?"
+    purpose:
+      - "What is the purpose of this payment?"
+      - "Is this for a legitimate expense or service?"
+      - "Are you being promised something in return?"
+      - "Is this payment for an emergency or urgent need?"
+    relationship:
+      - "How do you know the recipient?"
+      - "Is this a new relationship or an existing one?"
+      - "Have you met them in person or only online?"
+      - "Do you have mutual friends or connections?"
+    amount:
+      - "Is this amount significant for your financial situation?"
+      - "Is this more than you can comfortably afford?"
+      - "Are you being asked to borrow money to make this payment?"
+      - "Is this amount reasonable for the claimed purpose?"
+    urgency_pressure:
+      - "Are you being pressured to act quickly?"
+      - "Are they claiming this is a limited time opportunity?"
+      - "Are they making you feel guilty if you don't help?"
+      - "Are they threatening consequences if you don't comply?"
+
+# High-Risk Customer Questions
+high_risk_customer:
+  fraud_type: "high_risk_customer"
+  core_facts:
+    - "verification"
+    - "recipient"
+    - "authorization"
+    - "purpose"
+    - "relationship"
+    - "amount"
+    - "vulnerability_assessment"
+  questions:
+    verification:
+      - "Have you completed our scam awareness training?"
+      - "Are you aware of common scam tactics?"
+      - "Do you have someone you can discuss financial decisions with?"
+      - "Have you verified this transaction independently?"
+    recipient:
+      - "Who are you making this payment to?"
+      - "How do you know this person or company?"
+      - "Have you verified their identity?"
+      - "Is this a new recipient or one you've used before?"
+    authorization:
+      - "Did you authorize this payment?"
+      - "Are you being pressured to act quickly?"
+      - "Are you comfortable with this transaction?"
+      - "Do you understand the risks involved?"
+    purpose:
+      - "What is the purpose of this payment?"
+      - "Is this for a legitimate expense or service?"
+      - "Are you being promised something in return?"
+      - "Is this payment necessary and urgent?"
+    relationship:
+      - "How do you know the recipient?"
+      - "Is this a new relationship or an existing one?"
+      - "Have you met them in person or only online?"
+      - "Do you trust this person or company?"
+    amount:
+      - "Is this amount significant for your financial situation?"
+      - "Can you afford this payment without financial hardship?"
+      - "Have you considered the impact on your finances?"
+      - "Is this amount reasonable for the claimed purpose?"
+    vulnerability_assessment:
+      - "Do you feel pressured to make this payment?"
+      - "Are you being asked to keep this transaction secret?"
+      - "Are you comfortable discussing this with family or friends?"
+      - "Do you have any concerns about this transaction?" 

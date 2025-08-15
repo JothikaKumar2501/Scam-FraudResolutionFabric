@@ -1,0 +1,226 @@
+# ANZ Bank Standard Operating Procedures (SOPs) for Authorized Scam Detection
+# Dynamic, intelligent SOPs for production-ready fraud detection
+
+# Business Email Compromise (BEC) SOPs
+business_email_compromise:
+  fraud_type: "business_email_compromise"
+  risk_level: "HIGH"
+  indicators:
+    - "vendor_impersonation"
+    - "banking_detail_change"
+    - "invoice_redirection"
+    - "urgent_payment_request"
+  verification_questions:
+    - "Was this account detail change verified through a secure communication channel directly with [Vendor Name]?"
+    - "Are you aware of using a new payment channel for this vendor recently?"
+    - "Did you receive an email requesting banking detail changes?"
+    - "Have you contacted the vendor through previously established contact information?"
+  required_actions:
+    - "Place immediate hold on transaction"
+    - "Contact customer via secure channels"
+    - "Verify with vendor through established contact details"
+    - "Check for similar patterns across other customers"
+  regulatory_requirements:
+    - "AUSTRAC_SMR_REQUIRED"
+    - "APRA_CPG_234_COMPLIANCE"
+    - "BANKING_CODE_OF_PRACTICE"
+
+# Romance Scam SOPs
+romance_scam:
+  fraud_type: "romance_scam"
+  risk_level: "HIGH"
+  indicators:
+    - "emotional_manipulation"
+    - "urgent_requests"
+    - "isolation_tactics"
+    - "promised_returns"
+    - "relationship_escalation"
+  verification_questions:
+    - "How long have you known this person?"
+    - "Have you met them in person?"
+    - "What is the purpose of this payment?"
+    - "Are they pressuring you to keep this secret?"
+    - "Have they asked you to lie to family or friends?"
+  required_actions:
+    - "Educate customer about romance scams"
+    - "Verify relationship authenticity"
+    - "Check for emotional manipulation indicators"
+    - "Provide scam awareness resources"
+  regulatory_requirements:
+    - "CUSTOMER_PROTECTION_OBLIGATIONS"
+    - "SCAM_PREVENTION_GUIDELINES"
+
+# Investment Scam SOPs
+investment_scam:
+  fraud_type: "investment_scam"
+  risk_level: "HIGH"
+  indicators:
+    - "promised_returns"
+    - "pressure_tactics"
+    - "fake_platforms"
+    - "urgent_investment_opportunity"
+    - "guaranteed_profits"
+  verification_questions:
+    - "What type of investment is this?"
+    - "Have you researched this investment platform?"
+    - "What returns are being promised?"
+    - "Are they pressuring you to invest quickly?"
+    - "Have you verified the platform's legitimacy?"
+  required_actions:
+    - "Verify investment platform legitimacy"
+    - "Check regulatory compliance"
+    - "Educate about investment scams"
+    - "Provide financial advice resources"
+  regulatory_requirements:
+    - "ASIC_COMPLIANCE"
+    - "INVESTMENT_PROTECTION"
+
+# Tech Support Scam SOPs
+tech_support_scam:
+  fraud_type: "tech_support_scam"
+  risk_level: "MEDIUM"
+  indicators:
+    - "remote_access"
+    - "urgent_technical_issues"
+    - "payment_demands"
+    - "computer_virus_claims"
+    - "system_compromise_allegations"
+  verification_questions:
+    - "Who contacted you about the technical issue?"
+    - "Did they ask for remote access to your computer?"
+    - "What payment method did they request?"
+    - "Did they claim your computer was compromised?"
+    - "Have you verified their identity?"
+  required_actions:
+    - "Verify tech support legitimacy"
+    - "Check for remote access indicators"
+    - "Educate about tech support scams"
+    - "Provide legitimate tech support contacts"
+  regulatory_requirements:
+    - "CUSTOMER_PROTECTION"
+    - "FRAUD_PREVENTION"
+
+# Impersonation Scam SOPs
+impersonation_scam:
+  fraud_type: "impersonation_scam"
+  risk_level: "HIGH"
+  indicators:
+    - "government_impersonation"
+    - "bank_official_impersonation"
+    - "authority_claims"
+    - "urgent_legal_action"
+    - "confidentiality_demands"
+  verification_questions:
+    - "Who claimed to be contacting you?"
+    - "What authority did they claim to have?"
+    - "Did they ask for personal information?"
+    - "Were they pressuring you to act quickly?"
+    - "Have you verified their identity independently?"
+  required_actions:
+    - "Verify caller identity independently"
+    - "Check for official contact methods"
+    - "Educate about impersonation scams"
+    - "Provide official contact information"
+  regulatory_requirements:
+    - "IDENTITY_VERIFICATION"
+    - "CUSTOMER_PROTECTION"
+
+# Purchase Scam SOPs
+purchase_scam:
+  fraud_type: "purchase_scam"
+  risk_level: "MEDIUM"
+  indicators:
+    - "online_purchase"
+    - "seller_pressure"
+    - "marketplace_transaction"
+    - "urgent_purchase"
+    - "unusual_payment_method"
+  verification_questions:
+    - "What are you purchasing?"
+    - "Have you verified the seller's identity?"
+    - "What payment method did they request?"
+    - "Are they pressuring you to pay quickly?"
+    - "Have you checked seller reviews and ratings?"
+  required_actions:
+    - "Verify seller legitimacy"
+    - "Check marketplace policies"
+    - "Educate about purchase scams"
+    - "Provide safe purchasing guidelines"
+  regulatory_requirements:
+    - "CONSUMER_PROTECTION"
+    - "E_COMMERCE_GUIDELINES"
+
+# General Scam Detection SOPs
+general_scam_detection:
+  fraud_type: "general_scam"
+  risk_level: "MEDIUM"
+  indicators:
+    - "urgency_pressure"
+    - "unusual_payment_methods"
+    - "secrecy_demands"
+    - "emotional_manipulation"
+    - "promised_returns"
+  verification_questions:
+    - "What is the purpose of this payment?"
+    - "Are you being pressured to act quickly?"
+    - "Have you verified the recipient's identity?"
+    - "Are they asking you to keep this secret?"
+    - "What returns or benefits are promised?"
+  required_actions:
+    - "Verify transaction legitimacy"
+    - "Check for scam indicators"
+    - "Educate customer about scams"
+    - "Provide protection resources"
+  regulatory_requirements:
+    - "CUSTOMER_PROTECTION"
+    - "SCAM_PREVENTION"
+
+# High-Risk Customer SOPs
+high_risk_customer:
+  fraud_type: "high_risk_customer"
+  risk_level: "HIGH"
+  indicators:
+    - "prior_alerts"
+    - "no_scam_education"
+    - "vulnerable_demographics"
+    - "high_transaction_amounts"
+    - "unusual_behavior_patterns"
+  verification_questions:
+    - "Have you completed our scam awareness training?"
+    - "Are you aware of common scam tactics?"
+    - "Do you have someone you can discuss financial decisions with?"
+    - "Have you verified this transaction independently?"
+  required_actions:
+    - "Implement enhanced monitoring"
+    - "Provide mandatory scam education"
+    - "Consider transaction limits"
+    - "Assign relationship manager"
+  regulatory_requirements:
+    - "ENHANCED_DUE_DILIGENCE"
+    - "CUSTOMER_PROTECTION"
+    - "VULNERABLE_CUSTOMER_PROTOCOLS"
+
+# Regulatory Compliance SOPs
+regulatory_compliance:
+  fraud_type: "regulatory_compliance"
+  risk_level: "HIGH"
+  indicators:
+    - "large_transaction_amounts"
+    - "suspicious_patterns"
+    - "high_risk_customers"
+    - "unusual_transaction_types"
+  verification_questions:
+    - "What is the source of funds for this transaction?"
+    - "What is the purpose of this payment?"
+    - "Have you verified the recipient's identity?"
+    - "Are you aware of any suspicious activity?"
+  required_actions:
+    - "File Suspicious Matter Report (SMR)"
+    - "Implement enhanced due diligence"
+    - "Monitor for similar patterns"
+    - "Report to relevant authorities"
+  regulatory_requirements:
+    - "AUSTRAC_REPORTING"
+    - "APRA_CPG_234"
+    - "ASIC_RG_271"
+    - "BANKING_CODE_OF_PRACTICE" 

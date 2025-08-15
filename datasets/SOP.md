@@ -4,9 +4,9 @@ Here is the **final, comprehensive Standard Operating Procedure (SOP)** tailored
 **Title:** ANZ Bank Fraud Transaction Protocol (FTP) Alert Handling & Triage Agent Decision Protocol  
 **Department:** ANZ Fraud Risk & Intelligence  
 **Issued By:** Head of Financial Crime Compliance, ANZ Bank  
-**Effective Date:** 08 July 2025  
-**Version:** 3.1  
-**Applies To:** ANZ Fraud Analysts, Triage Agents, Digital Operations, Contact Centre, Case Management Teams
+**Effective Date:** 19 December 2024  
+**Version:** 4.0  
+**Applies To:** ANZ Fraud Analysts, Triage Agents, Digital Operations, Contact Centre, Case Management Teams, AI Agentic Systems
 
 ## 1. PURPOSE  
 To establish a **structured, compliant, and risk-driven framework** for identifying, validating, triaging, and resolving suspected fraudulent financial activity detected via ANZ’s Fraud Transaction Protocol (FTP) alerting system. This SOP ensures:  
@@ -88,16 +88,21 @@ If crypto/investment related:
 
 ## 10. COMPLIANCE & REFERENCES  
 
-- APRA CPG 234 (Prudential Standard)  
-- ASIC Scams Database  
-- AUSTRAC AML Guidelines  
-- Scamwatch.gov.au  
-- ANZ internal Fraud Money Back Guarantee and card security policies  
+- **APRA CPG 234** (Prudential Standard for Information Security) - Information security controls and customer protection requirements
+- **ASIC RG 271** (Internal Dispute Resolution) - Consumer harm prevention and scam prevention guidelines  
+- **AUSTRAC AML/CTF Act 2024** - Anti-money laundering and counter-terrorism financing regulations
+- **Scamwatch.gov.au** - Australian government scam reporting and prevention
+- **ANZ Fraud Money Back Guarantee** - Customer protection for fraudulent transactions
+- **ANZ Falcon®** - ANZ's anti-fraud technology preventing $112M in losses in 2023
+- **Confirmation of Payee** - Account name matching service for payment security
+- **Digital Padlock** - Real-time account locking capability for cybercrime protection
+- **Passwordless Web Banking** - Advanced authentication methods for ANZ Plus  
 
 ## 11. REVISION HISTORY  
 
 | Version | Date       | Notes                                           |
 |---------|------------|-------------------------------------------------|
+| 4.0     | 2024-12-19 | Production-ready SOP with current ANZ policies, enhanced MCP integration, and AI agentic systems |
 | 3.1     | 2025-07-10 | Added MCP orchestration, GenAI agent logic, audit guardrails (ANZ) |
 | 3.0     | 2025-07-08 | Combined FTP SOP with agent-based triage rules  |
 | 2.1     | 2025-07-06 | Defined fraud strategy thresholds                |
@@ -137,6 +142,24 @@ If crypto/investment related:
 # --- FRAUD SOP STRUCTURED BLOCKS ---
 
 ---
+fraud_type: RUL-BEC008
+call_required_if:
+  - Vendor bank details changed via email/request
+  - Abbreviated/altered vendor name in invoice or email
+  - Duplicate invoice reference or redirection request
+skip_call_if:
+  - Change verified directly with vendor via a secure, previously known channel (phone number from prior invoice/website)
+finalize_if:
+  - change_not_verified_via_secure_channel AND (duplicate_invoice OR vendor_name_manipulation)
+escalation_triggers:
+  - Any BEC with confirmed payment sent to new account details
+  - Repeat victim indicators or prior BEC history
+compliance_notes:
+  - APRA CPG 234
+  - AUSTRAC AML/CTF Act (Suspicious Matter Report if funds misdirected)
+  - ASIC RG 271 (customer protection)
+---
+# Add more fraud types as needed in the same format.
 fraud_type: RUL-TX901
 call_required_if:
   - Transfer > $5,000 within 60 mins of password change AND unknown payee

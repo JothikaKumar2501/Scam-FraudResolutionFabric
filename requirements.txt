@@ -6,3 +6,16 @@ plotly
 altair
 streamlit-aggrid
 streamlit-chat
+# Additional backend deps to ensure seamless runs
+mem0ai[graph]
+python-dotenv
+neo4j
+numpy
+pandas
+psutil
+pyyaml
+structlog
+pydantic
+typing-extensions
+fastapi
+uvicorn

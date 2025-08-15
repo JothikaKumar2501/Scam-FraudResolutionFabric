@@ -1,4 +1,22 @@
 {
+  "metadata": {
+    "version": "3.0",
+    "created_date": "2024-01-15",
+    "last_updated": "2024-12-19",
+    "description": "ANZ Bank customer demographic data for fraud detection system - Industry Standard Enhanced",
+    "total_customers": 10,
+    "data_quality_score": 0.98,
+    "data_owner": "ANZ Bank Fraud Operations",
+    "classification_level": "Internal",
+    "compliance_standards": ["KYC", "AML", "CDD"],
+    "data_retention_policy": "7 years",
+    "gdpr_compliant": true,
+    "audit_trail": {
+      "last_validation": "2024-12-19T10:00:00Z",
+      "validation_method": "Automated Quality Check",
+      "validator": "ANZ Data Quality Engine"
+    }
+  },
   "customers": [
     {
       "customer_id": "AU-CUST7712",
@@ -7,34 +25,75 @@
         "date_of_birth": "1989-05-17",
         "gender": "Male",
         "id_verified": true,
-        "digital_literacy_level": "High"
+        "digital_literacy_level": "High",
+        "document_verification_date": "2015-07-23",
+        "kyc_status": "Verified",
+        "identity_document_type": "Australian Passport",
+        "identity_document_number": "N1234567",
+        "identity_document_expiry": "2029-05-17"
       },
       "contact_information": {
-        "address": "27 Eucalyptus Drive, Blackburn VIC 3130",
+        "address": {
+          "street": "27 Eucalyptus Drive",
+          "suburb": "Blackburn",
+          "state": "VIC",
+          "postcode": "3130",
+          "country": "AU"
+        },
         "email": "oliver.thompson@gmail.com",
-        "phone": "0468 329 174",
-        "preferred_contact": "Email"
+        "phone": "+61 468 329 174",
+        "preferred_contact": "Email",
+        "address_verification_status": "Verified",
+        "email_verification_status": "Verified",
+        "phone_verification_status": "Verified"
       },
       "background": {
-        "citizenship": "Australian",
+        "citizenship": "AU",
+        "country_of_birth": "AU",
         "marital_status": "Married",
         "dependents": 2,
-        "language_preference": "English"
+        "language_preference": "en-AU",
+        "tax_residency": "AU",
+        "politically_exposed_person": false,
+        "sanctions_check": "Clear"
       },
       "employment": {
         "status": "Full-time",
         "occupation": "Software Engineer",
         "employer": "TechSolutions Pty Ltd",
-        "annual_income": "110000"
+        "employer_abn": "12 345 678 901",
+        "annual_income": 110000,
+        "income_currency": "AUD",
+        "employment_verification_date": "2023-06-15",
+        "employment_verification_status": "Verified"
       },
       "customer_details": {
         "segment": "Premium",
         "customer_since": "2015-07-23",
         "home_branch": "Melbourne CBD",
+        "bsb_code": "012-001",
+        "account_type": "Everyday Account",
         "known_device_familiarity_score": 0.95,
         "prior_alerts": 1,
         "scam_education_completed": true,
-        "risk_profile": "Low"
+        "risk_profile": "Low",
+        "fraud_flag": false,
+        "aml_risk_level": "Low",
+        "cdd_level": "Standard",
+        "digital_banking_adoption": "High",
+        "mobile_banking_enabled": true,
+        "online_banking_enabled": true,
+        "last_risk_assessment": "2024-11-15",
+        "next_risk_assessment": "2025-05-15",
+        "notes": "Tech-savvy customer with good security awareness"
+      },
+      "compliance": {
+        "kyc_review_due": "2025-07-23",
+        "aml_monitoring_active": true,
+        "regulatory_reporting_required": false,
+        "data_retention_category": "Standard",
+        "privacy_consent_given": true,
+        "marketing_consent_given": true
       }
     },
     {
@@ -44,34 +103,75 @@
         "date_of_birth": "1982-07-03",
         "gender": "Male",
         "id_verified": true,
-        "digital_literacy_level": "Medium"
+        "digital_literacy_level": "Medium",
+        "document_verification_date": "2013-09-22",
+        "kyc_status": "Verified",
+        "identity_document_type": "Australian Driver's Licence",
+        "identity_document_number": "123456789",
+        "identity_document_expiry": "2027-07-03"
       },
       "contact_information": {
-        "address": "5 Adelaide Terrace, Darwin NT 0800",
+        "address": {
+          "street": "5 Adelaide Terrace",
+          "suburb": "Darwin",
+          "state": "NT",
+          "postcode": "0800",
+          "country": "AU"
+        },
         "email": "jack.oconnor@yahoo.com.au",
-        "phone": "0459 218 673",
-        "preferred_contact": "Email"
+        "phone": "+61 459 218 673",
+        "preferred_contact": "Email",
+        "address_verification_status": "Verified",
+        "email_verification_status": "Verified",
+        "phone_verification_status": "Verified"
       },
       "background": {
-        "citizenship": "Australian",
+        "citizenship": "AU",
+        "country_of_birth": "AU",
         "marital_status": "Married",
         "dependents": 2,
-        "language_preference": "English"
+        "language_preference": "en-AU",
+        "tax_residency": "AU",
+        "politically_exposed_person": false,
+        "sanctions_check": "Clear"
       },
       "employment": {
         "status": "Self-employed",
         "occupation": "Electrician",
         "employer": "O'Connor Electrical Services",
-        "annual_income": "95000"
+        "employer_abn": "98 765 432 109",
+        "annual_income": 95000,
+        "income_currency": "AUD",
+        "employment_verification_date": "2023-08-10",
+        "employment_verification_status": "Verified"
       },
       "customer_details": {
         "segment": "Standard",
         "customer_since": "2013-09-22",
         "home_branch": "Darwin Central",
+        "bsb_code": "015-001",
+        "account_type": "Business Account",
         "known_device_familiarity_score": 0.65,
         "prior_alerts": 2,
         "scam_education_completed": false,
-        "risk_profile": "High"
+        "risk_profile": "High",
+        "fraud_flag": false,
+        "aml_risk_level": "Medium",
+        "cdd_level": "Enhanced",
+        "digital_banking_adoption": "Medium",
+        "mobile_banking_enabled": true,
+        "online_banking_enabled": true,
+        "last_risk_assessment": "2024-10-20",
+        "next_risk_assessment": "2025-04-20",
+        "notes": "Business owner, occasionally falls for invoice scams"
+      },
+      "compliance": {
+        "kyc_review_due": "2025-09-22",
+        "aml_monitoring_active": true,
+        "regulatory_reporting_required": false,
+        "data_retention_category": "Standard",
+        "privacy_consent_given": true,
+        "marketing_consent_given": false
       }
     },
     {
@@ -81,36 +181,543 @@
         "date_of_birth": "1965-11-30",
         "gender": "Female",
         "id_verified": false,
-        "digital_literacy_level": "Low"
+        "digital_literacy_level": "Low",
+        "document_verification_date": null,
+        "kyc_status": "Pending",
+        "identity_document_type": null,
+        "identity_document_number": null,
+        "identity_document_expiry": null
       },
       "contact_information": {
-        "address": "14 Victoria St, Cabramatta NSW 2166",
+        "address": {
+          "street": "14 Victoria Street",
+          "suburb": "Cabramatta",
+          "state": "NSW",
+          "postcode": "2166",
+          "country": "AU"
+        },
         "email": "minh.lan1965@yahoo.com",
-        "phone": "0422 991 038",
-        "preferred_contact": "Phone"
+        "phone": "+61 422 991 038",
+        "preferred_contact": "Phone",
+        "address_verification_status": "Pending",
+        "email_verification_status": "Unverified",
+        "phone_verification_status": "Verified"
       },
       "background": {
-        "citizenship": "Australian",
+        "citizenship": "AU",
+        "country_of_birth": "VN",
         "marital_status": "Widowed",
         "dependents": 0,
-        "language_preference": "Vietnamese"
+        "language_preference": "vi-AU",
+        "tax_residency": "AU",
+        "politically_exposed_person": false,
+        "sanctions_check": "Clear"
       },
       "employment": {
         "status": "Retired",
-        "occupation": "N/A",
+        "occupation": "Retired",
         "employer": "N/A",
-        "annual_income": "21000"
+        "employer_abn": null,
+        "annual_income": 21000,
+        "income_currency": "AUD",
+        "employment_verification_date": null,
+        "employment_verification_status": "Not Applicable"
       },
       "customer_details": {
         "segment": "Vulnerable",
         "customer_since": "2001-01-10",
         "home_branch": "Bankstown",
+        "bsb_code": "012-001",
+        "account_type": "Pensioner Account",
         "known_device_familiarity_score": 0.25,
         "prior_alerts": 4,
         "scam_education_completed": false,
         "risk_profile": "Very High",
         "fraud_flag": true,
-        "note": "Uses interpreter; lives alone; victim of previous investment scam in 2023"
+        "aml_risk_level": "High",
+        "cdd_level": "Enhanced",
+        "digital_banking_adoption": "Low",
+        "mobile_banking_enabled": false,
+        "online_banking_enabled": false,
+        "last_risk_assessment": "2024-12-01",
+        "next_risk_assessment": "2025-03-01",
+        "notes": "Uses interpreter; lives alone; victim of previous investment scam in 2023"
+      },
+      "compliance": {
+        "kyc_review_due": "2024-12-31",
+        "aml_monitoring_active": true,
+        "regulatory_reporting_required": true,
+        "data_retention_category": "Enhanced",
+        "privacy_consent_given": true,
+        "marketing_consent_given": false
+      }
+    },
+    {
+      "customer_id": "AU-CUST7630",
+      "personal_information": {
+        "name": "Isabella Maria Martinez",
+        "date_of_birth": "1986-04-10",
+        "gender": "Female",
+        "id_verified": true,
+        "digital_literacy_level": "High",
+        "document_verification_date": "2014-03-28",
+        "kyc_status": "Verified",
+        "identity_document_type": "Australian Passport",
+        "identity_document_number": "N9876543",
+        "identity_document_expiry": "2030-04-10"
+      },
+      "contact_information": {
+        "address": {
+          "street": "221 Lonsdale Street",
+          "suburb": "Adelaide",
+          "state": "SA",
+          "postcode": "5000",
+          "country": "AU"
+        },
+        "email": "bella.martinez@outlook.com",
+        "phone": "+61 478 332 916",
+        "preferred_contact": "Email",
+        "address_verification_status": "Verified",
+        "email_verification_status": "Verified",
+        "phone_verification_status": "Verified"
+      },
+      "background": {
+        "citizenship": "AU",
+        "country_of_birth": "AU",
+        "marital_status": "Married",
+        "dependents": 1,
+        "language_preference": "en-AU",
+        "tax_residency": "AU",
+        "politically_exposed_person": false,
+        "sanctions_check": "Clear"
+      },
+      "employment": {
+        "status": "Full-time",
+        "occupation": "Urban Planner",
+        "employer": "Adelaide City Council",
+        "employer_abn": "52 987 654 321",
+        "annual_income": 92000,
+        "income_currency": "AUD",
+        "employment_verification_date": "2023-09-20",
+        "employment_verification_status": "Verified"
+      },
+      "customer_details": {
+        "segment": "Premium",
+        "customer_since": "2014-03-28",
+        "home_branch": "Adelaide CBD",
+        "bsb_code": "015-001",
+        "account_type": "Everyday Account",
+        "known_device_familiarity_score": 0.85,
+        "prior_alerts": 0,
+        "scam_education_completed": true,
+        "risk_profile": "Low",
+        "fraud_flag": false,
+        "aml_risk_level": "Low",
+        "cdd_level": "Standard",
+        "digital_banking_adoption": "High",
+        "mobile_banking_enabled": true,
+        "online_banking_enabled": true,
+        "last_risk_assessment": "2024-10-15",
+        "next_risk_assessment": "2025-04-15",
+        "notes": "Security-conscious customer with good financial literacy"
+      },
+      "compliance": {
+        "kyc_review_due": "2025-03-28",
+        "aml_monitoring_active": true,
+        "regulatory_reporting_required": false,
+        "data_retention_category": "Standard",
+        "privacy_consent_given": true,
+        "marketing_consent_given": true
+      }
+    },
+    {
+      "customer_id": "AU-CUST5349",
+      "personal_information": {
+        "name": "Sarah Elizabeth Chen",
+        "date_of_birth": "1992-08-15",
+        "gender": "Female",
+        "id_verified": true,
+        "digital_literacy_level": "High",
+        "document_verification_date": "2018-11-05",
+        "kyc_status": "Verified",
+        "identity_document_type": "Australian Driver's Licence",
+        "identity_document_number": "987654321",
+        "identity_document_expiry": "2028-08-15"
+      },
+      "contact_information": {
+        "address": {
+          "street": "45 Collins Street",
+          "suburb": "Melbourne",
+          "state": "VIC",
+          "postcode": "3000",
+          "country": "AU"
+        },
+        "email": "sarah.chen@hotmail.com",
+        "phone": "+61 412 456 789",
+        "preferred_contact": "Email",
+        "address_verification_status": "Verified",
+        "email_verification_status": "Verified",
+        "phone_verification_status": "Verified"
+      },
+      "background": {
+        "citizenship": "AU",
+        "country_of_birth": "AU",
+        "marital_status": "Single",
+        "dependents": 0,
+        "language_preference": "en-AU",
+        "tax_residency": "AU",
+        "politically_exposed_person": false,
+        "sanctions_check": "Clear"
+      },
+      "employment": {
+        "status": "Full-time",
+        "occupation": "Marketing Manager",
+        "employer": "Digital Dynamics Pty Ltd",
+        "employer_abn": "34 567 890 123",
+        "annual_income": 85000,
+        "income_currency": "AUD",
+        "employment_verification_date": "2023-07-12",
+        "employment_verification_status": "Verified"
+      },
+      "customer_details": {
+        "segment": "Standard",
+        "customer_since": "2018-11-05",
+        "home_branch": "Melbourne CBD",
+        "bsb_code": "012-001",
+        "account_type": "Everyday Account",
+        "known_device_familiarity_score": 0.90,
+        "prior_alerts": 1,
+        "scam_education_completed": true,
+        "risk_profile": "Medium",
+        "fraud_flag": false,
+        "aml_risk_level": "Low",
+        "cdd_level": "Standard",
+        "digital_banking_adoption": "High",
+        "mobile_banking_enabled": true,
+        "online_banking_enabled": true,
+        "last_risk_assessment": "2024-11-20",
+        "next_risk_assessment": "2025-05-20",
+        "notes": "Young professional, active online banking user"
+      },
+      "compliance": {
+        "kyc_review_due": "2025-11-05",
+        "aml_monitoring_active": true,
+        "regulatory_reporting_required": false,
+        "data_retention_category": "Standard",
+        "privacy_consent_given": true,
+        "marketing_consent_given": true
+      }
+    },
+    {
+      "customer_id": "AU-CUST6831",
+      "personal_information": {
+        "name": "Robert William Johnson",
+        "date_of_birth": "1975-03-22",
+        "gender": "Male",
+        "id_verified": true,
+        "digital_literacy_level": "Medium",
+        "document_verification_date": "2010-06-12",
+        "kyc_status": "Verified",
+        "identity_document_type": "Australian Driver's Licence",
+        "identity_document_number": "456789123",
+        "identity_document_expiry": "2026-03-22"
+      },
+      "contact_information": {
+        "address": {
+          "street": "78 Queen Street",
+          "suburb": "Brisbane",
+          "state": "QLD",
+          "postcode": "4000",
+          "country": "AU"
+        },
+        "email": "rob.johnson@bigpond.com",
+        "phone": "+61 433 789 123",
+        "preferred_contact": "Phone",
+        "address_verification_status": "Verified",
+        "email_verification_status": "Verified",
+        "phone_verification_status": "Verified"
+      },
+      "background": {
+        "citizenship": "AU",
+        "country_of_birth": "AU",
+        "marital_status": "Divorced",
+        "dependents": 1,
+        "language_preference": "en-AU",
+        "tax_residency": "AU",
+        "politically_exposed_person": false,
+        "sanctions_check": "Clear"
+      },
+      "employment": {
+        "status": "Full-time",
+        "occupation": "Accountant",
+        "employer": "Johnson & Associates",
+        "employer_abn": "76 543 210 987",
+        "annual_income": 78000,
+        "income_currency": "AUD",
+        "employment_verification_date": "2023-05-18",
+        "employment_verification_status": "Verified"
+      },
+      "customer_details": {
+        "segment": "Standard",
+        "customer_since": "2010-06-12",
+        "home_branch": "Brisbane Central",
+        "bsb_code": "014-001",
+        "account_type": "Everyday Account",
+        "known_device_familiarity_score": 0.70,
+        "prior_alerts": 3,
+        "scam_education_completed": false,
+        "risk_profile": "High",
+        "fraud_flag": true,
+        "aml_risk_level": "Medium",
+        "cdd_level": "Enhanced",
+        "digital_banking_adoption": "Medium",
+        "mobile_banking_enabled": true,
+        "online_banking_enabled": true,
+        "last_risk_assessment": "2024-12-05",
+        "next_risk_assessment": "2025-03-05",
+        "notes": "Recently divorced, may be vulnerable to romance scams"
+      },
+      "compliance": {
+        "kyc_review_due": "2025-06-12",
+        "aml_monitoring_active": true,
+        "regulatory_reporting_required": false,
+        "data_retention_category": "Enhanced",
+        "privacy_consent_given": true,
+        "marketing_consent_given": false
+      }
+    },
+    {
+      "customer_id": "AU-CUST9823",
+      "personal_information": {
+        "name": "Margaret Patricia O'Brien",
+        "date_of_birth": "1958-12-08",
+        "gender": "Female",
+        "id_verified": true,
+        "digital_literacy_level": "Low",
+        "document_verification_date": "2020-02-20",
+        "kyc_status": "Verified",
+        "identity_document_type": "Australian Passport",
+        "identity_document_number": "N1111111",
+        "identity_document_expiry": "2028-12-08"
+      },
+      "contact_information": {
+        "address": {
+          "street": "12 High Street",
+          "suburb": "Perth",
+          "state": "WA",
+          "postcode": "6000",
+          "country": "AU"
+        },
+        "email": "margaret.obrien@westnet.com.au",
+        "phone": "+61 444 321 654",
+        "preferred_contact": "Phone",
+        "address_verification_status": "Verified",
+        "email_verification_status": "Verified",
+        "phone_verification_status": "Verified"
+      },
+      "background": {
+        "citizenship": "AU",
+        "country_of_birth": "AU",
+        "marital_status": "Widowed",
+        "dependents": 0,
+        "language_preference": "en-AU",
+        "tax_residency": "AU",
+        "politically_exposed_person": false,
+        "sanctions_check": "Clear"
+      },
+      "employment": {
+        "status": "Retired",
+        "occupation": "Retired",
+        "employer": "N/A",
+        "employer_abn": null,
+        "annual_income": 45000,
+        "income_currency": "AUD",
+        "employment_verification_date": null,
+        "employment_verification_status": "Not Applicable"
+      },
+      "customer_details": {
+        "segment": "Vulnerable",
+        "customer_since": "1995-02-20",
+        "home_branch": "Perth Central",
+        "bsb_code": "016-001",
+        "account_type": "Pensioner Account",
+        "known_device_familiarity_score": 0.30,
+        "prior_alerts": 2,
+        "scam_education_completed": false,
+        "risk_profile": "High",
+        "fraud_flag": false,
+        "aml_risk_level": "Medium",
+        "cdd_level": "Enhanced",
+        "digital_banking_adoption": "Low",
+        "mobile_banking_enabled": false,
+        "online_banking_enabled": false,
+        "last_risk_assessment": "2024-11-10",
+        "next_risk_assessment": "2025-02-10",
+        "notes": "Elderly customer, limited digital experience, lives alone"
+      },
+      "compliance": {
+        "kyc_review_due": "2025-02-20",
+        "aml_monitoring_active": true,
+        "regulatory_reporting_required": false,
+        "data_retention_category": "Enhanced",
+        "privacy_consent_given": true,
+        "marketing_consent_given": false
+      }
+    },
+    {
+      "customer_id": "AU-CUST4581",
+      "personal_information": {
+        "name": "David Michael Wilson",
+        "date_of_birth": "1980-09-14",
+        "gender": "Male",
+        "id_verified": true,
+        "digital_literacy_level": "High",
+        "document_verification_date": "2012-04-18",
+        "kyc_status": "Verified",
+        "identity_document_type": "Australian Passport",
+        "identity_document_number": "N2222222",
+        "identity_document_expiry": "2030-09-14"
+      },
+      "contact_information": {
+        "address": {
+          "street": "156 George Street",
+          "suburb": "Sydney",
+          "state": "NSW",
+          "postcode": "2000",
+          "country": "AU"
+        },
+        "email": "david.wilson@gmail.com",
+        "phone": "+61 455 987 654",
+        "preferred_contact": "Email",
+        "address_verification_status": "Verified",
+        "email_verification_status": "Verified",
+        "phone_verification_status": "Verified"
+      },
+      "background": {
+        "citizenship": "AU",
+        "country_of_birth": "AU",
+        "marital_status": "Married",
+        "dependents": 3,
+        "language_preference": "en-AU",
+        "tax_residency": "AU",
+        "politically_exposed_person": false,
+        "sanctions_check": "Clear"
+      },
+      "employment": {
+        "status": "Full-time",
+        "occupation": "Investment Advisor",
+        "employer": "Wilson Financial Services",
+        "employer_abn": "11 222 333 444",
+        "annual_income": 120000,
+        "income_currency": "AUD",
+        "employment_verification_date": "2023-08-25",
+        "employment_verification_status": "Verified"
+      },
+      "customer_details": {
+        "segment": "Premium",
+        "customer_since": "2012-04-18",
+        "home_branch": "Sydney CBD",
+        "bsb_code": "012-001",
+        "account_type": "Premium Account",
+        "known_device_familiarity_score": 0.95,
+        "prior_alerts": 0,
+        "scam_education_completed": true,
+        "risk_profile": "Low",
+        "fraud_flag": false,
+        "aml_risk_level": "Low",
+        "cdd_level": "Standard",
+        "digital_banking_adoption": "High",
+        "mobile_banking_enabled": true,
+        "online_banking_enabled": true,
+        "last_risk_assessment": "2024-10-30",
+        "next_risk_assessment": "2025-04-30",
+        "notes": "Financial professional, high net worth, sophisticated user"
+      },
+      "compliance": {
+        "kyc_review_due": "2025-04-18",
+        "aml_monitoring_active": true,
+        "regulatory_reporting_required": false,
+        "data_retention_category": "Standard",
+        "privacy_consent_given": true,
+        "marketing_consent_given": true
+      }
+    },
+    {
+      "customer_id": "AU-CUST3917",
+      "personal_information": {
+        "name": "Lisa Anne Thompson",
+        "date_of_birth": "1988-11-25",
+        "gender": "Female",
+        "id_verified": true,
+        "digital_literacy_level": "Medium",
+        "document_verification_date": "2016-08-30",
+        "kyc_status": "Verified",
+        "identity_document_type": "Australian Driver's Licence",
+        "identity_document_number": "555666777",
+        "identity_document_expiry": "2027-11-25"
+      },
+      "contact_information": {
+        "address": {
+          "street": "89 Murray Street",
+          "suburb": "Hobart",
+          "state": "TAS",
+          "postcode": "7000",
+          "country": "AU"
+        },
+        "email": "lisa.thompson@yahoo.com.au",
+        "phone": "+61 466 555 888",
+        "preferred_contact": "Email",
+        "address_verification_status": "Verified",
+        "email_verification_status": "Verified",
+        "phone_verification_status": "Verified"
+      },
+      "background": {
+        "citizenship": "AU",
+        "country_of_birth": "AU",
+        "marital_status": "Single",
+        "dependents": 0,
+        "language_preference": "en-AU",
+        "tax_residency": "AU",
+        "politically_exposed_person": false,
+        "sanctions_check": "Clear"
+      },
+      "employment": {
+        "status": "Part-time",
+        "occupation": "Teacher",
+        "employer": "Hobart Primary School",
+        "employer_abn": "33 444 555 666",
+        "annual_income": 65000,
+        "income_currency": "AUD",
+        "employment_verification_date": "2023-09-15",
+        "employment_verification_status": "Verified"
+      },
+      "customer_details": {
+        "segment": "Standard",
+        "customer_since": "2016-08-30",
+        "home_branch": "Hobart Central",
+        "bsb_code": "017-001",
+        "account_type": "Everyday Account",
+        "known_device_familiarity_score": 0.75,
+        "prior_alerts": 1,
+        "scam_education_completed": true,
+        "risk_profile": "Medium",
+        "fraud_flag": false,
+        "aml_risk_level": "Low",
+        "cdd_level": "Standard",
+        "digital_banking_adoption": "Medium",
+        "mobile_banking_enabled": true,
+        "online_banking_enabled": true,
+        "last_risk_assessment": "2024-11-25",
+        "next_risk_assessment": "2025-05-25",
+        "notes": "Educator, good security awareness, moderate online activity"
+      },
+      "compliance": {
+        "kyc_review_due": "2025-08-30",
+        "aml_monitoring_active": true,
+        "regulatory_reporting_required": false,
+        "data_retention_category": "Standard",
+        "privacy_consent_given": true,
+        "marketing_consent_given": true
       }
     }
   ]

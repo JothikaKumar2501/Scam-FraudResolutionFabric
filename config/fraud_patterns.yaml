@@ -1,0 +1,340 @@
+# ANZ Bank Fraud Pattern Recognition for Authorized Scam Detection
+# Dynamic, intelligent pattern detection for production-ready fraud prevention
+
+# Business Email Compromise (BEC) Patterns
+business_email_compromise_patterns:
+  fraud_type: "business_email_compromise"
+  risk_score: 0.9
+  patterns:
+    banking_detail_change:
+      indicators:
+        - "vendor_impersonation"
+        - "banking_detail_change"
+        - "invoice_redirection"
+        - "urgent_payment_request"
+      confidence_threshold: 0.8
+      required_verification:
+        - "vendor_contact"
+        - "banking_verification"
+        - "invoice_verification"
+    vendor_impersonation:
+      indicators:
+        - "familiar_vendor_name"
+        - "altered_contact_details"
+        - "urgent_communication"
+        - "banking_detail_request"
+      confidence_threshold: 0.85
+      required_verification:
+        - "vendor_identity"
+        - "contact_verification"
+        - "communication_channel"
+    invoice_redirection:
+      indicators:
+        - "legitimate_invoice_format"
+        - "altered_banking_details"
+        - "urgent_payment_demand"
+        - "familiar_vendor_relationship"
+      confidence_threshold: 0.9
+      required_verification:
+        - "invoice_authenticity"
+        - "banking_detail_verification"
+        - "vendor_contact_confirmation"
+
+# Romance Scam Patterns
+romance_scam_patterns:
+  fraud_type: "romance_scam"
+  risk_score: 0.85
+  patterns:
+    emotional_manipulation:
+      indicators:
+        - "emotional_manipulation"
+        - "urgent_requests"
+        - "isolation_tactics"
+        - "relationship_escalation"
+      confidence_threshold: 0.8
+      required_verification:
+        - "relationship_authenticity"
+        - "identity_verification"
+        - "meeting_confirmation"
+    emergency_funding:
+      indicators:
+        - "urgent_emergency"
+        - "medical_expenses"
+        - "travel_costs"
+        - "business_opportunity"
+      confidence_threshold: 0.85
+      required_verification:
+        - "emergency_authenticity"
+        - "expense_verification"
+        - "relationship_confirmation"
+    isolation_tactics:
+      indicators:
+        - "secrecy_demands"
+        - "family_isolation"
+        - "friend_isolation"
+        - "confidentiality_requests"
+      confidence_threshold: 0.9
+      required_verification:
+        - "relationship_health"
+        - "communication_patterns"
+        - "isolation_indicators"
+
+# Investment Scam Patterns
+investment_scam_patterns:
+  fraud_type: "investment_scam"
+  risk_score: 0.9
+  patterns:
+    promised_returns:
+      indicators:
+        - "promised_returns"
+        - "pressure_tactics"
+        - "fake_platforms"
+        - "urgent_investment_opportunity"
+      confidence_threshold: 0.85
+      required_verification:
+        - "platform_legitimacy"
+        - "regulatory_compliance"
+        - "return_realism"
+    crypto_investment:
+      indicators:
+        - "cryptocurrency_investment"
+        - "guaranteed_profits"
+        - "limited_time_opportunity"
+        - "social_media_promotion"
+      confidence_threshold: 0.8
+      required_verification:
+        - "platform_verification"
+        - "regulatory_status"
+        - "investment_legitimacy"
+    forex_trading:
+      indicators:
+        - "forex_trading_opportunity"
+        - "high_returns_promise"
+        - "pressure_to_invest"
+        - "fake_platform"
+      confidence_threshold: 0.85
+      required_verification:
+        - "platform_legitimacy"
+        - "regulatory_compliance"
+        - "trading_authenticity"
+
+# Tech Support Scam Patterns
+tech_support_scam_patterns:
+  fraud_type: "tech_support_scam"
+  risk_score: 0.8
+  patterns:
+    remote_access:
+      indicators:
+        - "remote_access_request"
+        - "urgent_technical_issues"
+        - "payment_demands"
+        - "computer_virus_claims"
+      confidence_threshold: 0.8
+      required_verification:
+        - "technical_issue_authenticity"
+        - "remote_access_legitimacy"
+        - "payment_purpose"
+    system_compromise:
+      indicators:
+        - "system_compromise_allegations"
+        - "urgent_fix_required"
+        - "payment_for_services"
+        - "threat_claims"
+      confidence_threshold: 0.85
+      required_verification:
+        - "system_issue_verification"
+        - "service_legitimacy"
+        - "payment_justification"
+
+# Impersonation Scam Patterns
+impersonation_scam_patterns:
+  fraud_type: "impersonation_scam"
+  risk_score: 0.85
+  patterns:
+    government_impersonation:
+      indicators:
+        - "government_impersonation"
+        - "urgent_legal_action"
+        - "confidentiality_demands"
+        - "authority_claims"
+      confidence_threshold: 0.9
+      required_verification:
+        - "identity_verification"
+        - "authority_confirmation"
+        - "contact_legitimacy"
+    bank_official_impersonation:
+      indicators:
+        - "bank_official_impersonation"
+        - "account_security_claims"
+        - "urgent_action_required"
+        - "personal_info_request"
+      confidence_threshold: 0.85
+      required_verification:
+        - "official_identity"
+        - "contact_verification"
+        - "request_legitimacy"
+
+# Purchase Scam Patterns
+purchase_scam_patterns:
+  fraud_type: "purchase_scam"
+  risk_score: 0.7
+  patterns:
+    online_purchase:
+      indicators:
+        - "online_purchase"
+        - "seller_pressure"
+        - "marketplace_transaction"
+        - "urgent_purchase"
+      confidence_threshold: 0.75
+      required_verification:
+        - "seller_legitimacy"
+        - "product_authenticity"
+        - "payment_method"
+    marketplace_scam:
+      indicators:
+        - "marketplace_transaction"
+        - "unusual_payment_method"
+        - "seller_pressure"
+        - "too_good_to_be_true"
+      confidence_threshold: 0.8
+      required_verification:
+        - "seller_verification"
+        - "product_legitimacy"
+        - "payment_security"
+
+# Behavioral Pattern Indicators
+behavioral_patterns:
+  high_risk_indicators:
+    urgency_pressure:
+      indicators:
+        - "urgent_action_required"
+        - "limited_time_opportunity"
+        - "pressure_to_decide"
+        - "threat_of_consequences"
+      confidence_threshold: 0.8
+    emotional_manipulation:
+      indicators:
+        - "guilt_tripping"
+        - "emotional_blackmail"
+        - "sympathy_requests"
+        - "relationship_pressure"
+      confidence_threshold: 0.85
+    secrecy_demands:
+      indicators:
+        - "confidentiality_requests"
+        - "secrecy_demands"
+        - "isolation_requests"
+        - "privacy_claims"
+      confidence_threshold: 0.9
+    unusual_payment_methods:
+      indicators:
+        - "cryptocurrency_payment"
+        - "gift_card_payment"
+        - "wire_transfer_request"
+        - "unusual_banking_details"
+      confidence_threshold: 0.8
+
+# Transaction Pattern Indicators
+transaction_patterns:
+  amount_indicators:
+    high_amount:
+      threshold: 10000
+      risk_multiplier: 1.5
+      indicators:
+        - "unusual_amount"
+        - "higher_than_normal"
+        - "significant_increase"
+    very_high_amount:
+      threshold: 50000
+      risk_multiplier: 2.0
+      indicators:
+        - "very_high_amount"
+        - "unusual_frequency"
+        - "pattern_break"
+  frequency_indicators:
+    unusual_frequency:
+      indicators:
+        - "increased_frequency"
+        - "pattern_change"
+        - "unusual_timing"
+      confidence_threshold: 0.7
+    time_based_patterns:
+      indicators:
+        - "evening_transactions"
+        - "weekend_activity"
+        - "holiday_periods"
+        - "urgent_timing"
+      confidence_threshold: 0.6
+
+# Device and Location Patterns
+device_patterns:
+  device_indicators:
+    unfamiliar_device:
+      indicators:
+        - "new_device_login"
+        - "unfamiliar_location"
+        - "device_mismatch"
+        - "suspicious_activity"
+      confidence_threshold: 0.8
+    location_anomalies:
+      indicators:
+        - "geographic_mismatch"
+        - "unusual_location"
+        - "travel_patterns"
+        - "location_change"
+      confidence_threshold: 0.7
+
+# Customer Vulnerability Patterns
+customer_vulnerability_patterns:
+  demographic_indicators:
+    elderly_customer:
+      indicators:
+        - "older_age_group"
+        - "limited_digital_literacy"
+        - "vulnerable_demographics"
+        - "isolation_indicators"
+      confidence_threshold: 0.8
+    high_risk_profile:
+      indicators:
+        - "prior_alerts"
+        - "no_scam_education"
+        - "vulnerable_indicators"
+        - "risk_profile"
+      confidence_threshold: 0.85
+    financial_stress:
+      indicators:
+        - "financial_pressure"
+        - "debt_indicators"
+        - "economic_vulnerability"
+        - "desperation_signals"
+      confidence_threshold: 0.8
+
+# Regulatory Compliance Patterns
+regulatory_patterns:
+  austrac_indicators:
+    large_transaction:
+      threshold: 10000
+      indicators:
+        - "large_amount"
+        - "suspicious_pattern"
+        - "unusual_activity"
+      reporting_required: true
+    structured_transaction:
+      indicators:
+        - "multiple_small_transactions"
+        - "pattern_avoidance"
+        - "structured_activity"
+      reporting_required: true
+  apra_indicators:
+    high_risk_customer:
+      indicators:
+        - "vulnerable_customer"
+        - "high_risk_profile"
+        - "enhanced_monitoring"
+      compliance_required: true
+    information_security:
+      indicators:
+        - "data_breach_indicators"
+        - "security_concerns"
+        - "privacy_issues"
+      compliance_required: true 

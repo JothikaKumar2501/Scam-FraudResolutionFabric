@@ -48,3 +48,5 @@ test_agent_memory/
 
 # Scam data - potentially sensitive test data
 scams/
+
+.vscode/

@@ -1,0 +1,20 @@
+# AgentCore Runtime Requirements
+bedrock-agentcore
+strands-agents
+bedrock-agentcore-starter-toolkit
+
+# Your existing dependencies
+fastapi
+uvicorn
+python-dotenv
+boto3
+qdrant-client
+neo4j
+mem0ai
+httpx
+pydantic
+asyncio-mqtt
+concurrent-futures
+
+# AgentCore Memory Integration
+bedrock-agentcore-starter-toolkit

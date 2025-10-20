@@ -1,13 +1,10 @@
 streamlit
 boto3
-langgraph
-qdrant-client
 plotly
 altair
 streamlit-aggrid
 streamlit-chat
 # Additional backend deps to ensure seamless runs
-mem0ai[graph]
 python-dotenv
 neo4j
 numpy
@@ -19,3 +16,7 @@ pydantic
 typing-extensions
 fastapi
 uvicorn
+# New dependencies for Strands and Bedrock AgentCore
+strands
+bedrock-agentcore
+bedrock-agentcore-starter-toolkit

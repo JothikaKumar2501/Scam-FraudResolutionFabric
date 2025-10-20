@@ -22,5 +22,29 @@ docs_md/
 frontend/.next/
 frontend/node_modules/
 frontend/package-lock.json
-
+todo.md
 CLAUDE.md
+
+*.md
+
+# Test files - temporary/experimental
+test_*.py
+pytest_*.py
+
+# Deployment scripts - may contain sensitive info
+deploy_to_vm.sh
+
+# Docker files - may contain sensitive build context
+.dockerignore
+Dockerfile
+
+# AgentCore configuration - may contain sensitive settings
+.bedrock_agentcore.yaml
+.bedrock_agentcore/
+
+# Agent memory data - contains runtime data
+agent_core_memory/
+test_agent_memory/
+
+# Scam data - potentially sensitive test data
+scams/

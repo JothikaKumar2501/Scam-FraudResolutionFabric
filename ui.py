@@ -4,7 +4,7 @@ import os
 from agents_multi import SupervisorAgent, DialogueAgent
 from context_store import ContextStore
 import copy
-from langgraph_multi_agent import run_langgraph_multi_agent, stream_langgraph_steps
+from langgraph_multi_agent import run_strands_multi_agent, stream_strands_steps
 import time
 import re
 import types
@@ -396,7 +396,7 @@ def agentic_system_page():
         # --- Process streaming updates step by step ---
         # Always re-initialize the generator if it's None (e.g., after a reload)
         if st.session_state.streaming_generator is None:
-            st.session_state.streaming_generator = stream_langgraph_steps(backend_state)
+            st.session_state.streaming_generator = stream_strands_steps(backend_state)
             st.session_state.current_state = None
         
         # Get next state from generator
@@ -621,7 +621,7 @@ def agentic_system_page():
                     if user_input:
                         st.session_state.backend_state['dialogue_history'].append({'role': 'user', 'user': user_input})
                         if st.session_state.streaming_generator is None:
-                            st.session_state.streaming_generator = stream_langgraph_steps(st.session_state.backend_state)
+                            st.session_state.streaming_generator = stream_strands_steps(st.session_state.backend_state)
                         st.session_state.current_state = next(st.session_state.streaming_generator)
                         st.rerun()
                 elif st.session_state.get('chat_done', False):

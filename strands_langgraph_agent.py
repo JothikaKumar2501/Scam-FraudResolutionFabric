@@ -1,6 +1,6 @@
 """
 Strands-based Multi-Agent System for Authorized Scam Detection
-Pure Strands framework implementation for fraud detection and risk assessment
+Enhanced with Intel Agent, Agent Core Memory, and Streaming Fixes
 """
 
 import os
@@ -24,30 +24,44 @@ from RiskAssessorAgent import risk_assessor_agent
 from PolicyDecisionAgent import policy_decision_agent
 from FeedbackCollectorAgent import feedback_collector_agent
 
+# Intel agent for threat intelligence (5th context agent)
+try:
+    from intel_agent import intel_agent
+    INTEL_AGENT_AVAILABLE = True
+    print("✅ Intel Agent loaded successfully")
+except Exception as e:
+    print(f"⚠️ Intel agent not available: {e}")
+    intel_agent = None
+    INTEL_AGENT_AVAILABLE = False
+
 # Optional enhanced dialogue agent with XAI
 try:
     from intelligent_dialogue import IntelligentDialogueAgent as _XaiDialogue
+    print("✅ XAI Dialogue Agent loaded successfully")
 except Exception:
     _XaiDialogue = None
+
+# Agent Core Memory Integration (replaces Mem0)
+try:
+    from agent_core_memory_integration import agent_core_memory, AgentCoreMemoryIntegration
+    MEMORY_AVAILABLE = True
+    print("✅ Agent Core Memory loaded successfully")
+except Exception as e:
+    print(f"⚠️ Agent Core Memory not available: {e}")
+    agent_core_memory = None
+    MEMORY_AVAILABLE = False
 
 from context_store import ContextStore
 from bedrock_agentcore import BedrockAgentCoreApp
 
-# AgentCore Memory Integration
-try:
-    from dotenv import load_dotenv
-    load_dotenv()
-    from agent_core_memory_integration import AgentCoreMemoryIntegration
-    agentcore_memory = AgentCoreMemoryIntegration()
-    MEMORY_AVAILABLE = True
-    print("✅ AgentCore Memory integrated successfully")
-except Exception as e:
-    print(f"⚠️ AgentCore Memory not available: {e}")
-    agentcore_memory = None
-    MEMORY_AVAILABLE = False
-
 app = BedrockAgentCoreApp()
 context_store = ContextStore()
+
+# Initialize memory integration
+if MEMORY_AVAILABLE:
+    memory_integration = AgentCoreMemoryIntegration()
+else:
+    memory_integration = None
 
 # Performance monitoring
 def performance_monitor(func):
@@ -75,43 +89,19 @@ def log_step(state, message):
     state['logs'].append(message)
     return state
 
-def store_to_memory(state: Dict[str, Any], data: str, agent_name: str, data_type: str = "context"):
-    """Store data to AgentCore memory without disrupting workflow"""
-    if not MEMORY_AVAILABLE or not agentcore_memory:
-        return
-    
-    try:
-        # Get case ID from state
-        case_id = (
-            state.get('transaction', {}).get('alertId') or 
-            state.get('transaction', {}).get('alert_id') or 
-            f"case_{int(time.time())}"
-        )
-        
-        # Store based on data type
-        if data_type == "context":
-            agentcore_memory.store_context_summary(case_id, data, agent_name)
-        elif data_type == "risk":
-            agentcore_memory.store_risk_assessment(case_id, data, agent_name=agent_name)
-        elif data_type == "dialogue":
-            agentcore_memory.store_customer_interaction(case_id, data, agent_name)
-        elif data_type == "policy":
-            agentcore_memory.store_policy_decision(case_id, data, agent_name)
-        else:
-            agentcore_memory.store_agent_summary(case_id, data, agent_name)
-            
-    except Exception as e:
-        # Non-blocking - memory errors don't affect main workflow
-        print(f"⚠️ Memory storage error (non-blocking): {e}")
-
 @performance_monitor
 def run_context_agents_parallel(state):
-    """Run all context agents in parallel for better performance using Strands agents"""
+    """Run all context agents in parallel with Intel Agent and memory integration"""
+    print("🚀 Running context agents in parallel...")
     context_results = {}
     logs = []
     responses = []
+    agent_names = []
     
-    # Define context agents with their configurations
+    # Get case ID for memory storage
+    case_id = state.get('transaction', {}).get('alertId') or state.get('transaction', {}).get('alert_id') or 'unknown_case'
+    
+    # Define context agents with their configurations (including Intel Agent as 5th)
     context_agents = [
         (transaction_context_agent, 'TransactionContextAgent', 'transaction_context', 'analyze_transaction'),
         (customer_info_agent, 'CustomerInfoAgent', 'customer_context', 'analyze_customer'),
@@ -119,21 +109,63 @@ def run_context_agents_parallel(state):
         (behavioral_pattern_agent, 'BehavioralPatternAgent', 'anomaly_context', 'analyze_behavior'),
     ]
     
+    # Add Intel Agent as 5th context agent if available
+    if INTEL_AGENT_AVAILABLE and intel_agent:
+        context_agents.append((intel_agent, 'IntelAgent', 'threat_intelligence', 'update_threat_patterns_tool'))
+        print("✅ Intel Agent included as 5th context agent")
+    
     def run_single_agent(agent_config):
-        """Run a single Strands agent and return results"""
+        """Run a single Strands agent and return results with memory storage"""
         agent, name, key, method_name = agent_config
         try:
-            # Get the method from the agent
-            method = getattr(agent, method_name)
-            result = method(state)
-            return {
-                'name': name,
-                'key': key,
-                'result': result,
-                'response': result.get(key, '[No response]') if result else '[No response]'
-            }
+            if name == 'IntelAgent':
+                # Intel agent has a different interface - call it directly
+                result = agent("Fetch latest threat patterns for authorized fraud analysis")
+                response_text = result if isinstance(result, str) else str(result)
+                
+                # Store in memory if available
+                if MEMORY_AVAILABLE and memory_integration:
+                    try:
+                        memory_integration.store_context_summary(case_id, response_text, name)
+                    except Exception as e:
+                        print(f"Memory storage error for {name}: {e}")
+                
+                return {
+                    'name': name,
+                    'key': key,
+                    'result': {key: result},
+                    'response': response_text
+                }
+            else:
+                # Regular Strands agents with tool methods
+                method = getattr(agent, method_name)
+                result = method(state)
+                
+                # Extract the actual response text for UI display
+                if result and isinstance(result, dict):
+                    # Get the context value for UI display
+                    response_text = result.get(key, '[No response]')
+                    # If it's still a dict, convert to string for UI
+                    if isinstance(response_text, dict):
+                        response_text = str(response_text)
+                else:
+                    response_text = '[No response]'
+                
+                # Store in memory if available
+                if MEMORY_AVAILABLE and memory_integration:
+                    try:
+                        memory_integration.store_context_summary(case_id, str(response_text), name)
+                    except Exception as e:
+                        print(f"Memory storage error for {name}: {e}")
+                
+                return {
+                    'name': name,
+                    'key': key,
+                    'result': result,
+                    'response': response_text
+                }
         except Exception as e:
-            print(f"Error running {name}: {e}")
+            print(f"❌ Error running {name}: {e}")
             return {
                 'name': name,
                 'key': key,
@@ -142,7 +174,7 @@ def run_context_agents_parallel(state):
             }
     
     # Run all context agents in parallel using ThreadPoolExecutor
-    with concurrent.futures.ThreadPoolExecutor(max_workers=4) as executor:
+    with concurrent.futures.ThreadPoolExecutor(max_workers=5) as executor:  # Increased to 5 for Intel Agent
         # Submit all agent tasks
         future_to_agent = {
             executor.submit(run_single_agent, agent_config): agent_config[1] 
@@ -156,14 +188,14 @@ def run_context_agents_parallel(state):
                 agent_result = future.result()
                 if agent_result['result'] is not None and agent_result['key'] in agent_result['result']:
                     context_results[agent_result['key']] = agent_result['result'][agent_result['key']]
-                    # Store context to memory (non-blocking)
-                    store_to_memory(state, str(agent_result['response']), agent_result['name'], "context")
                 logs.append(agent_result['name'])
                 responses.append(agent_result['response'])
+                agent_names.append(agent_result['name'])
             except Exception as e:
-                print(f"Error collecting result from {agent_name}: {e}")
+                print(f"❌ Error collecting result from {agent_name}: {e}")
                 logs.append(agent_name)
                 responses.append(f'[Error: {e}]')
+                agent_names.append(agent_name)
     
     # Update state with results
     state.update(context_results)
@@ -173,6 +205,9 @@ def run_context_agents_parallel(state):
         state['agent_responses'] = []
     state['logs'].extend(logs)
     state['agent_responses'].extend(responses)
+    
+    # Enhanced logging with streaming output
+    print(f"✅ Context agents completed: {', '.join(agent_names)}")
     
     return state
 
@@ -189,44 +224,82 @@ def run_strands_multi_agent(alert, max_steps=None):
         state['contexts_built'] = True
         step += 4
     
-    # 2. RiskSynthesizerAgent
+    # 2. RiskSynthesizerAgent with memory integration
     if (max_steps is None or step < max_steps) and not state.get('risk_synth_done'):
+        print("🔍 Running RiskSynthesizerAgent...")
         result = risk_synthesizer_agent.synthesize_risk(state)
+        
+        # Extract response for UI display
+        if result and isinstance(result, dict):
+            response_text = result.get('risk_summary_context', '[No response]')
+            # If it's still a dict, convert to string for UI
+            if isinstance(response_text, dict):
+                response_text = str(response_text)
+        else:
+            response_text = '[No response]'
+        
+        # Store in memory
+        if MEMORY_AVAILABLE and memory_integration:
+            try:
+                memory_integration.store_risk_assessment(case_id, str(response_text), agent_name="RiskSynthesizerAgent")
+            except Exception as e:
+                print(f"Memory storage error for RiskSynthesizerAgent: {e}")
+        
         state['logs'].append("RiskSynthesizerAgent")
-        response_text = result.get('risk_summary_context', '[No response]') if result and isinstance(result, dict) else '[No response]'
         state['agent_responses'].append(response_text)
-        # Store risk assessment to memory
-        store_to_memory(state, str(response_text), "RiskSynthesizerAgent", "risk")
         if result and isinstance(result, dict):
             state.update(result)
         state['risk_synth_done'] = True
+        print(f"💬 RiskSynthesizerAgent assessment: {response_text[:100]}...")
         step += 1
     
-    # 3. TriageAgent
+    # 3. TriageAgent with memory integration
     if (max_steps is None or step < max_steps) and not state.get('triage_done'):
+        print("⚡ Running TriageAgent...")
         result = triage_agent.triage_case(state)
+        
+        # Extract response for UI display
+        if result and isinstance(result, dict):
+            response_text = result.get('triage_decision', '[No response]')
+            # If it's still a dict, convert to string for UI
+            if isinstance(response_text, dict):
+                response_text = str(response_text)
+        else:
+            response_text = '[No response]'
+        
+        # Store in memory
+        if MEMORY_AVAILABLE and memory_integration:
+            try:
+                memory_integration.store_agent_summary(case_id, str(response_text), "TriageAgent")
+            except Exception as e:
+                print(f"Memory storage error for TriageAgent: {e}")
+        
         state['logs'].append("TriageAgent")
-        response_text = result.get('triage_decision', '[No response]') if result and isinstance(result, dict) else '[No response]'
         state['agent_responses'].append(response_text)
-        # Store triage decision to memory
-        store_to_memory(state, str(response_text), "TriageAgent", "summary")
         if result and isinstance(result, dict):
             state.update(result)
         state['triage_done'] = True
+        print(f"🎯 TriageAgent decision: {response_text[:100]}...")
         step += 1
     
-    # 4. DialogueAgent <-> RiskAssessorAgent loop (non-streaming fallback)
+    # 4. DialogueAgent <-> RiskAssessorAgent loop with memory integration
     dialogue_history = state.get('dialogue_history', [])
     done = False
     max_turns = 8
     turn_count = 0
-    next_q = None  # Initialize to avoid UnboundLocalError
-    agent_name = "DialogueAgent"  # Default agent name
-    
     while not done and turn_count < max_turns and (max_steps is None or step < max_steps):
+        print("💬 Running DialogueAgent...")
         next_q, agent_name, finished = dialogue_agent.get_next_question_and_agent(dialogue_history, state)
         if next_q:
             dialogue_history.append({'agent': agent_name, 'question': next_q, 'agent_log': agent_name})
+            
+            # Store dialogue in memory
+            if MEMORY_AVAILABLE and memory_integration:
+                try:
+                    memory_integration.store_customer_interaction(case_id, str(next_q), "DialogueAgent")
+                except Exception as e:
+                    print(f"Memory storage error for DialogueAgent: {e}")
+        
         # In non-streaming path do NOT simulate user; break until UI supplies input
         # Mark waiting state and exit loop gracefully
         done = finished or (turn_count + 1) >= max_turns
@@ -235,38 +308,66 @@ def run_strands_multi_agent(alert, max_steps=None):
         break
     state['dialogue_history'] = dialogue_history
     state['logs'].append("DialogueAgent")
-    state['agent_responses'].append(next_q if isinstance(next_q, str) else '[Dialogue update]')
+    response_text = next_q if isinstance(next_q, str) else '[Dialogue update]'
+    state['agent_responses'].append(response_text)
     
-    # 5. PolicyDecisionAgent (only if finalization occurred and not already run)
+    # ALSO set dialogue_analysis for frontend compatibility
+    if next_q and isinstance(next_q, str):
+        state['dialogue_analysis'] = next_q
+        print(f"❓ Dialogue Question: {next_q}")
+    
+    print(f"💬 DialogueAgent generated question: {response_text[:100]}...")
+    
+    # 5. PolicyDecisionAgent with memory integration
     if (max_steps is None or step < max_steps) and (state.get('chat_done') or state.get('risk_ready_to_finalize') or state.get('finalized_by_risk')) and not state.get('policy_decision_done'):
+        print("📋 Running PolicyDecisionAgent...")
         result = policy_decision_agent.make_policy_decision(state)
-        state['logs'].append("PolicyDecisionAgent")
         response_text = result.get('policy_decision', '[No response]') if result and isinstance(result, dict) else '[No response]'
+        
+        # Store in memory
+        if MEMORY_AVAILABLE and memory_integration:
+            try:
+                memory_integration.store_policy_decision(case_id, str(response_text), "PolicyDecisionAgent")
+            except Exception as e:
+                print(f"Memory storage error for PolicyDecisionAgent: {e}")
+        
+        state['logs'].append("PolicyDecisionAgent")
         state['agent_responses'].append(response_text)
-        # Store policy decision to memory
-        store_to_memory(state, str(response_text), "PolicyDecisionAgent", "policy")
         if result and isinstance(result, dict):
             state.update(result)
         state['policy_decision_done'] = True
+        print(f"📋 Policy Decision: {response_text[:100]}...")
+        
         # Attach XAI decision for non-streaming fallback path as well
         try:
             xai_decision = _build_xai_decision(state)
             state['xai_decision'] = xai_decision
             state.setdefault('audit_log', []).append({'type': 'xai_decision', 'payload': xai_decision})
-            # Store XAI decision to memory for audit trail
-            store_to_memory(state, str(xai_decision), "XAIDecisionAgent", "summary")
-        except Exception:
-            pass
+            print(f"🧠 XAI Decision: {xai_decision.get('decision', 'unknown')} (score: {xai_decision.get('score', 0.0):.2f})")
+        except Exception as e:
+            print(f"XAI decision error: {e}")
         step += 1
     
-    # 6. FeedbackCollectorAgent (optional)
+    # 6. FeedbackCollectorAgent (optional) with memory integration
     if max_steps is None or step < max_steps:
+        print("📝 Running FeedbackCollectorAgent...")
         result = feedback_collector_agent.collect_feedback(state)
+        response_text = result.get('feedback_summary', '[No response]') if result and isinstance(result, dict) else '[No response]'
+        
+        # Store in memory
+        if MEMORY_AVAILABLE and memory_integration:
+            try:
+                memory_integration.store_agent_summary(case_id, str(response_text), "FeedbackCollectorAgent")
+            except Exception as e:
+                print(f"Memory storage error for FeedbackCollectorAgent: {e}")
+        
         state['logs'].append("FeedbackCollectorAgent")
-        state['agent_responses'].append(result.get('feedback_summary', '[No response]') if result and isinstance(result, dict) else '[No response]')
+        state['agent_responses'].append(response_text)
         if result and isinstance(result, dict):
             state.update(result)
         step += 1
+    
+    print("🎉 Workflow completed successfully!")
     
     return state
 
@@ -467,9 +568,6 @@ def stream_strands_steps(state):
     if 'transaction' not in state:
         state = {'transaction': state, 'logs': [], 'agent_responses': [], 'dialogue_history': []}
     
-    # Store initial alert to memory
-    store_to_memory(state, f"Initial alert: {str(state.get('transaction', state))}", "InitialAlert", "context")
-    
     # Idempotent gating to avoid duplicate runs
     state.setdefault('contexts_built', False)
     state.setdefault('risk_synth_done', False)
@@ -485,6 +583,9 @@ def stream_strands_steps(state):
     except Exception:
         pass
 
+    # Get case ID for memory storage
+    case_id = state.get('transaction', {}).get('alertId') or state.get('transaction', {}).get('alert_id') or 'unknown_case'
+
     if not state.get('contexts_built'):
         print("🚀 Running context agents in parallel...")
         state = run_context_agents_parallel(state)
@@ -495,29 +596,59 @@ def stream_strands_steps(state):
     if not state.get('risk_synth_done'):
         print("🔍 Running RiskSynthesizerAgent...")
         result = risk_synthesizer_agent.synthesize_risk(state)
+        
+        # Extract response for UI display
+        if result and isinstance(result, dict):
+            response_text = result.get('risk_summary_context', '[No response]')
+            # If it's still a dict, convert to string for UI
+            if isinstance(response_text, dict):
+                response_text = str(response_text)
+        else:
+            response_text = '[No response]'
+        
+        # Store in memory
+        if MEMORY_AVAILABLE and memory_integration:
+            try:
+                memory_integration.store_risk_assessment(case_id, str(response_text), agent_name="RiskSynthesizerAgent")
+            except Exception as e:
+                print(f"Memory storage error for RiskSynthesizerAgent: {e}")
+        
         state['logs'].append("RiskSynthesizerAgent")
-        response_text = result.get('risk_summary_context', '[No response]') if result and isinstance(result, dict) else '[No response]'
         state['agent_responses'].append(response_text)
-        # Store risk assessment to memory
-        store_to_memory(state, str(response_text), "RiskSynthesizerAgent", "risk")
         if result and isinstance(result, dict):
             state.update(result)
         state['risk_synth_done'] = True
         state['current_step'] = 5
+        print(f"🎯 Risk assessment: {response_text[:100]}...")
         yield state.copy()
 
     if not state.get('triage_done'):
         print("⚡ Running TriageAgent...")
         result = triage_agent.triage_case(state)
+        
+        # Extract response for UI display
+        if result and isinstance(result, dict):
+            response_text = result.get('triage_decision', '[No response]')
+            # If it's still a dict, convert to string for UI
+            if isinstance(response_text, dict):
+                response_text = str(response_text)
+        else:
+            response_text = '[No response]'
+        
+        # Store in memory
+        if MEMORY_AVAILABLE and memory_integration:
+            try:
+                memory_integration.store_agent_summary(case_id, str(response_text), "TriageAgent")
+            except Exception as e:
+                print(f"Memory storage error for TriageAgent: {e}")
+        
         state['logs'].append("TriageAgent")
-        response_text = result.get('triage_decision', '[No response]') if result and isinstance(result, dict) else '[No response]'
         state['agent_responses'].append(response_text)
-        # Store triage decision to memory
-        store_to_memory(state, str(response_text), "TriageAgent", "summary")
         if result and isinstance(result, dict):
             state.update(result)
         state['triage_done'] = True
         state['current_step'] = 6
+        print(f"🎯 Triage decision: {response_text[:100]}...")
         yield state.copy()
     
     if 'dialogue_history' not in state or not isinstance(state['dialogue_history'], list):
@@ -610,9 +741,17 @@ def stream_strands_steps(state):
         # Prefer explicit dialogue_analysis; fall back to XAI agent current_question
         buffer = result.get('dialogue_analysis') or result.get('current_question') or ''
         
+        # Store dialogue in memory
+        if MEMORY_AVAILABLE and memory_integration and buffer.strip():
+            try:
+                memory_integration.store_customer_interaction(case_id, str(buffer), "DialogueAgent")
+            except Exception as e:
+                print(f"Memory storage error for DialogueAgent: {e}")
+        
         # Update response immediately
         if state['agent_responses']:
             state['agent_responses'][-1] = buffer
+        print(f"💬 DialogueAgent generated question: {buffer[:100]}...")
         yield state.copy()
         
         # Add dialogue question to history if non-empty; avoid duplicating identical question
@@ -623,6 +762,12 @@ def stream_strands_steps(state):
                     should_append = False
             if should_append:
                 state['dialogue_history'].append({'role': 'assistant', 'question': buffer})
+            
+            # ALSO set dialogue_analysis for frontend compatibility
+            state['dialogue_analysis'] = buffer
+            
+            # Print the question prominently for UI visibility
+            print(f"❓ Dialogue Question: {buffer}")
         yield state.copy()
 
         # Respect DialogueAgent completion and requested finalization flags
@@ -751,17 +896,25 @@ def stream_strands_steps(state):
                 pass
         
         # Ensure dialogue_history is included for final assessment
+        print("🎯 Running final risk assessment...")
         state.setdefault('dialogue_history', state.get('dialogue_history', []))
         risk_summary_result = risk_assessor_agent.assess_risk(state, is_final=True)
         if risk_summary_result and isinstance(risk_summary_result, dict):
             state.update(risk_summary_result)
             summary = risk_summary_result.get('final_risk_assessment') or risk_summary_result.get('risk_assessment') or str(risk_summary_result)
+            
+            # Store final risk assessment in memory
+            if MEMORY_AVAILABLE and memory_integration:
+                try:
+                    memory_integration.store_risk_assessment(case_id, str(summary), confidence=1.0, agent_name="RiskAssessorAgentFinal")
+                except Exception as e:
+                    print(f"Memory storage error for final risk assessment: {e}")
+            
             state['logs'].append('RiskAssessorAgentFinalSummary')
             state['agent_responses'].append(summary)
             state['risk_assessment_summary'] = summary
             state['final_risk_determination'] = summary
-            # Store final risk assessment to memory
-            store_to_memory(state, str(summary), "RiskAssessorAgentFinal", "risk")
+            print(f"🎯 Final Risk Assessment: {summary[:100]}...")
         state['current_step'] = 8
         yield state.copy()
         
@@ -769,24 +922,41 @@ def stream_strands_steps(state):
         print("📋 Running policy decision...")
         if not state.get('policy_decision_done'):
             policy_result = policy_decision_agent.make_policy_decision(state)
+            
+            # Extract response for UI display
+            if policy_result and isinstance(policy_result, dict):
+                response_text = policy_result.get('policy_decision', '[No response]')
+                # If it's still a dict, convert to string for UI
+                if isinstance(response_text, dict):
+                    response_text = str(response_text)
+            else:
+                response_text = '[No response]'
+            
+            # Store policy decision in memory
+            if MEMORY_AVAILABLE and memory_integration:
+                try:
+                    memory_integration.store_policy_decision(case_id, str(response_text), "PolicyDecisionAgent")
+                except Exception as e:
+                    print(f"Memory storage error for PolicyDecisionAgent: {e}")
+            
             state['logs'].append("PolicyDecisionAgent")
-            response_text = policy_result.get('policy_decision', '[No response]') if policy_result and isinstance(policy_result, dict) else '[No response]'
             state['agent_responses'].append(response_text)
-            # Store policy decision to memory
-            store_to_memory(state, str(response_text), "PolicyDecisionAgent", "policy")
             if policy_result and isinstance(policy_result, dict):
                 state.update(policy_result)
             state['policy_decision_done'] = True
+            print(f"📋 Policy Decision: {response_text[:100]}...")
         state['current_step'] = 9
+        
         # XAI decision JSON for streaming path
         try:
             xai = _build_xai_decision(state)
             state['xai_decision'] = xai
             state.setdefault('audit_log', []).append({'type': 'xai_decision', 'payload': xai})
-            # Store XAI decision to memory for audit trail
-            store_to_memory(state, str(xai), "XAIDecisionAgent", "summary")
-        except Exception:
-            pass
+            print(f"🧠 XAI Decision: {xai.get('decision', 'unknown')} (score: {xai.get('score', 0.0):.2f})")
+        except Exception as e:
+            print(f"XAI decision error: {e}")
+        
+        print("🎉 Workflow completed successfully!")
         yield state.copy()
 
 def run_strands_pipeline(alert: Dict[str, Any]) -> Dict[str, Any]:
@@ -801,32 +971,54 @@ def run_strands_pipeline(alert: Dict[str, Any]) -> Dict[str, Any]:
 # Main entry points
 # LangGraph compatibility wrappers removed - use Strands functions directly
 
-# Memory utility functions
-def get_case_history(case_id: str) -> str:
-    """Get complete memory history for a case"""
-    if MEMORY_AVAILABLE and agentcore_memory:
-        return agentcore_memory.get_case_summary(case_id)
-    return "AgentCore Memory not available"
-
-def search_case_patterns(case_id: str, query: str) -> list:
-    """Search for specific patterns in case memory"""
-    if MEMORY_AVAILABLE and agentcore_memory:
-        return agentcore_memory.search_memories(case_id, query)
+# Memory retrieval functions
+def get_case_memories(case_id: str, limit: int = 10) -> List[Dict]:
+    """Retrieve all memories for a specific case"""
+    if MEMORY_AVAILABLE and memory_integration:
+        try:
+            return memory_integration.retrieve_memories(case_id, limit=limit)
+        except Exception as e:
+            print(f"Error retrieving memories for case {case_id}: {e}")
+            return []
     return []
 
-def get_case_memories(case_id: str, limit: int = 10) -> list:
-    """Retrieve all memories for a case"""
-    if MEMORY_AVAILABLE and agentcore_memory:
-        return agentcore_memory.retrieve_memories(case_id, limit)
+def search_case_memories(case_id: str, query: str, limit: int = 5) -> List[Dict]:
+    """Search memories for a specific case"""
+    if MEMORY_AVAILABLE and memory_integration:
+        try:
+            return memory_integration.search_graph(case_id, query, limit=limit)
+        except Exception as e:
+            print(f"Error searching memories for case {case_id}: {e}")
+            return []
     return []
+
+def get_memory_summary(case_id: str) -> str:
+    """Get a summary of all memories for a case"""
+    memories = get_case_memories(case_id, limit=20)
+    if not memories:
+        return "No memories found for this case."
+    
+    summary_parts = []
+    for mem in memories:
+        content = mem.get('content', {})
+        if isinstance(content, dict):
+            if 'summary' in content:
+                summary_parts.append(f"- {content.get('agent', 'Unknown')}: {content['summary'][:100]}...")
+            elif 'assessment' in content:
+                summary_parts.append(f"- Risk Assessment: {content['assessment'][:100]}...")
+            elif 'decision' in content:
+                summary_parts.append(f"- Policy Decision: {content['decision'][:100]}...")
+            elif 'interaction' in content:
+                summary_parts.append(f"- Customer Interaction: {content['interaction'][:100]}...")
+    
+    return "\n".join(summary_parts) if summary_parts else "No detailed memories available."
 
 # Export the main functions
 __all__ = [
     'run_strands_multi_agent',
     'run_strands_pipeline', 
     'stream_strands_steps',
-    'get_case_history',
-    'search_case_patterns',
     'get_case_memories',
-    'store_to_memory'
+    'search_case_memories', 
+    'get_memory_summary'
 ]

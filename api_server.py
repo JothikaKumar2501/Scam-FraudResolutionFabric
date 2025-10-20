@@ -10,7 +10,7 @@ from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse, JSONResponse
 
-from langgraph_multi_agent import stream_langgraph_steps
+from langgraph_multi_agent import stream_strands_steps
 from context_store import context_store
 from mem0_integration import search_graph as mem0_graph_search, add_graph as mem0_graph_add, clear_case as mem0_graph_clear
 from vector_utils import get_relevant_context
@@ -54,7 +54,7 @@ def _warmup_vector_store():
 class Session:
     def __init__(self, state: Dict[str, Any]):
         self.state = state
-        self.generator = stream_langgraph_steps(state)
+        self.generator = stream_strands_steps(state)
         self.lock = threading.Lock()
         self.closed = False
 

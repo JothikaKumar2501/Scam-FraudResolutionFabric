@@ -1,0 +1,525 @@
+banking_related_patterns: 6
+errors: 0
+fraud_specific_patterns: 3
+last_update: '2025-10-20T12:17:04.909474'
+patterns:
+- attack_vectors:
+  - social_engineering
+  banking_related: true
+  confidence_score: 0.7000000000000001
+  fetched_at: '2025-10-20T12:16:34.313443'
+  fraud_category: general_scam
+  link: https://fraud.org/ghost-tapping-isnt-a-halloween-prank/?utm_source=rss&utm_medium=rss&utm_campaign=ghost-tapping-isnt-a-halloween-prank
+  mitigations:
+  - Verify unusual requests through alternate communication channel
+  - Be suspicious of urgent payment requests
+  - Never share sensitive information via email or phone
+  published: Wed, 01 Oct 2025 17:43:53 +0000
+  risk_level: high
+  source: National Consumers League Fraud.org
+  source_url: https://www.fraud.org/feed
+  summary: The BBB is warning about recent reports of “ghost tapping” scams. While
+    this may sound like a Halloween prank, it’s anything but funny. Ghost tapping
+    takes advantage of Near Field Communications (NFC), the technology embedded in
+    many payment cards and smartphones that allows tap-to-pay functions. In
+  target_sectors:
+  - General
+  threat_actors:
+  - Unknown
+  title: Ghost Tapping Isn’t a Halloween Prank
+  urgency: high
+- attack_vectors:
+  - impersonation
+  banking_related: false
+  confidence_score: 0.75
+  fetched_at: '2025-10-20T12:16:34.313443'
+  fraud_category: phishing_social_engineering
+  link: https://fraud.org/generative-ai-is-fueling-sophisticated-impersonation-scams/?utm_source=rss&utm_medium=rss&utm_campaign=generative-ai-is-fueling-sophisticated-impersonation-scams
+  mitigations:
+  - Conduct regular phishing awareness training
+  - Implement email filtering and link scanning
+  - Enable MFA on all accounts
+  - Report suspicious emails to security team
+  - Verify unusual requests through alternate communication channel
+  published: Mon, 30 Jun 2025 18:44:49 +0000
+  risk_level: high
+  source: National Consumers League Fraud.org
+  source_url: https://www.fraud.org/feed
+  summary: As developers rush to release their AI products, not all of them are implementing
+    checks to prevent misuse of their services. Scammers have made news with their
+    use of voice cloning software, in particular. With generative AI, criminals can
+    easily obtain scripts for a variety of scenarios and create
+  target_sectors:
+  - Technology
+  threat_actors:
+  - Unknown
+  title: Generative AI is fueling sophisticated impersonation scams
+  urgency: high
+- attack_vectors:
+  - impersonation
+  banking_related: false
+  confidence_score: 0.7
+  fetched_at: '2025-10-20T12:16:34.314441'
+  fraud_category: phishing_social_engineering
+  link: https://fraud.org/beware-of-bogus-job-offers/?utm_source=rss&utm_medium=rss&utm_campaign=beware-of-bogus-job-offers
+  mitigations:
+  - Conduct regular phishing awareness training
+  - Implement email filtering and link scanning
+  - Enable MFA on all accounts
+  - Report suspicious emails to security team
+  - Verify unusual requests through alternate communication channel
+  published: Fri, 28 Feb 2025 19:47:07 +0000
+  risk_level: high
+  source: National Consumers League Fraud.org
+  source_url: https://www.fraud.org/feed
+  summary: Fake job listings can be found almost anywhere, from posters on college
+    campuses to trusted job-search websites. In the latest full year of data reported
+    by the Federal Trade Commission, more than 107,000 individuals reported job opportunity
+    scams, with a total annual loss of $491,000,000. With some
+  target_sectors:
+  - Government
+  - Education
+  threat_actors:
+  - Unknown
+  title: Beware of bogus job offers
+  urgency: medium
+- attack_vectors:
+  - social_engineering
+  banking_related: true
+  confidence_score: 0.65
+  fetched_at: '2025-10-20T12:16:34.314441'
+  fraud_category: general_scam
+  link: https://fraud.org/top-ten-scams-report-for-2024/?utm_source=rss&utm_medium=rss&utm_campaign=top-ten-scams-report-for-2024
+  mitigations:
+  - Verify unusual requests through alternate communication channel
+  - Be suspicious of urgent payment requests
+  - Never share sensitive information via email or phone
+  published: Fri, 07 Feb 2025 21:41:29 +0000
+  risk_level: high
+  source: National Consumers League Fraud.org
+  source_url: https://www.fraud.org/feed
+  summary: '2024 fraud trends show sweepstakes &#38; prizes scams are #1, while cryptocurrency
+    scams are the most expensive Fraud.org&#8217;s annual Top Ten Scams report for
+    2024 is out. This year, the most common scams reported were Prizes, Sweepstakes,
+    and Free Gifts, accounting for 38% of all complaints. How'
+  target_sectors:
+  - General
+  threat_actors:
+  - Unknown
+  title: Top Ten Scams of 2024
+  urgency: high
+- attack_vectors:
+  - email
+  - wire_transfer
+  banking_related: false
+  confidence_score: 0.7
+  fetched_at: '2025-10-20T12:16:35.049062'
+  fraud_category: phishing_social_engineering
+  link: https://www.infosecurity-magazine.com/news/lastpass-not-hacked-phishing-email/
+  mitigations:
+  - Conduct regular phishing awareness training
+  - Implement email filtering and link scanning
+  - Enable MFA on all accounts
+  - Report suspicious emails to security team
+  - Deploy advanced email security solutions
+  published: Thu, 16 Oct 2025 12:30:00 GMT
+  risk_level: high
+  source: Infosecurity Magazine
+  source_url: https://www.infosecurity-magazine.com/rss/news/
+  summary: LastPass warns customers it has not been breached, after phishing emails
+    falsely claim a hack and urge users to update their desktop app
+  target_sectors:
+  - General
+  threat_actors:
+  - Unknown
+  title: LastPass Warns Customers It Has Not Been Hacked Amid Phishing Email Scam
+  urgency: medium
+- attack_vectors:
+  - social_engineering
+  banking_related: false
+  confidence_score: 0.7
+  fetched_at: '2025-10-20T12:16:36.178137'
+  fraud_category: phishing_social_engineering
+  link: https://threatpost.com/0ktapus-victimize-130-firms/180487/
+  mitigations:
+  - Conduct regular phishing awareness training
+  - Implement email filtering and link scanning
+  - Enable MFA on all accounts
+  - Report suspicious emails to security team
+  - Verify unusual requests through alternate communication channel
+  published: Mon, 29 Aug 2022 14:56:19 +0000
+  risk_level: high
+  source: Threatpost
+  source_url: https://threatpost.com/feed/
+  summary: Over 130 companies tangled in sprawling phishing campaign that spoofed
+    a multi-factor authentication system.
+  target_sectors:
+  - General
+  threat_actors:
+  - 0Ktapus
+  title: Tentacles of ‘0ktapus’ Threat Group Victimize 130 Firms
+  urgency: medium
+- attack_vectors:
+  - email
+  banking_related: true
+  confidence_score: 0.9
+  fetched_at: '2025-10-20T12:16:59.895415'
+  fraud_category: business_email_compromise
+  link: https://www.pymnts.com/consumer-finance/2025/gen-z-credit-scores-plunge-as-cost-of-living-rises/
+  mitigations:
+  - Implement email authentication (SPF, DKIM, DMARC)
+  - Establish verification procedures for wire transfers
+  - Use out-of-band verification for payment changes
+  - Train employees on CEO fraud tactics
+  - Deploy advanced email security solutions
+  published: Mon, 20 Oct 2025 01:20:06 +0000
+  risk_level: low
+  source: PYMNTS - Payment Fraud News
+  source_url: https://www.pymnts.com/feed/
+  summary: <p>For members of Generation Z, it’s becoming harder and harder to maintain
+    good credit.  That age group saw the steepest drop in credit health this year,
+    The New York Times reported Saturday (Oct. 18), citing data from FICO’s Credit
+    Insights Report.  According to the report, Gen Z’s average FICO sc
+  target_sectors:
+  - Finance
+  threat_actors:
+  - Unknown
+  title: Gen Z Credit Scores Plunge as Cost of Living Rises
+  urgency: high
+- attack_vectors:
+  - email
+  banking_related: true
+  confidence_score: 0.85
+  fetched_at: '2025-10-20T12:16:59.896412'
+  fraud_category: business_email_compromise
+  link: https://www.pymnts.com/artificial-intelligence-2/2025/blackstone-president-foresees-profound-ai-disruption-in-business/
+  mitigations:
+  - Implement email authentication (SPF, DKIM, DMARC)
+  - Establish verification procedures for wire transfers
+  - Use out-of-band verification for payment changes
+  - Train employees on CEO fraud tactics
+  - Deploy advanced email security solutions
+  published: Mon, 20 Oct 2025 00:49:09 +0000
+  risk_level: low
+  source: PYMNTS - Payment Fraud News
+  source_url: https://www.pymnts.com/feed/
+  summary: <p>The president of private capital group Blackstone says Wall Street is
+    still underestimating artificial intelligence (AI).  In comments published Saturday
+    (Oct. 18) by the Financial Times (FT), Jonathan Gray says investors are discounting
+    the potential of AI to render whole industries obsolete, an
+  target_sectors:
+  - General
+  threat_actors:
+  - Unknown
+  title: Blackstone President Foresees ‘Profound’ AI Disruption in Business
+  urgency: medium
+- attack_vectors:
+  - social_engineering
+  banking_related: true
+  confidence_score: 0.85
+  fetched_at: '2025-10-20T12:17:01.036213'
+  fraud_category: phishing_social_engineering
+  link: https://thehackernews.com/2025/10/europol-dismantles-sim-farm-network.html
+  mitigations:
+  - Conduct regular phishing awareness training
+  - Implement email filtering and link scanning
+  - Enable MFA on all accounts
+  - Report suspicious emails to security team
+  - Verify unusual requests through alternate communication channel
+  published: Sun, 19 Oct 2025 11:43:00 +0530
+  risk_level: high
+  source: The Hacker News
+  source_url: https://feeds.feedburner.com/TheHackersNews
+  summary: 'Europol on Friday announced the disruption of a sophisticated cybercrime-as-a-service
+    (CaaS) platform that operated a SIM farm and enabled its customers to carry out
+    a broad spectrum of crimes ranging from phishing to investment fraud.
+
+    The coordinated law enforcement effort, dubbed Operation SIMCART'
+  target_sectors:
+  - Finance
+  threat_actors:
+  - Unknown
+  title: Europol Dismantles SIM Farm Network Powering 49 Million Fake Accounts Worldwide
+  urgency: high
+- attack_vectors:
+  - email
+  - malware
+  banking_related: false
+  confidence_score: 0.75
+  fetched_at: '2025-10-20T12:17:01.036213'
+  fraud_category: phishing_social_engineering
+  link: https://thehackernews.com/2025/10/new-net-capi-backdoor-targets-russian.html
+  mitigations:
+  - Conduct regular phishing awareness training
+  - Implement email filtering and link scanning
+  - Enable MFA on all accounts
+  - Report suspicious emails to security team
+  - Deploy advanced email security solutions
+  published: Sat, 18 Oct 2025 17:11:00 +0530
+  risk_level: high
+  source: The Hacker News
+  source_url: https://feeds.feedburner.com/TheHackersNews
+  summary: 'Cybersecurity researchers have shed light on a new campaign that has likely
+    targeted the Russian automobile and e-commerce sectors with a previously undocumented
+    .NET malware dubbed CAPI Backdoor.
+
+    According to Seqrite Labs, the attack chain involves distributing phishing emails
+    containing a ZIP arch'
+  target_sectors:
+  - Retail
+  threat_actors:
+  - Unknown
+  title: New .NET CAPI Backdoor Targets Russian Auto and E-Commerce Firms via Phishing
+    ZIPs
+  urgency: high
+- attack_vectors:
+  - email
+  - fake_website
+  - malware
+  banking_related: false
+  confidence_score: 0.7
+  fetched_at: '2025-10-20T12:17:01.036213'
+  fraud_category: phishing_social_engineering
+  link: https://thehackernews.com/2025/10/silver-fox-expands-winos-40-attacks-to.html
+  mitigations:
+  - Conduct regular phishing awareness training
+  - Implement email filtering and link scanning
+  - Enable MFA on all accounts
+  - Report suspicious emails to security team
+  - Deploy advanced email security solutions
+  published: Sat, 18 Oct 2025 12:21:00 +0530
+  risk_level: high
+  source: The Hacker News
+  source_url: https://feeds.feedburner.com/TheHackersNews
+  summary: 'The threat actors behind a malware family known as Winos 4.0 (aka ValleyRAT)
+    have expanded their targeting footprint from China and Taiwan to target Japan
+    and Malaysia with another remote access trojan (RAT) tracked as HoldingHands RAT
+    (aka Gh0stBins).
+
+    "The campaign relied on phishing emails with PD'
+  target_sectors:
+  - General
+  threat_actors:
+  - Unknown
+  title: Silver Fox Expands Winos 4.0 Attacks to Japan and Malaysia via HoldingHands
+    RAT
+  urgency: medium
+- attack_vectors:
+  - social_engineering
+  banking_related: false
+  confidence_score: 0.7
+  fetched_at: '2025-10-20T12:17:01.386608'
+  fraud_category: phishing_social_engineering
+  link: https://blog.knowbe4.com/phishing-remains-the-top-initial-access-vector-in-cyberattacks-across-europe
+  mitigations:
+  - Conduct regular phishing awareness training
+  - Implement email filtering and link scanning
+  - Enable MFA on all accounts
+  - Report suspicious emails to security team
+  - Verify unusual requests through alternate communication channel
+  published: Fri, 17 Oct 2025 14:00:00 GMT
+  risk_level: high
+  source: KnowBe4 Security Blog
+  source_url: https://blog.knowbe4.com/rss.xml
+  summary: "<div class=\"hs-featured-image-wrapper\"> \n <a class=\"hs-featured-image-link\"\
+    \ href=\"https://blog.knowbe4.com/phishing-remains-the-top-initial-access-vector-in-cyberattacks-across-europe\"\
+    \ title=\"\"> <img alt=\"Phishing Remains the Top Initial Access Vector in Cyberattacks\
+    \ Across Europe\" class=\"hs-feature"
+  target_sectors:
+  - General
+  threat_actors:
+  - Unknown
+  title: Phishing Remains the Top Initial Access Vector in Cyberattacks Across Europe
+  urgency: medium
+- attack_vectors:
+  - phone_call
+  banking_related: false
+  confidence_score: 0.75
+  fetched_at: '2025-10-20T12:17:01.387606'
+  fraud_category: phishing_social_engineering
+  link: https://blog.knowbe4.com/protect-yourself-from-voice-phishing-attacks-targeting-salesforce-instances
+  mitigations:
+  - Conduct regular phishing awareness training
+  - Implement email filtering and link scanning
+  - Enable MFA on all accounts
+  - Report suspicious emails to security team
+  - Verify caller identity through official channels
+  published: Thu, 16 Oct 2025 15:30:00 GMT
+  risk_level: high
+  source: KnowBe4 Security Blog
+  source_url: https://blog.knowbe4.com/rss.xml
+  summary: "<div class=\"hs-featured-image-wrapper\"> \n <a class=\"hs-featured-image-link\"\
+    \ href=\"https://blog.knowbe4.com/protect-yourself-from-voice-phishing-attacks-targeting-salesforce-instances\"\
+    \ title=\"\"> <img alt=\"Protect Yourself From Voice Phishing Attacks Targeting\
+    \ Salesforce Instances\" class=\"hs-featured-"
+  target_sectors:
+  - General
+  threat_actors:
+  - Unknown
+  title: Protect Yourself From Voice Phishing Attacks Targeting Salesforce Instances
+  urgency: high
+- attack_vectors:
+  - social_engineering
+  banking_related: false
+  confidence_score: 0.75
+  fetched_at: '2025-10-20T12:17:01.387606'
+  fraud_category: phishing_social_engineering
+  link: https://blog.knowbe4.com/cyberheistnews-vol-15-41-ai-misuse-alert-new-phishing-campaign-uses-ai-tools-to-evade-detection
+  mitigations:
+  - Conduct regular phishing awareness training
+  - Implement email filtering and link scanning
+  - Enable MFA on all accounts
+  - Report suspicious emails to security team
+  - Verify unusual requests through alternate communication channel
+  published: Tue, 14 Oct 2025 13:00:02 GMT
+  risk_level: high
+  source: KnowBe4 Security Blog
+  source_url: https://blog.knowbe4.com/rss.xml
+  summary: "<div class=\"hs-featured-image-wrapper\"> \n <a class=\"hs-featured-image-link\"\
+    \ href=\"https://blog.knowbe4.com/cyberheistnews-vol-15-41-ai-misuse-alert-new-phishing-campaign-uses-ai-tools-to-evade-detection\"\
+    \ title=\"\"> <img alt=\"CyberheistNews Vol 15 #41\" class=\"hs-featured-image\"\
+    \ src=\"https://blog.knowb"
+  target_sectors:
+  - General
+  threat_actors:
+  - Unknown
+  title: 'CyberheistNews Vol 15 #41 [AI Misuse Alert] New Phishing Campaign Uses AI
+    Tools to Evade Detection'
+  urgency: high
+- attack_vectors:
+  - sms
+  banking_related: false
+  confidence_score: 0.75
+  fetched_at: '2025-10-20T12:17:01.387606'
+  fraud_category: phishing_social_engineering
+  link: https://blog.knowbe4.com/a-surge-in-text-message-scams-targets-younger-americans
+  mitigations:
+  - Conduct regular phishing awareness training
+  - Implement email filtering and link scanning
+  - Enable MFA on all accounts
+  - Report suspicious emails to security team
+  - Verify caller identity through official channels
+  published: Mon, 13 Oct 2025 18:30:00 GMT
+  risk_level: high
+  source: KnowBe4 Security Blog
+  source_url: https://blog.knowbe4.com/rss.xml
+  summary: "<div class=\"hs-featured-image-wrapper\"> \n <a class=\"hs-featured-image-link\"\
+    \ href=\"https://blog.knowbe4.com/a-surge-in-text-message-scams-targets-younger-americans\"\
+    \ title=\"\"> <img alt=\"A Surge in Text Message Scams Targets Younger Americans\"\
+    \ class=\"hs-featured-image\" src=\"https://blog.knowbe4.com/hub"
+  target_sectors:
+  - General
+  threat_actors:
+  - Unknown
+  title: A Surge in Text Message Scams Targets Younger Americans
+  urgency: high
+- attack_vectors:
+  - social_engineering
+  banking_related: false
+  confidence_score: 0.8
+  fetched_at: '2025-10-20T12:17:01.387606'
+  fraud_category: phishing_social_engineering
+  link: https://blog.knowbe4.com/cybersecurity-awareness-month-the-rise-of-dr.-deepfake-combatting-social-engineerings-newest-weapon
+  mitigations:
+  - Conduct regular phishing awareness training
+  - Implement email filtering and link scanning
+  - Enable MFA on all accounts
+  - Report suspicious emails to security team
+  - Verify unusual requests through alternate communication channel
+  published: Mon, 13 Oct 2025 13:30:00 GMT
+  risk_level: high
+  source: KnowBe4 Security Blog
+  source_url: https://blog.knowbe4.com/rss.xml
+  summary: "<div class=\"hs-featured-image-wrapper\"> \n <a class=\"hs-featured-image-link\"\
+    \ href=\"https://blog.knowbe4.com/cybersecurity-awareness-month-the-rise-of-dr.-deepfake-combatting-social-engineerings-newest-weapon\"\
+    \ title=\"\"> <img alt=\"[Cybersecurity Awareness Month] The Rise of Dr. Deepfake:\
+    \ Combatting Soc"
+  target_sectors:
+  - General
+  threat_actors:
+  - Unknown
+  title: '[Cybersecurity Awareness Month] The Rise of Dr. Deepfake: Combatting Social
+    Engineering’s Newest Weapon'
+  urgency: high
+- attack_vectors:
+  - social_media
+  banking_related: true
+  confidence_score: 0.7000000000000001
+  fetched_at: '2025-10-20T12:17:03.123827'
+  fraud_category: general_scam
+  link: https://www.welivesecurity.com/en/videos/month-security-tony-anscombe-august-2025/
+  mitigations:
+  - Verify unusual requests through alternate communication channel
+  - Be suspicious of urgent payment requests
+  - Never share sensitive information via email or phone
+  published: Thu, 28 Aug 2025 09:00:00 +0000
+  risk_level: high
+  source: ESET WeLiveSecurity
+  source_url: https://www.welivesecurity.com/feed/
+  summary: From Meta shutting down millions of WhatsApp accounts linked to scam centers
+    all the way to attacks at water facilities in Europe, August 2025 saw no shortage
+    of impactful cybersecurity news
+  target_sectors:
+  - General
+  threat_actors:
+  - Unknown
+  title: This month in security with Tony Anscombe – August 2025 edition
+  urgency: high
+- attack_vectors:
+  - email
+  banking_related: false
+  confidence_score: 0.7
+  fetched_at: '2025-10-20T12:17:03.123827'
+  fraud_category: business_email_compromise
+  link: https://www.welivesecurity.com/en/kids-online/dont-let-back-to-school-become-back-to-bullying/
+  mitigations:
+  - Implement email authentication (SPF, DKIM, DMARC)
+  - Establish verification procedures for wire transfers
+  - Use out-of-band verification for payment changes
+  - Train employees on CEO fraud tactics
+  - Deploy advanced email security solutions
+  published: Wed, 27 Aug 2025 09:00:00 +0000
+  risk_level: low
+  source: ESET WeLiveSecurity
+  source_url: https://www.welivesecurity.com/feed/
+  summary: Cyberbullying is a fact of life in our digital-centric society, but there
+    are ways to push back
+  target_sectors:
+  - Education
+  threat_actors:
+  - Unknown
+  title: Don’t let “back to school” become “back to (cyber)bullying”
+  urgency: low
+source_details:
+- name: Krebs on Security
+  url: https://krebsonsecurity.com/feed/
+- name: Bank Info Security
+  url: https://www.bankinfosecurity.com/rss-feeds
+- name: National Consumers League Fraud.org
+  url: https://www.fraud.org/feed
+- name: Infosecurity Magazine
+  url: https://www.infosecurity-magazine.com/rss/news/
+- name: Threatpost
+  url: https://threatpost.com/feed/
+- name: Dark Reading
+  url: https://www.darkreading.com/rss_simple.asp
+- name: SecurityWeek
+  url: https://www.securityweek.com/feed/
+- name: Financial Fraud Action UK
+  url: https://www.financialfraudaction.org.uk/feed/
+- name: PYMNTS - Payment Fraud News
+  url: https://www.pymnts.com/feed/
+- name: BleepingComputer
+  url: https://www.bleepingcomputer.com/feed/
+- name: The Hacker News
+  url: https://feeds.feedburner.com/TheHackersNews
+- name: KnowBe4 Security Blog
+  url: https://blog.knowbe4.com/rss.xml
+- name: Proofpoint Threat Intelligence
+  url: https://www.proofpoint.com/us/blog/rss.xml
+- name: ESET WeLiveSecurity
+  url: https://www.welivesecurity.com/feed/
+- name: Cisco Talos Intelligence
+  url: https://blog.talosintelligence.com/rss/
+sources_checked: 15
+total_patterns: 18

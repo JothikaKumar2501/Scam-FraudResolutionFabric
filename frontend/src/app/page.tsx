@@ -683,7 +683,7 @@ export default function Home() {
                 <div>
                   <div className="text-muted-foreground">Gate Reason</div>
                   <div className="text-xs whitespace-pre-wrap border rounded p-2 bg-muted/30 min-h-16">
-                    {state.gate_reason ? JSON.stringify(state.gate_reason, null, 2) : '—'}
+                    {'gate_reason' in state ? JSON.stringify(state.gate_reason, null, 2) : '—'}
                   </div>
                 </div>
                 <div>

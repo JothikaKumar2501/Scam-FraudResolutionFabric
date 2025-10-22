@@ -50,3 +50,6 @@ test_agent_memory/
 scams/
 
 .vscode/
+
+frontend/build.zip
+frontend/build_mix/

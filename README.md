@@ -7,7 +7,7 @@ This project is a **production-ready AI Agent deployed on AWS** that meets all A
 ### ✅ AWS Requirements Met
 
 **1. Large Language Model (LLM) Integration:**
-- **AWS Bedrock**: Claude 3 Sonnet and Haiku models for reasoning and decision-making
+- **AWS Bedrock**: Claude 4.5 Sonnet and Haiku models for reasoning and decision-making
 - **Amazon SageMaker AI**: Optional integration for custom model deployment
 
 **2. AWS Services Integration:**

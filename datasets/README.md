@@ -1,7 +1,7 @@
-# ANZ Bank Fraud Detection System - Dataset Documentation
+# XYZ Bank Fraud Detection System - Dataset Documentation
 
 ## Overview
-This directory contains the standardized datasets for the ANZ Bank fraud detection system. All datasets have been updated to version 2.0 with improved structure, consistency, and data quality.
+This directory contains the standardized datasets for the XYZ Bank fraud detection system. All datasets have been updated to version 2.0 with improved structure, consistency, and data quality.
 
 ## Dataset Files
 
@@ -15,7 +15,7 @@ This directory contains the standardized datasets for the ANZ Bank fraud detecti
     "version": "2.0",
     "created_date": "2024-01-15",
     "last_updated": "2024-01-15",
-    "description": "ANZ Bank customer demographic data for fraud detection system",
+    "description": "XYZ Bank customer demographic data for fraud detection system",
     "total_customers": 10,
     "data_quality_score": 0.95
   },
@@ -80,7 +80,7 @@ This directory contains the standardized datasets for the ANZ Bank fraud detecti
     "version": "2.0",
     "created_date": "2024-01-15",
     "last_updated": "2024-01-15",
-    "description": "ANZ Bank customer transaction history for fraud detection system",
+    "description": "XYZ Bank customer transaction history for fraud detection system",
     "total_transactions": 20,
     "date_range": {
       "start": "2024-01-01",
@@ -97,7 +97,7 @@ This directory contains the standardized datasets for the ANZ Bank fraud detecti
       "transaction_type": "Payment",
       "transaction_date": "2024-01-15",
       "transaction_time": "09:15:30",
-      "bank_id": "ANZ001",
+      "bank_id": "XYZ001",
       "branch_id": "BR001",
       "account_number": "1234567890",
       "payee_payer_name": "Woolworths",
@@ -135,7 +135,7 @@ This directory contains the standardized datasets for the ANZ Bank fraud detecti
     "version": "2.0",
     "created_date": "2024-01-15",
     "last_updated": "2024-01-15",
-    "description": "ANZ Bank customer call history for fraud detection system",
+    "description": "XYZ Bank customer call history for fraud detection system",
     "total_calls": 15,
     "date_range": {
       "start": "2024-01-01",
@@ -189,7 +189,7 @@ This directory contains the standardized datasets for the ANZ Bank fraud detecti
     "version": "2.0",
     "created_date": "2024-01-15",
     "last_updated": "2024-01-15",
-    "description": "ANZ Bank Fraud Transaction Protocol (FTP) alerts for fraud detection system",
+    "description": "XYZ Bank Fraud Transaction Protocol (FTP) alerts for fraud detection system",
     "total_alerts": 12,
     "date_range": {
       "start": "2024-01-01",
@@ -290,10 +290,10 @@ This directory contains the standardized datasets for the ANZ Bank fraud detecti
 2. Validate relationships regularly
 3. Update metadata timestamps
 4. Maintain audit trails
-5. Follow ANZ Bank compliance requirements
+5. Follow XYZ Bank compliance requirements
 
 ## Compliance Notes
-- All data follows ANZ Bank privacy policies
+- All data follows XYZ Bank privacy policies
 - Customer information is anonymized for testing
 - Transaction amounts are realistic but fictional
 - Dates are recent but not current
@@ -301,7 +301,7 @@ This directory contains the standardized datasets for the ANZ Bank fraud detecti
 
 ## Support
 For questions about the dataset structure or usage, refer to:
-- ANZ Bank Fraud Detection System Documentation
+- XYZ Bank Fraud Detection System Documentation
 - Data Schema Specifications
 - Compliance Guidelines
 - Testing Procedures

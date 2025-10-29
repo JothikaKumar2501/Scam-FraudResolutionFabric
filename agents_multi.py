@@ -1,5 +1,5 @@
 """
-Advanced Intelligent Agents for ANZ Bank Authorized Scam Detection
+Advanced Intelligent Agents for XYZ Bank Authorized Scam Detection
 Production-ready agents with dynamic, expert-level capabilities
 """
 
@@ -262,7 +262,7 @@ class TransactionContextAgent(IntelligentAgent):
         sop_summary = "\n".join(sops[:5]) if sops else "No specific SOPs found"
         
         prompt = f"""
-You are a senior ANZ transaction context expert specializing in advanced fraud typologies for ANZ Bank.
+You are a senior XYZ transaction context expert specializing in advanced fraud typologies for XYZ Bank.
 
 {fraud_analysis_prompt}
 {regulatory_prompt}
@@ -1318,7 +1318,7 @@ class TriageAgent(IntelligentAgent):
         anom = context.get('anomaly_context', '[unavailable]')
         risk = context.get('risk_summary_context', '[unavailable]')
         
-        # Build intelligent triage prompt (ANZ context-aware)
+        # Build intelligent triage prompt (XYZ context-aware)
         prompt = self._build_triage_prompt(txn, cust, merch, anom, risk, sops)
         
         # Get expert triage decision
@@ -1771,9 +1771,9 @@ Write a concise, directive summary appropriate for immediate customer communicat
             result = "".join([token for token in converse_with_claude_stream([
                 {"role": "user", "content": [{"text": prompt}]}
             ], max_tokens=self.agent_config.max_tokens)])
-            # If model still hedges, harden tone under ANZ SOPs
+            # If model still hedges, harden tone under XYZ SOPs
             if 'insufficient' in result.lower() or 'cannot' in result.lower():
-                result += "\n\nNote: Under ANZ APP fraud SOP, context is sufficient for policy decision due to BEC indicators."
+                result += "\n\nNote: Under XYZ APP fraud SOP, context is sufficient for policy decision due to BEC indicators."
             return result
         except Exception as e:
             self.logger.error(f"Failed to build final summary: {e}")
@@ -2197,7 +2197,7 @@ class RiskAssessorAgent(IntelligentAgent):
                 result += "\n\nTYPOLOGY: business_email_compromise"
         
         # Add to context with metadata
-        # Enforce ANZ bank guidelines and avoid "insufficient" hedging if gating passed
+        # Enforce XYZ bank guidelines and avoid "insufficient" hedging if gating passed
         safe_result = result or ""
         if context.get('gate_reason', {}).get('passed'):
             # Remove hedging lines to avoid contradictory outputs when gate passed
@@ -2213,7 +2213,7 @@ class RiskAssessorAgent(IntelligentAgent):
                 pass
             # Add explicit note reinforcing finalization
             if 'Note: Expert gate indicates sufficient context' not in safe_result:
-                safe_result += "\n\nNote: Expert gate indicates sufficient context; proceed with final determination under ANZ APP fraud SOP."
+                safe_result += "\n\nNote: Expert gate indicates sufficient context; proceed with final determination under XYZ APP fraud SOP."
         context['risk_assessment'] = safe_result
         context['risk_assessment_timestamp'] = datetime.now().isoformat()
         context['assessment_type'] = 'final' if is_final_assessment else 'progressive'
@@ -2386,7 +2386,7 @@ OUTPUT (STRICT):
         
         # EXPERT-LEVEL COMPRESSED PROMPT
         prompt = f"""
-ANZ Bank Expert Risk Assessment - COMPRESSED CONTEXT
+XYZ Bank Expert Risk Assessment - COMPRESSED CONTEXT
 
 {compressed_context}
 {compressed_risk}
@@ -2685,7 +2685,7 @@ Consider the customer's vulnerability, transaction amount, and reputational risk
             result = "".join([token for token in converse_with_claude_stream([
                 {"role": "user", "content": [{"text": prompt}]}
             ], max_tokens=self.agent_config.max_tokens)])
-            # Standardize BEC decision outputs per ANZ SOP if BEC detected
+            # Standardize BEC decision outputs per XYZ SOP if BEC detected
             rl = result.lower()
             if 'business email compromise' in rl or 'bec' in rl:
                 if 'POLICY DECISION:' not in result:
@@ -3079,7 +3079,7 @@ class SupervisorAgent(IntelligentAgent):
         conversation_summary = self._build_final_conversation_summary(context)
         
         prompt = f"""
-You are a senior fraud analyst at ANZ Bank. Based on the following comprehensive investigation, provide a clear, professional final report.
+You are a senior fraud analyst at XYZ Bank. Based on the following comprehensive investigation, provide a clear, professional final report.
 
 INVESTIGATION CONTEXT:
 {context_summary}

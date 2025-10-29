@@ -1,22 +1,22 @@
-Here is the **final, comprehensive Standard Operating Procedure (SOP)** tailored for the ANZ Bank Fraud Use Case, integrating your detailed fraud transaction protocols, triage decision rules, customer interaction scripting, escalation framework, and compliance references. This SOP is designed for operational teams and agentic AI systems handling fraud alerts for ANZ Bank.
+Here is the **final, comprehensive Standard Operating Procedure (SOP)** tailored for the XYZ Bank Fraud Use Case, integrating your detailed fraud transaction protocols, triage decision rules, customer interaction scripting, escalation framework, and compliance references. This SOP is designed for operational teams and agentic AI systems handling fraud alerts for XYZ Bank.
 
 # 🛡️ STANDARD OPERATING PROCEDURE (SOP)  
-**Title:** ANZ Bank Fraud Transaction Protocol (FTP) Alert Handling & Triage Agent Decision Protocol  
-**Department:** ANZ Fraud Risk & Intelligence  
-**Issued By:** Head of Financial Crime Compliance, ANZ Bank  
+**Title:** XYZ Bank Fraud Transaction Protocol (FTP) Alert Handling & Triage Agent Decision Protocol  
+**Department:** XYZ Fraud Risk & Intelligence  
+**Issued By:** Head of Financial Crime Compliance, XYZ Bank  
 **Effective Date:** 19 December 2024  
 **Version:** 4.0  
-**Applies To:** ANZ Fraud Analysts, Triage Agents, Digital Operations, Contact Centre, Case Management Teams, AI Agentic Systems
+**Applies To:** XYZ Fraud Analysts, Triage Agents, Digital Operations, Contact Centre, Case Management Teams, AI Agentic Systems
 
 ## 1. PURPOSE  
-To establish a **structured, compliant, and risk-driven framework** for identifying, validating, triaging, and resolving suspected fraudulent financial activity detected via ANZ’s Fraud Transaction Protocol (FTP) alerting system. This SOP ensures:  
+To establish a **structured, compliant, and risk-driven framework** for identifying, validating, triaging, and resolving suspected fraudulent financial activity detected via XYZ’s Fraud Transaction Protocol (FTP) alerting system. This SOP ensures:  
 - Customer protection and harm minimisation  
-- Regulatory compliance with APRA, ASIC, Scamwatch, AUSTRAC, and ANZ internal policies  
+- Regulatory compliance with APRA, ASIC, Scamwatch, AUSTRAC, and XYZ internal policies  
 - Efficient, data-driven analyst and agent response using rule-based and GenAI-enhanced methodologies
 
 ## 2. SCOPE  
 Applies to:  
-- All FTP-generated alerts across ANZ channels: Online Banking, Mobile App, SWIFT, PayID, BPAY, etc.  
+- All FTP-generated alerts across XYZ channels: Online Banking, Mobile App, SWIFT, PayID, BPAY, etc.  
 - Threat vectors including credential compromise, phishing, account takeover, investment/romance scams, remote access frauds, business email compromise (BEC), invoice redirection, and device/IP anomalies.
 
 ## 3. FTP ALERT INPUTS & CONTEXT MANAGEMENT  
@@ -25,10 +25,10 @@ Alerts are ingested and orchestrated via **MCP (Model Context Protocol)**, gener
 - **UserContext:** Customer demographics, transaction & call history  
 - **MerchantContext:** Merchant risk profiles and past reports  
 - **DeviceContext:** Device ID, geo-location, login anomalies  
-- **SOPContext:** ANZ Bank policies, fraud rules, exceptions  
+- **SOPContext:** XYZ Bank policies, fraud rules, exceptions  
 - **AlertContext:** FTP metadata (alertId, ruleId, priority, description)  
 
-All context reads/writes are logged with ownership, TTL, and versioning metadata for auditability by ANZ.
+All context reads/writes are logged with ownership, TTL, and versioning metadata for auditability by XYZ.
 
 ## 4. FRAUD STRATEGIES & TRIAGE DECISION RULES  
 
@@ -52,7 +52,7 @@ All context reads/writes are logged with ownership, TTL, and versioning metadata
 - Optional: Email or Phone used in last login  
 
 **Sample Script:**  
-“Hi [Customer Name], this is [Agent Name] from ANZ’s Fraud Team. We’ve noticed a potentially suspicious transaction on your ANZ account and need to confirm some details.”  
+“Hi [Customer Name], this is [Agent Name] from XYZ’s Fraud Team. We’ve noticed a potentially suspicious transaction on your XYZ account and need to confirm some details.”  
 
 If crypto/investment related:  
 “We understand you sent $[Amount] to [Entity]. Please confirm how you were introduced to them. Are you aware if they are ASIC licensed?”
@@ -61,9 +61,9 @@ If crypto/investment related:
 
 | Tier     | Role                     | Responsibilities                                         |
 |----------|--------------------------|----------------------------------------------------------|
-| Tier 1   | ANZ Triage Analyst           | Case intake, customer calls, documentation in CMS        |
-| Tier 2   | ANZ Fraud Lead / Team Leader | Complex cases (> $20k, overseas, legal risk), fund blocking decisions |
-| Tier 3   | ANZ Legal / Compliance       | Police reports, scam recovery, regulator reporting (AUSTRAC/ASIC) |
+| Tier 1   | XYZ Triage Analyst           | Case intake, customer calls, documentation in CMS        |
+| Tier 2   | XYZ Fraud Lead / Team Leader | Complex cases (> $20k, overseas, legal risk), fund blocking decisions |
+| Tier 3   | XYZ Legal / Compliance       | Police reports, scam recovery, regulator reporting (AUSTRAC/ASIC) |
 
 ## 7. SLA & TIMELINES  
 
@@ -75,16 +75,16 @@ If crypto/investment related:
 
 ## 8. SYSTEMS & DOCUMENTATION  
 
-- ANZ CRM & CMS systems to record all customer interactions, analyst notes, and case decisions  
+- XYZ CRM & CMS systems to record all customer interactions, analyst notes, and case decisions  
 - Audio logs retained for 90 days  
 - All resolved alerts tagged with SOP adherence flags for audit  
 
 ## 9. AUDIT, SECURITY & GOVERNANCE  
 
-- Full MCP logs of context reads/writes, tool calls, decisions, and timestamps (ANZ)  
+- Full MCP logs of context reads/writes, tool calls, decisions, and timestamps (XYZ)  
 - Role-based ACLs and data guardrails to prevent unauthorized data access  
 - MCP servers enforce schema validation and security controls  
-- Compliance with ANZ enterprise risk frameworks ([k2view.com], [swimlane.com], [anthropic.com])  
+- Compliance with XYZ enterprise risk frameworks ([k2view.com], [swimlane.com], [anthropic.com])  
 
 ## 10. COMPLIANCE & REFERENCES  
 
@@ -92,23 +92,23 @@ If crypto/investment related:
 - **ASIC RG 271** (Internal Dispute Resolution) - Consumer harm prevention and scam prevention guidelines  
 - **AUSTRAC AML/CTF Act 2024** - Anti-money laundering and counter-terrorism financing regulations
 - **Scamwatch.gov.au** - Australian government scam reporting and prevention
-- **ANZ Fraud Money Back Guarantee** - Customer protection for fraudulent transactions
-- **ANZ Falcon®** - ANZ's anti-fraud technology preventing $112M in losses in 2023
+- **XYZ Fraud Money Back Guarantee** - Customer protection for fraudulent transactions
+- **XYZ Falcon®** - XYZ's anti-fraud technology preventing $112M in losses in 2023
 - **Confirmation of Payee** - Account name matching service for payment security
 - **Digital Padlock** - Real-time account locking capability for cybercrime protection
-- **Passwordless Web Banking** - Advanced authentication methods for ANZ Plus  
+- **Passwordless Web Banking** - Advanced authentication methods for XYZ Plus  
 
 ## 11. REVISION HISTORY  
 
 | Version | Date       | Notes                                           |
 |---------|------------|-------------------------------------------------|
-| 4.0     | 2024-12-19 | Production-ready SOP with current ANZ policies, enhanced MCP integration, and AI agentic systems |
-| 3.1     | 2025-07-10 | Added MCP orchestration, GenAI agent logic, audit guardrails (ANZ) |
+| 4.0     | 2024-12-19 | Production-ready SOP with current XYZ policies, enhanced MCP integration, and AI agentic systems |
+| 3.1     | 2025-07-10 | Added MCP orchestration, GenAI agent logic, audit guardrails (XYZ) |
 | 3.0     | 2025-07-08 | Combined FTP SOP with agent-based triage rules  |
 | 2.1     | 2025-07-06 | Defined fraud strategy thresholds                |
 | 2.0     | 2025-06-30 | Legacy triage-only framework                      |
 
-**This SOP is mandatory for all ANZ personnel and systems involved in fraud alert handling and triage at ANZ. Strict adherence ensures customer safety, regulatory compliance, and operational excellence.**
+**This SOP is mandatory for all XYZ personnel and systems involved in fraud alert handling and triage at XYZ. Strict adherence ensures customer safety, regulatory compliance, and operational excellence.**
 
 # Expanded SOP for richer RAG
 
@@ -126,18 +126,18 @@ If crypto/investment related:
 | Business Email Compromise      | RUL-BEC008  | Vendor payment details changed after suspicious email                   | Change verified via secure channel            |
 
 ### Escalation Triggers
-- Any transaction >$20,000 to new payee or overseas (ANZ)
-- Multiple failed login attempts followed by successful high-value transfer (ANZ)
-- Customer reports being on a call with "ANZ bank staff" or "police"
-- Device/IP mismatch with customer profile (ANZ)
+- Any transaction >$20,000 to new payee or overseas (XYZ)
+- Multiple failed login attempts followed by successful high-value transfer (XYZ)
+- Customer reports being on a call with "XYZ bank staff" or "police"
+- Device/IP mismatch with customer profile (XYZ)
 - Any case matching AUSTRAC/ASIC/Scamwatch typologies
 
 ### Compliance Notes
-- All escalations must be logged with reason and supporting evidence (ANZ)
-- Adhere to APRA CPG 234, ASIC RG 271, AUSTRAC AML/CTF Act, and ANZ internal policies
-- For APP fraud, follow Scamwatch and UK APP code best practices (ANZ)
-- For synthetic identity, reference AUSTRAC and KYC/AML guidelines (ANZ)
-- For insider threat, notify ANZ compliance and HR immediately
+- All escalations must be logged with reason and supporting evidence (XYZ)
+- Adhere to APRA CPG 234, ASIC RG 271, AUSTRAC AML/CTF Act, and XYZ internal policies
+- For APP fraud, follow Scamwatch and UK APP code best practices (XYZ)
+- For synthetic identity, reference AUSTRAC and KYC/AML guidelines (XYZ)
+- For insider threat, notify XYZ compliance and HR immediately
 
 # --- FRAUD SOP STRUCTURED BLOCKS ---
 
@@ -167,8 +167,8 @@ skip_call_if:
   - Payee trusted > 3 months
   - Transaction matches usual behaviour
 escalation_triggers:
-  - Any transaction >$20,000 to new payee or overseas (ANZ)
-  - Multiple failed login attempts followed by successful high-value transfer (ANZ)
+  - Any transaction >$20,000 to new payee or overseas (XYZ)
+  - Multiple failed login attempts followed by successful high-value transfer (XYZ)
 compliance_notes:
   - APRA CPG 234
   - ASIC Scams Database
@@ -181,7 +181,7 @@ skip_call_if:
   - Biometrics verified
   - Device previously approved
 escalation_triggers:
-  - Any transaction >$20,000 to new payee or overseas (ANZ)
+  - Any transaction >$20,000 to new payee or overseas (XYZ)
 compliance_notes:
   - APRA CPG 234
   - ASIC Scams Database
@@ -193,7 +193,7 @@ call_required_if:
 skip_call_if:
   - No skip allowed
 escalation_triggers:
-  - Any transaction >$20,000 to new payee or overseas (ANZ)
+  - Any transaction >$20,000 to new payee or overseas (XYZ)
 compliance_notes:
   - APRA CPG 234
   - ASIC Scams Database
@@ -205,7 +205,7 @@ call_required_if:
 skip_call_if:
   - No skip allowed
 escalation_triggers:
-  - Any transaction >$20,000 to new payee or overseas (ANZ)
+  - Any transaction >$20,000 to new payee or overseas (XYZ)
 compliance_notes:
   - APRA CPG 234
   - ASIC Scams Database
@@ -217,7 +217,7 @@ call_required_if:
 skip_call_if:
   - Licensed entity AND pattern regular
 escalation_triggers:
-  - Any transaction >$20,000 to new payee or overseas (ANZ)
+  - Any transaction >$20,000 to new payee or overseas (XYZ)
 compliance_notes:
   - APRA CPG 234
   - ASIC Scams Database
@@ -229,7 +229,7 @@ call_required_if:
 skip_call_if:
   - Matches existing legitimate pattern
 escalation_triggers:
-  - Any transaction >$20,000 to new payee or overseas (ANZ)
+  - Any transaction >$20,000 to new payee or overseas (XYZ)
 compliance_notes:
   - APRA CPG 234
   - ASIC Scams Database
@@ -241,7 +241,7 @@ call_required_if:
 skip_call_if:
   - Securely verified change
 escalation_triggers:
-  - Any transaction >$20,000 to new payee or overseas (ANZ)
+  - Any transaction >$20,000 to new payee or overseas (XYZ)
 compliance_notes:
   - APRA CPG 234
   - ASIC Scams Database
@@ -253,7 +253,7 @@ call_required_if:
 skip_call_if:
   - No skip allowed
 escalation_triggers:
-  - Any transaction >$20,000 to new payee or overseas (ANZ)
+  - Any transaction >$20,000 to new payee or overseas (XYZ)
 compliance_notes:
   - APRA CPG 234
   - ASIC Scams Database

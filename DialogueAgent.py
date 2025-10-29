@@ -443,9 +443,9 @@ Write a concise, directive summary appropriate for immediate customer communicat
             result = "".join([token for token in converse_with_claude_stream([
                 {"role": "user", "content": [{"text": prompt}]}
             ], max_tokens=self.agent_config.max_tokens)])
-            # If model still hedges, harden tone under ANZ SOPs
+            # If model still hedges, harden tone under XYZ SOPs
             if 'insufficient' in result.lower() or 'cannot' in result.lower():
-                result += "\n\nNote: Under ANZ APP fraud SOP, context is sufficient for policy decision due to BEC indicators."
+                result += "\n\nNote: Under XYZ APP fraud SOP, context is sufficient for policy decision due to BEC indicators."
             return result
         except Exception as e:
             self.logger.error(f"Failed to build final summary: {e}")

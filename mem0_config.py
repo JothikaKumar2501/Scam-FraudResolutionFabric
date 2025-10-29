@@ -1,5 +1,5 @@
 """
-Mem0 Configuration for ANZ Bank Fraud Detection System
+Mem0 Configuration for XYZ Bank Fraud Detection System
 =====================================================
 
 This module handles Mem0 configuration and environment variables.

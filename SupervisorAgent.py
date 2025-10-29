@@ -125,7 +125,7 @@ class SupervisorAgent(Agent):
         conversation_summary = self._build_final_conversation_summary(context)
         
         prompt = f"""
-You are a senior fraud analyst at ANZ Bank. Based on the following comprehensive investigation, provide a clear, professional final report.
+You are a senior fraud analyst at XYZ Bank. Based on the following comprehensive investigation, provide a clear, professional final report.
 
 INVESTIGATION CONTEXT:
 {context_summary}

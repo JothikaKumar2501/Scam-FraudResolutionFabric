@@ -170,7 +170,7 @@ class TransactionContextAgent(Agent):
         sop_summary = "\n".join(sops[:5]) if sops else "No specific SOPs found"
         
         prompt = f"""
-You are a senior ANZ transaction context expert specializing in advanced fraud typologies for ANZ Bank.
+You are a senior XYZ transaction context expert specializing in advanced fraud typologies for XYZ Bank.
 
 {fraud_analysis_prompt}
 {regulatory_prompt}

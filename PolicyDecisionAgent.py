@@ -183,7 +183,7 @@ Consider the customer's vulnerability, transaction amount, and reputational risk
             result = "".join([token for token in converse_with_claude_stream([
                 {"role": "user", "content": [{"text": prompt}]}
             ], max_tokens=self.agent_config.max_tokens)])
-            # Standardize BEC decision outputs per ANZ SOP if BEC detected
+            # Standardize BEC decision outputs per XYZ SOP if BEC detected
             rl = result.lower()
             if 'business email compromise' in rl or 'bec' in rl:
                 if 'POLICY DECISION:' not in result:

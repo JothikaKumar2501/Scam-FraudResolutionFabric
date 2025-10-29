@@ -1,5 +1,5 @@
 """
-Intelligent Dialogue System for ANZ Bank Fraud Detection
+Intelligent Dialogue System for XYZ Bank Fraud Detection
 =======================================================
 
 This module implements enhanced dialogue intelligence with XAI capabilities

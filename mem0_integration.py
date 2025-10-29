@@ -1,8 +1,8 @@
 """
-Mem0 Integration for ANZ Bank Fraud Detection System
+Mem0 Integration for XYZ Bank Fraud Detection System
 ====================================================
 
-This module provides comprehensive memory management for the ANZ Bank fraud detection
+This module provides comprehensive memory management for the XYZ Bank fraud detection
 application using Mem0. It stores memories, context summaries, and agent summaries
 with best practices for production use.
 
@@ -67,7 +67,7 @@ class MemoryMetadata:
             self.tags = []
 
 class Mem0Manager:
-    """Comprehensive Mem0 memory manager for ANZ Bank fraud detection"""
+    """Comprehensive Mem0 memory manager for XYZ Bank fraud detection"""
     
     def __init__(self, api_key: Optional[str] = None):
         """Initialize Mem0 manager with API key"""
@@ -157,12 +157,12 @@ class Mem0Manager:
     def _generate_user_id(self, case_id: str, agent_name: str = None) -> str:
         """Generate consistent user ID for memory organization"""
         if agent_name:
-            return f"anz_fraud_{case_id}_{agent_name}"
-        return f"anz_fraud_{case_id}"
+            return f"XYZ_fraud_{case_id}_{agent_name}"
+        return f"XYZ_fraud_{case_id}"
     
     def _generate_agent_id(self, agent_name: str) -> str:
         """Generate agent ID for memory organization"""
-        return f"anz_agent_{agent_name}"
+        return f"XYZ_agent_{agent_name}"
     
     def _validate_and_sanitize_query(self, query: str, fallback: str = "fraud case") -> str:
         """Validate and sanitize search query to prevent API errors"""
@@ -200,7 +200,7 @@ class Mem0Manager:
         """Store fraud case memory with comprehensive metadata"""
         try:
             memory_content = f"""
-ANZ Bank Fraud Case: {case_id}
+XYZ Bank Fraud Case: {case_id}
 Transaction: ${case_data.get('amount', 'Unknown')} to {case_data.get('payee', 'Unknown')}
 Risk Level: {case_data.get('risk_level', 'Unknown')}
 Scam Typology: {case_data.get('scam_typology', 'Unknown')}
@@ -214,7 +214,7 @@ Timestamp: {datetime.now().isoformat()}
                 agent_name="system",
                 timestamp=datetime.now().isoformat(),
                 priority="high",
-                tags=["fraud_case", "anz_bank", case_data.get('scam_typology', 'unknown')]
+                tags=["fraud_case", "XYZ_bank", case_data.get('scam_typology', 'unknown')]
             )
             
             self.client.add(
@@ -329,7 +329,7 @@ Timestamp: {datetime.now().isoformat()}
                 agent_name="RiskAssessorAgent",
                 timestamp=datetime.now().isoformat(),
                 priority="high",
-                tags=["risk_assessment", "anz_bank", case_id]
+                tags=["risk_assessment", "XYZ_bank", case_id]
             )
             
             self.client.add(
@@ -367,7 +367,7 @@ Timestamp: {datetime.now().isoformat()}
                 agent_name="PolicyDecisionAgent",
                 timestamp=datetime.now().isoformat(),
                 priority="high",
-                tags=["policy_decision", "anz_bank", case_id]
+                tags=["policy_decision", "XYZ_bank", case_id]
             )
             
             self.client.add(
@@ -405,7 +405,7 @@ Timestamp: {datetime.now().isoformat()}
                 agent_name="DialogueAgent",
                 timestamp=datetime.now().isoformat(),
                 priority="medium",
-                tags=["customer_interaction", "anz_bank", case_id]
+                tags=["customer_interaction", "XYZ_bank", case_id]
             )
             
             self.client.add(

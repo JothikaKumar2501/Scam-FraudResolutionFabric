@@ -1,8 +1,8 @@
-# ANZ BANK AI AGENT - Enhanced Fraud Detection Questions & Scripts
+# XYZ BANK AI AGENT - Enhanced Fraud Detection Questions & Scripts
 
-This is a comprehensive list of questions and scripts for the ANZ BANK AI AGENT, based on the enhanced dataset structure and current ANZ Bank policies. All questions and scripts are for ANZ BANK AI AGENT. Modify and formulate the questions accordingly. Do not hallucinate the Questions. Strictly follow ANZ rules and context, and only ask relevant questions. Minimize the number of questions you ask (make this super fast to finalize based on the questions you asked and the responses that customer provided).
+This is a comprehensive list of questions and scripts for the XYZ BANK AI AGENT, based on the enhanced dataset structure and current XYZ Bank policies. All questions and scripts are for XYZ BANK AI AGENT. Modify and formulate the questions accordingly. Do not hallucinate the Questions. Strictly follow XYZ rules and context, and only ask relevant questions. Minimize the number of questions you ask (make this super fast to finalize based on the questions you asked and the responses that customer provided).
 
-You are specialized for ANZ BANK AI AGENT to solve this problem.
+You are specialized for XYZ BANK AI AGENT to solve this problem.
 
 **Enhanced Dataset Integration:**
 - Customer Demographics: KYC status, AML risk level, CDD level, digital literacy
@@ -10,27 +10,27 @@ You are specialized for ANZ BANK AI AGENT to solve this problem.
 - Call History: Analyst details, call quality, regulatory reporting requirements
 - FTP Alerts: Enhanced risk scoring (0-1000), escalation levels (L1/L2/L3), compliance flags
 
-### General Questions (Applicable to most ANZ alerts)
+### General Questions (Applicable to most XYZ alerts)
 
-These are for initial contact and identity verification by ANZ.
+These are for initial contact and identity verification by XYZ.
 
 1.  **Identity Verification:**
-    *   "Can you please confirm your full name and date of birth for ANZ security purposes?" (from ANZ SOP, Section 5)
-    *   "To verify your identity for ANZ, can you tell me about a recent transaction on your ANZ account or confirm your registered address?" (from ANZ SOP, Section 5)
-    *   "Could you please confirm the email address or phone number you used for your last ANZ login?" (from ANZ SOP, Section 5)
+    *   "Can you please confirm your full name and date of birth for XYZ security purposes?" (from XYZ SOP, Section 5)
+    *   "To verify your identity for XYZ, can you tell me about a recent transaction on your XYZ account or confirm your registered address?" (from XYZ SOP, Section 5)
+    *   "Could you please confirm the email address or phone number you used for your last XYZ login?" (from XYZ SOP, Section 5)
 
 2.  **Transaction Confirmation (Initial):**
-    *   "We've noticed a potentially suspicious transaction on your ANZ account and need to confirm some details. Did you authorize a transaction for roughly $[Amount] on [Date] to [Recipient]?" (adapted from ANZ SOP, Section 5 conversation sample)
-    *   "Are you currently attempting to make a payment to [Recipient] from your ANZ account?"
-    *   "Have you recently initiated any large transfers from your ANZ account?"
+    *   "We've noticed a potentially suspicious transaction on your XYZ account and need to confirm some details. Did you authorize a transaction for roughly $[Amount] on [Date] to [Recipient]?" (adapted from XYZ SOP, Section 5 conversation sample)
+    *   "Are you currently attempting to make a payment to [Recipient] from your XYZ account?"
+    *   "Have you recently initiated any large transfers from your XYZ account?"
 
 ### Specific Questions (Triggered by Rule ID / Fraud Type)
 
-These questions should be framed by the Dialogue Agent based on the `Rule ID` and the specific context (`TransactionContext`, `UserContext`, etc.) identified by the upstream agents. All questions must be ANZ-branded and reference ANZ where appropriate.
+These questions should be framed by the Dialogue Agent based on the `Rule ID` and the specific context (`TransactionContext`, `UserContext`, etc.) identified by the upstream agents. All questions must be XYZ-branded and reference XYZ where appropriate.
 
 # --- FRAUD QUESTION TEMPLATES ---
 
-# (For each YAML block and question, add 'ANZ' or 'ANZ Bank' where it makes sense, especially in customer-facing language)
+# (For each YAML block and question, add 'XYZ' or 'XYZ Bank' where it makes sense, especially in customer-facing language)
 
 ---
 fraud_type: RUL-TX901
@@ -43,11 +43,11 @@ core_facts:
 finalize_if:
   - user_denies_authorization AND identity_verified
 questions:
-  - "Can you please confirm your full name and date of birth for ANZ security purposes?"
-  - "Did you authorize a transaction for $[Amount] to [Recipient] from your ANZ account?"
-  - "Is [Recipient] a new payee for you, or have you sent money to them before from your ANZ account?"
-  - "Have you changed your ANZ password multiple times in the last 24 hours?"
-  - "Is this type of transfer amount and recipient consistent with your usual ANZ banking behaviour?"
+  - "Can you please confirm your full name and date of birth for XYZ security purposes?"
+  - "Did you authorize a transaction for $[Amount] to [Recipient] from your XYZ account?"
+  - "Is [Recipient] a new payee for you, or have you sent money to them before from your XYZ account?"
+  - "Have you changed your XYZ password multiple times in the last 24 hours?"
+  - "Is this type of transfer amount and recipient consistent with your usual XYZ banking behaviour?"
 ---
 fraud_type: RUL-TX817
 core_facts:
@@ -59,11 +59,11 @@ core_facts:
 finalize_if:
   - user_confirms_biometrics OR (user_denies_authorization AND identity_verified)
 questions:
-  - "We've detected a login from a new device, immediately followed by a large transfer of $[Amount] from your ANZ account. Was this login authorized by you?"
-  - "Can you confirm the device you are currently using to access your ANZ banking?"
+  - "We've detected a login from a new device, immediately followed by a large transfer of $[Amount] from your XYZ account. Was this login authorized by you?"
+  - "Can you confirm the device you are currently using to access your XYZ banking?"
   - "Is the destination of this transfer to an investment or cryptocurrency platform?"
-  - "Did you verify this new device with biometrics or a security code when you logged in to ANZ?"
-  - "Is this pattern of new device login and transfer consistent with your past ANZ banking behaviour?"
+  - "Did you verify this new device with biometrics or a security code when you logged in to XYZ?"
+  - "Is this pattern of new device login and transfer consistent with your past XYZ banking behaviour?"
 ---
 fraud_type: RUL-TX488
 core_facts:
@@ -156,24 +156,24 @@ questions:
 
 **I. For Feedback Collection (Post-Resolution)**
 
-*   "To help us improve ANZ fraud detection, can you confirm if this alert was a true fraud incident or a legitimate transaction?"
-*   "What was the final outcome of this transaction with ANZ?"
+*   "To help us improve XYZ fraud detection, can you confirm if this alert was a true fraud incident or a legitimate transaction?"
+*   "What was the final outcome of this transaction with XYZ?"
 
 **Important Considerations for Agent Implementation:**
 
 *   **Context-Driven Selection:** The Dialogue Agent must intelligently select which specific questions to ask based on the `Rule ID` and the presence/absence of other relevant context (e.g., `UserContext`, `DeviceContext`).
 *   **Logical Flow:** Questions should follow a natural conversational progression (e.g., identity verification first, then transaction specifics, then deeper probing based on scam indicators).
 *   **Templating:** Use placeholders like `[Amount]`, `[Recipient]`, `[Entity]` that are dynamically filled from the `TransactionContext` or other relevant contexts.
-*   **No Hallucinations:** The agent should ONLY draw questions from the pre-defined ANZ SOP rules and conversation samples. It should not generate new, unverified questions.
-*   **Adaptive Questioning:** If a customer's answer resolves the suspicion (e.g., "Yes, that's my new phone and I logged in with ANZ biometrics"), the agent should pivot to closing the inquiry or escalate as per the ANZ SOP, rather than asking irrelevant follow-up questions.
+*   **No Hallucinations:** The agent should ONLY draw questions from the pre-defined XYZ SOP rules and conversation samples. It should not generate new, unverified questions.
+*   **Adaptive Questioning:** If a customer's answer resolves the suspicion (e.g., "Yes, that's my new phone and I logged in with XYZ biometrics"), the agent should pivot to closing the inquiry or escalate as per the XYZ SOP, rather than asking irrelevant follow-up questions.
 
 **Enhanced Risk Assessment Questions:**
 
 *   **Digital Literacy Assessment:** "How comfortable are you with online banking and security features?"
-*   **Device Verification:** "Can you confirm if you're using your usual device for ANZ banking?"
+*   **Device Verification:** "Can you confirm if you're using your usual device for XYZ banking?"
 *   **Location Verification:** "Are you currently in [Location] where this transaction originated?"
-*   **Behavioral Pattern:** "Is this transaction amount and timing consistent with your usual ANZ banking behavior?"
-*   **Education Material:** "Have you completed ANZ's scam education materials recently?"
+*   **Behavioral Pattern:** "Is this transaction amount and timing consistent with your usual XYZ banking behavior?"
+*   **Education Material:** "Have you completed XYZ's scam education materials recently?"
 
 # Expanded Questions for RAG
 
@@ -214,8 +214,8 @@ questions:
 * "Did you notice any unusual staff activity or communication?" (for customers)
 
 ### Business Email Compromise (RUL-BEC008)
-* "Did you receive any requests to change vendor payment details via email?" (ANZ)
-* "Did you verify the new bank details directly with the vendor using a phone number from a previous ANZ invoice or their official website?" (ANZ secure verification)
-* "Is the payment amount or recipient consistent with your usual pattern for this vendor?" (ANZ)
-* "Was the vendor name or email slightly different (e.g., abbreviation or small change)?" (ANZ)
-* "Did you receive duplicate invoices or a follow-up asking to ‘redirect’ the payment?" (ANZ)
+* "Did you receive any requests to change vendor payment details via email?" (XYZ)
+* "Did you verify the new bank details directly with the vendor using a phone number from a previous XYZ invoice or their official website?" (XYZ secure verification)
+* "Is the payment amount or recipient consistent with your usual pattern for this vendor?" (XYZ)
+* "Was the vendor name or email slightly different (e.g., abbreviation or small change)?" (XYZ)
+* "Did you receive duplicate invoices or a follow-up asking to ‘redirect’ the payment?" (XYZ)

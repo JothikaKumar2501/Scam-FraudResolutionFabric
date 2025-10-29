@@ -32,7 +32,7 @@ class TriageAgent(Agent):
             anom = context.get('anomaly_context', '[unavailable]')
             risk = context.get('risk_summary_context', '[unavailable]')
             
-            # Build intelligent triage prompt (ANZ context-aware)
+            # Build intelligent triage prompt (XYZ context-aware)
             prompt = self._build_triage_prompt(txn, cust, merch, anom, risk, sops)
             
             # Get expert triage decision

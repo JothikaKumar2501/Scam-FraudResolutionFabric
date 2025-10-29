@@ -1,5 +1,5 @@
 """
-Advanced Intelligent Agent Base Class for ANZ Bank Authorized Scam Detection
+Advanced Intelligent Agent Base Class for XYZ Bank Authorized Scam Detection
 Production-ready agent framework with dynamic capabilities and expert-level intelligence
 """
 

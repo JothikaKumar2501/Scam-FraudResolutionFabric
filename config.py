@@ -1,5 +1,5 @@
 """
-Advanced Configuration System for ANZ Bank Authorized Scam Detection
+Advanced Configuration System for XYZ Bank Authorized Scam Detection
 Production-ready configuration with dynamic, intelligent settings
 """
 

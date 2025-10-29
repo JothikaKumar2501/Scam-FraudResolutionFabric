@@ -1,4 +1,4 @@
-# AWS AI Agent - ANZ Bank Authorized Scam Detection System
+# AWS AI Agent - XYZ(fictitious) Bank Authorized Scam Detection System
 
 ## 🏆 AWS AI Agent Compliance
 
@@ -54,7 +54,7 @@ streamlit run ui.py --server.port 8501
 
 ## Overview
 
-A **production-ready AWS AI Agent** for detecting and preventing authorized payment scams (APP fraud) at ANZ Bank. This system demonstrates advanced AI agent capabilities using AWS Bedrock AgentCore primitives (Memory, Runtime, Observability) with autonomous decision-making and external tool integration to protect customers from sophisticated social engineering attacks.
+A **production-ready AWS AI Agent** for detecting and preventing authorized payment scams (APP fraud) at XYZ Bank. This system demonstrates advanced AI agent capabilities using AWS Bedrock AgentCore primitives (Memory, Runtime, Observability) with autonomous decision-making and external tool integration to protect customers from sophisticated social engineering attacks.
 
 ### 🤖 AWS AI Agent Architecture
 - **Reasoning Engine**: Claude 3 Sonnet/Haiku for complex fraud analysis
@@ -722,14 +722,14 @@ This project demonstrates a **fully compliant AWS AI Agent** meeting all require
 
 ## 📄 License
 
-This project is proprietary to ANZ Bank. All rights reserved.
+This project is proprietary to XYZ Bank. All rights reserved.
 
 **AWS AI Agent Compliance**: This system meets all AWS-defined AI agent qualifications and demonstrates production-ready deployment on AWS infrastructure.
 
 ## 🆘 Support
 
 ### Technical Support
-- **Email**: fraud-detection-support@anz.com
+- **Email**: fraud-detection-support@XYZ.com
 - **Phone**: +61 3 9683 9999
 - **Hours**: 24/7 for critical issues
 
@@ -739,10 +739,10 @@ This project is proprietary to ANZ Bank. All rights reserved.
 - **Troubleshooting**: [docs/troubleshooting.md](docs/troubleshooting.md)
 
 ### Emergency Contacts
-- **Security Issues**: security-incident@anz.com
-- **Regulatory Issues**: regulatory-compliance@anz.com
-- **Customer Issues**: customer-support@anz.com
+- **Security Issues**: security-incident@XYZ.com
+- **Regulatory Issues**: regulatory-compliance@XYZ.com
+- **Customer Issues**: customer-support@XYZ.com
 
 ---
 
-**ANZ Bank Authorized Scam Detection System** - Protecting customers from sophisticated fraud with intelligent, production-ready technology.
+**XYZ Bank Authorized Scam Detection System** - Protecting customers from sophisticated fraud with intelligent, production-ready technology.

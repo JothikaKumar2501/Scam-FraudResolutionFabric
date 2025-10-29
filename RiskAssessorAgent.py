@@ -59,7 +59,7 @@ class RiskAssessorAgent(Agent):
                     result += "\n\nTYPOLOGY: business_email_compromise"
             
             # Add to context with metadata
-            # Enforce ANZ bank guidelines and avoid "insufficient" hedging if gating passed
+            # Enforce XYZ bank guidelines and avoid "insufficient" hedging if gating passed
             safe_result = result or ""
             if context.get('gate_reason', {}).get('passed'):
                 # Remove hedging lines to avoid contradictory outputs when gate passed
@@ -75,7 +75,7 @@ class RiskAssessorAgent(Agent):
                     pass
                 # Add explicit note reinforcing finalization
                 if 'Note: Expert gate indicates sufficient context' not in safe_result:
-                    safe_result += "\n\nNote: Expert gate indicates sufficient context; proceed with final determination under ANZ APP fraud SOP."
+                    safe_result += "\n\nNote: Expert gate indicates sufficient context; proceed with final determination under XYZ APP fraud SOP."
             
             context['risk_assessment'] = safe_result
             context['risk_assessment_timestamp'] = datetime.now().isoformat()
@@ -261,7 +261,7 @@ OUTPUT (STRICT):
         
         # EXPERT-LEVEL COMPRESSED PROMPT
         prompt = f"""
-ANZ Bank Expert Risk Assessment - COMPRESSED CONTEXT
+XYZ Bank Expert Risk Assessment - COMPRESSED CONTEXT
 
 {compressed_context}
 {compressed_risk}
